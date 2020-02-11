@@ -1,9 +1,8 @@
 const { paths } = require('../../webpack.settings');
-const { mode } = require('../utils');
-
 const cacheLoader = require('../loaders/cache');
 const svgrLoader = require('../loaders/inlineSvg');
 const urlLoader = require('../loaders/url');
+const { mode } = require('../utils');
 
 module.exports = (env) => ({
   module: {

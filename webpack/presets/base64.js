@@ -1,7 +1,6 @@
-const { mode } = require('../utils');
-
 const cacheLoader = require('../loaders/cache');
 const base64Loader = require('../loaders/base64');
+const { mode } = require('../utils');
 
 module.exports = (env) => ({
   module: {

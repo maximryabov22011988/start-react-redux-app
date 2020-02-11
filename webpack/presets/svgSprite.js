@@ -1,5 +1,4 @@
 const { paths } = require('../../webpack.settings');
-
 const svgSpriteLoader = require('../loaders/svgSprite');
 
 module.exports = () => ({

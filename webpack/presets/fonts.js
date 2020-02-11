@@ -1,8 +1,7 @@
 const { paths } = require('../../webpack.settings');
-const { mode } = require('../utils');
-
 const cacheLoader = require('../loaders/cache');
 const fontFilesLoader = require('../loaders/fontFiles');
+const { mode } = require('../utils');
 
 module.exports = (env) => ({
   module: {
