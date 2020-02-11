@@ -1,4 +1,5 @@
 const { paths } = require('../../webpack.settings');
+
 const { mode } = require('../utils');
 
 module.exports = (env) => ({

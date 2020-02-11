@@ -1,6 +1,6 @@
-const urlLoader = require('./url');
-
 const { base64ImageLimit } = require('../../webpack.settings');
+
+const urlLoader = require('./url');
 
 module.exports = () =>
   urlLoader({
