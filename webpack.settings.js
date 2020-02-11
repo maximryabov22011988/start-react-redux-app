@@ -32,9 +32,9 @@ const isEnabledCriticalCSS = ({ isEnable }) =>
 
 // noinspection WebpackConfigHighlighting
 module.exports = {
-  name: 'Ипотечный брокер',
-  copyright: 'Dom.rf',
-  pageTitle: 'Ипотечный брокер',
+  name: 'Название проекта',
+  copyright: '',
+  pageTitle: 'Project name',
   paths: {
     ROOT: resolveApp('.'),
     SRC: resolveApp('src'),
