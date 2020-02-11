@@ -1,9 +1,9 @@
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
-const createPlugin = require('./createPlugin');
 const { supportedImageTypes } = require('../../webpack.settings');
 const { supportedImages } = require('../utils');
+const createPlugin = require('./createPlugin');
 
 const getImageOptions = (imageType, options) =>
   supportedImageTypes.includes(imageType) ? options : null;

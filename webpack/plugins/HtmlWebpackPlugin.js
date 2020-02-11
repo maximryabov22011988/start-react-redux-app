@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const createPlugin = require('./createPlugin');
 const { pageTitle: title, paths } = require('../../webpack.settings');
 const { mode } = require('../utils');
+const createPlugin = require('./createPlugin');
 
 module.exports = (env) =>
   createPlugin(HtmlWebpackPlugin, {

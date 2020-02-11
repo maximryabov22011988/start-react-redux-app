@@ -1,8 +1,8 @@
 /* eslint-disable */
 const path = require('path');
-const createPlugin = require('./createPlugin');
 
 const { entries } = require('../../webpack.settings');
+const createPlugin = require('./createPlugin');
 
 const entryNames = Object.keys(entries);
 
