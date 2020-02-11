@@ -1,0 +1,13 @@
+node_modules
+
+/.git
+/.vscode
+/.idea
+
+build/
+dist/
+plop-templates/
+
+webpack.config.js
+postcss.config.js
+plopfile.js

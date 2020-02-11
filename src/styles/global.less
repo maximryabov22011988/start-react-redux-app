@@ -1,0 +1,30 @@
+@import 'index';
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  .font-family();
+  .text();
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+
+// Добавляет возможность менять цвет иконок из спрайта в less
+svg path {
+  fill: inherit;
+}
+
+*:focus {
+  .custom-outline();
+}

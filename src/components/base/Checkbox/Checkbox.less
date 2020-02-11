@@ -1,0 +1,116 @@
+@import "~styles";
+
+@root-class: checkbox;
+@checkbox-size: 24px;
+@border-radius: 3px;
+
+@label-color: @gray-700;
+@label-color--disabled: @gray-400;
+
+@tick-color: @primary;
+@tick-color--disabled: @gray-500;
+
+@border-color: @gray-500;
+@border-color--hover: @gray-700;
+@border-color--focus: @primary;
+@border-color--error: @error;
+@border-color--disabled: @gray-400;
+@bg-color--disabled: @gray-100;
+
+.@{root-class} {
+  position: relative;
+  display: flex;
+
+  &:not(.isDisabled):hover {
+    .@{root-class}__custom-checkbox-input {
+      border-color: @border-color--hover;
+
+      .isChecked {
+        border-color: @border-color--hover;
+      }
+    }
+  }
+
+  & + & {
+    margin-left: 20px;
+  }
+
+  &__default-checkbox-input {
+    .visually-hidden();
+  }
+
+  &__custom-checkbox-input {
+    .square(@checkbox-size);
+    .radius(@border-radius);
+    .transition(border);
+    .transition(background-color);
+    position: relative;
+    margin-right: 10px;
+    background-color: @white;
+    border: 1px solid @border-color;
+  }
+
+  &__icon {
+    .transition(transform);
+    .transition(opacity);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    height: 10px;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    fill: @tick-color;
+  }
+
+  &__text {
+    .text(15px; 1.4; @color: @label-color);
+    .transition(color);
+    padding-top: 1px;
+  }
+
+  &.isFocused {
+    .@{root-class}__custom-checkbox-input {
+      .custom-outline();
+      border-color: @border-color--focus;
+    }
+  }
+
+  &.isChecked {
+    .@{root-class}__custom-checkbox-input {
+      border-color: @border-color--focus;
+    }
+
+    .@{root-class}__icon {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  &.isDisabled {
+    cursor: not-allowed;
+
+    .@{root-class}__default-checkbox-input {
+      cursor: not-allowed;
+    }
+
+    .@{root-class}__custom-checkbox-input {
+      background-color: @bg-color--disabled;
+      border-color: @border-color--disabled;
+    }
+
+    .@{root-class}__icon {
+      fill: @tick-color--disabled;
+    }
+
+    .@{root-class}__text {
+      color: @label-color--disabled;
+    }
+
+    .isChecked {
+      .checkbox__custom-checkbox-input {
+        background-color: @bg-color--disabled;
+      }
+    }
+  }
+}

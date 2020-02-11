@@ -1,0 +1,26 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
+
+import './{{pascalCase name}}.less';
+
+const rootClass = '{{dashCase cssClass}}';
+
+const propTypes = {
+  className: PropTypes.string,
+};
+
+const defaultProps = {};
+
+function {{pascalCase name}}({ className }) {
+  return (
+    <div className={cn(rootClass, className)}>
+      {{pascalCase name}}
+    </div>
+  );
+}
+
+{{pascalCase name}}.propTypes = propTypes;
+{{pascalCase name}}.defaultProps = defaultProps;
+
+export default {{pascalCase name}};

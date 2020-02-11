@@ -1,0 +1,130 @@
+@import "~styles";
+
+@vertical-padding: 0;
+@horizontal-padding: 20px;
+@border-width: 1px;
+@border-radius: 5px;
+
+@label-color: @gray-700;
+@label-color--disabled: @gray-400;
+
+@border-color: @gray-500;
+@border-color--hover: @gray-700;
+@border-color--focus: @primary;
+@border-color--error: @error;
+@border-color--disabled: @gray-400;
+@bg-color--disabled: @gray-100;
+
+@root-class: input;
+
+.@{root-class} {
+  .transition(background-color);
+  position: relative;
+  display: block;
+  width: 100%;
+  background-color: @gray-100;
+
+  &__input {
+    .transition(border-color);
+    .label-text();
+    .radius(@border-radius);
+    position: relative;
+    z-index: @zIndex-base + 2;
+    height: 60px;
+    color: @label-color;
+    background-color: transparent;
+    border: @border-width solid @border-color;
+
+    &:hover {
+      border-color: @border-color--hover;
+    }
+  }
+
+  &__placeholder {
+    .transition(transform);
+    .transition(color);
+    .ellipsis();
+    .label-text();
+    position: absolute;
+    top: 21px;
+    left: 0;
+    z-index: @zIndex-base + 1;
+    transform-origin: 0 0;
+    user-select: none;
+  }
+
+  &.isFocused.withValue,
+  &.isFocused,
+  &.withValue {
+    .@{root-class}__input {
+      padding-top: 12px;
+    }
+
+    .@{root-class}__placeholder {
+      transform: translate(4px, -12px) scale(0.85);
+    }
+  }
+
+  &.isDisabled.withValue,
+  &.isDisabled {
+    cursor: not-allowed;
+
+    .@{root-class}__input {
+      color: @label-color--disabled;
+      background-color: @bg-color--disabled;
+      border-color: @border-color--disabled;
+    }
+
+    .@{root-class}__placeholder {
+      z-index: @zIndex-base + 2;
+      color: @label-color--disabled;
+    }
+
+    .@{root-class}__input,
+    .@{root-class}__placeholder {
+      cursor: not-allowed;
+    }
+  }
+
+  &.withValue.isFocused,
+  &.isFocused {
+    .@{root-class}__input {
+      border-color: @border-color--focus;
+    }
+
+    .@{root-class}__placeholder {
+      color: @gray-600;
+    }
+  }
+
+  &.isError {
+    .@{root-class}__input {
+      border-color: @border-color--error;
+    }
+  }
+
+  &.isError.isFocused {
+    .@{root-class}__input {
+      border-color: @border-color--error;
+      box-shadow: 0 0 0 3px fade(@error, 25%);
+    }
+  }
+
+  &.withValue {
+    background-color: @white;
+  }
+
+  & + .helper-text__text {
+    display: block;
+    padding-top: 8px;
+    padding-left: @horizontal-padding;
+  }
+}
+
+.label-text() {
+  .font-family();
+  .text(15px; 1; @color: @gray-700);
+  display: block;
+  width: 100%;
+  padding: @vertical-padding @horizontal-padding;
+}

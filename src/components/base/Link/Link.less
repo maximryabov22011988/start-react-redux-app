@@ -1,0 +1,118 @@
+@import "~styles";
+
+// text
+@link-color: @gray-700;
+@link-color--hover: @primary;
+@link-color--focus: @primary;
+
+@link-color--disabled: fade(@text-color, 50%);
+
+@link-color--visited: #8e24aa;
+@link-color--visited--hover: fade(@link-color--visited, 70%);
+@link-color--visited--focus: fade(@link-color--visited, 60%);
+
+// button
+@min-width: 40px;
+@min-height: 40px;
+@vertical-padding: 12px;
+@horizontal-padding: 20px;
+@border-width: 1px;
+@border-radius: 5px;
+
+@text-color: @gray-700;
+@border-color: @gray-500;
+@bg-color: @white;
+
+@text-color--hover: @gray-700;
+@border-color--hover: @gray-700;
+
+@border-color--focus: @primary;
+
+@text-color--disabled: @gray-400;
+@border-color--disabled: @gray-300;
+@bg-color--disabled: @gray-100;
+
+.link {
+  position: relative;
+
+  &--text {
+    .text(15px; 1.2; @color: @link-color);
+    .transition(color);
+    .transition(text-decoration);
+    padding: 4px 8px;
+    user-select: none;
+
+    &:hover {
+      color: @link-color--hover;
+    }
+
+    &:active,
+    &:focus {
+      .radius(3px);
+      color: @link-color--focus;
+    }
+
+    &:visited {
+      color: @link-color--visited;
+    }
+
+    &:visited:hover {
+      color: @link-color--visited--hover;
+    }
+
+    &:visited:active,
+    &:visited:focus {
+      color: @link-color--visited--focus;
+    }
+
+    &.isDisabled,
+    &.isDisabled:hover,
+    &.isDisabled:focus {
+      color: @link-color--disabled;
+      outline: none;
+      cursor: not-allowed;
+    }
+  }
+
+  &--button {
+    .transition(color);
+    .transition(background-color);
+    .transition(border-color);
+    .font-family();
+    .text(15px; 1.2; @color: @text-color);
+    .radius(@border-radius);
+    .ellipsis();
+    display: inline-block;
+    min-width: @min-width;
+    max-width: 720px;
+    min-height: @vertical-padding * 3;
+    padding: @vertical-padding @horizontal-padding;
+    text-align: center;
+    background-color: @bg-color;
+    border: @border-width solid @border-color;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: @text-color--hover;
+      border-color: @border-color--hover;
+    }
+
+    &:focus {
+      border-color: @border-color--focus;
+    }
+
+    &.isDisabled,
+    &.isDisabled:hover,
+    &.isDisabled:focus {
+      color: @text-color--disabled;
+      background-color: @bg-color--disabled;
+      border-color: @border-color--disabled;
+      cursor: not-allowed;
+    }
+
+    &.withOutText {
+      min-height: @min-height;
+    }
+  }
+}

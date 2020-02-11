@@ -1,0 +1,30 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import getDisplayName from 'hocs/getDisplayName';
+
+import './{{camelCase name}}.less';
+
+function {{camelCase name}}(Component) {
+  const propTypes = {};
+
+  const defaultProps = {};
+
+  function {{pascalCase name}}(props) {
+    return (
+      <div>
+        {{pascalCase name}}
+      </div>
+    );
+  }
+
+  const componentName = getDisplayName(Component);
+  {{pascalCase name}}.displayName = `{{camelCase name}}(${componentName})`;
+
+  {{pascalCase name}}.propTypes = propTypes;
+  {{pascalCase name}}.defaultProps = defaultProps;
+
+  return {{pascalCase name}};
+};
+
+export default {{camelCase name}};

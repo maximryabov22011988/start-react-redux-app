@@ -1,0 +1,22 @@
+@import "~styles";
+
+.checkbox-group {
+  display: flex;
+
+  .checkbox + .helper-text,
+  .helper-text + .checkbox {
+    margin-left: 20px;
+  }
+
+  .helper-text {
+    flex: 1 0 auto;
+
+    &__text {
+      margin-left: 34px;
+    }
+  }
+
+  .helper-text + .helper-text {
+    margin-left: 20px;
+  }
+}

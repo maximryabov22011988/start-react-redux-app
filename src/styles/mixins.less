@@ -1,0 +1,155 @@
+@import 'index';
+
+.square(@num) {
+  width: @num + 0;
+  height: @num + 0;
+}
+
+.circle(@num) {
+  .square(@num);
+  border-radius: 50%;
+}
+
+.ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// нужно обязательно указывать первую переменную, all в крайнем случае
+.transition(@prop: all, @duration: 200ms, @function: cubic-bezier(0.4, 0, 0.2, 1), @delay: 0s) {
+  transition+: @arguments;
+  will-change+: @prop;
+}
+
+.pseudo(@width: 0; @height: 0) {
+  content: '';
+  position: absolute;
+  display: block;
+  width: @width;
+  height: @height;
+}
+
+.centering() {
+  .offset();
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.horizontal-centering() {
+  .offsetX();
+  position: absolute;
+  left: 50%;
+}
+
+.vertical-centering() {
+  .offsetY();
+  position: absolute;
+  top: 50%;
+}
+
+.offset(@x: -50%, @y: -50%) {
+  transform: translate(@x, @y);
+}
+
+.offsetX(@x: -50%) {
+  transform: translateX(@x);
+}
+
+.offsetY(@y: -50%) {
+  transform: translateY(@y);
+}
+
+.radius(@r: 5) {
+  border-radius: @r + 0;
+}
+
+.top-radius(@r: 5) {
+  border-radius: @r + 0 @r + 0 0 0;
+}
+
+.bottom-radius(@r: 5) {
+  border-radius: 0 0 @r + 0 @r + 0;
+}
+
+.left-radius(@r: 5) {
+  border-radius: @r + 0 0 0 @r + 0;
+}
+
+.right-radius(@r: 5) {
+  border-radius: 0 @r + 0 @r + 0 0;
+}
+
+.placeholder(@content) {
+  &::-webkit-input-placeholder {
+    @content();
+  }
+
+  &::-moz-placeholder {
+    @content();
+  }
+
+  &:-ms-input-placeholder {
+    @content();
+  }
+}
+
+.custom-scroll(@size: 3px; @color: @gray-500) {
+  & {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &::-webkit-scrollbar {
+    width: @size;
+    height: @size;
+    background: rgba(@color, 0);
+
+    &:disabled {
+      background: transparent;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(@color, 0.6);
+    border-radius: 30px;
+
+    &:hover {
+      background: rgba(@color, 0.75);
+    }
+
+    &:active {
+      background: rgba(@color, 0.9);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(@color, 0.2);
+  }
+}
+
+.visually-hidden() {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.text(@size: @font-size-default; @lh: 1.4; @weight: @weight-normal; @color: @text-color) {
+  font-weight: @weight;
+  font-size: @size;
+  line-height: @lh;
+  color: @color;
+}
+
+.custom-outline() {
+  box-shadow: 0 0 0 3px fade(@primary, 25%);
+}
