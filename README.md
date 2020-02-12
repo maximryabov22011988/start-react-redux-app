@@ -20,7 +20,7 @@
   так и устаревших браузеров.
 - [AirBnb codestyle](https://github.com/airbnb/javascript/tree/master/react).
 - автоформатирование кода ([prettier](https://prettier.io/) + [eslint](https://eslint.org/)).
-- поддержка [less](http://lesscss.org/), css-module.
+- поддержка [less](http://lesscss.org/), css-modules.
 - [stylelint](https://github.com/stylelint/stylelint).
 - настроенные тесты ([jest](https://jestjs.io/) + [enzyme](https://airbnb.io/enzyme/)).
 - сборка svg-спрайтов.
@@ -65,7 +65,7 @@
 
 `css` - необходимо указать, что использовать для работы с CSS (по умолчанию less).
  - препроцессор less.
- - css-module.
+ - css-modules.
 
 `supportedImageTypes` - какие изображения будут использоваться в проекте. На основе данного списка будут подключаться соответствующеры плагины для сжатия изображения (в production-сборке). Формат webp возможно использовать, когда используются jpg/jpeg/png-изображения.
 

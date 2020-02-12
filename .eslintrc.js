@@ -31,7 +31,7 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-return-assign': 'off',
     'func-names': 'off',
-    radix: 'off',
+    'radix': 'off',
     'arrow-body-style': 1,
     'no-use-before-define': [
       'error',
