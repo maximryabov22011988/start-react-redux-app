@@ -7,7 +7,11 @@ module.exports = () => ({
     iconName: '[name]-[hash:5]',
     svgoOptions: {
       // Обязательное правило для работы SvgStorePlugin.loader
-      plugins: [{ removeViewBox: false }],
+      plugins: [
+        { cleanupIDs: false },
+        { removeUnknownsAndDefaults: false },
+        { removeViewBox: false },
+      ],
     },
   },
 });

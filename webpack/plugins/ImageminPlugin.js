@@ -19,8 +19,11 @@ module.exports = () =>
         { convertStyleToAttrs: true },
         { convertTransform: true },
         { removeDesc: true },
-        { removeViewBox: false },
         { removeDimensions: true },
+        { cleanupIDs: false },
+        { removeUnknownsAndDefaults: false },
+        { removeViewBox: false },
+
       ],
     }),
     pngquant: getImageOptions('png', {
