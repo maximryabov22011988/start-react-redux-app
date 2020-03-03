@@ -35,13 +35,14 @@
   },
   "lint-staged": {
     "*.less": [
+      "stylelint --config .stylelintrc.js",
       "prettier --write",
       "stylelint --fix --config .stylelintrc.js",
       "git add"
     ],
     "*.(js|jsx)": [
-      "npm run lint:js",
-      "npm run format:js",
+      "eslint --max-warnings=0 --fix",
+      "prettier --config .prettierrc.js --write",
       "git add"
     ]
   },
