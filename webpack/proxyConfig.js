@@ -1,7 +1,7 @@
 module.exports = {
   '/api': {
-    target: 'https://uat.broker.domrf.ru',
-    auth: 'broker:Supermegabroker555',
+    target: 'https://',
+    auth: 'login:password',
     changeOrigin: true,
     pathRewrite: {
       '^/api': '/api',
