@@ -10,6 +10,8 @@ const ManifestPlugin = require('./webpack/plugins/WebpackManifestPlugin');
 const LegacyScriptPlugin = require('./webpack/plugins/LegacyScriptPlugin');
 const AutoDllPlugin = require('./webpack/plugins/AutoDllPlugin');
 const BundleAnalyzerPlugin = require('./webpack/plugins/BundleAnalyzerPlugin');
+const ErrorOverlay = require('./webpack/plugins/ErrorOverlayPlugin');
+const WebpackErrorsPlugin = require('./webpack/plugins/FriendlyErrorsWebpackPlugin');
 
 const HtmlPlugin = require('./webpack/plugins/HtmlWebpackPlugin');
 const MiniCssExtractPlugin = require('./webpack/plugins/MiniCssExtractPlugin');
@@ -66,7 +68,7 @@ const commonConfig = (env) => {
       mode: mode.isProduction(env) ? mode.PRODUCTION : mode.DEVELOPMENT,
       devtool: mode.isProduction(env)
         ? 'source-map'
-        : 'cheap-module-eval-source-map',
+        : 'cheap-module-source-map',
       resolve: {
         ...settings.resolve,
         modules: [settings.paths.SRC, 'node_modules'],
@@ -96,25 +98,9 @@ const commonConfig = (env) => {
 const developmentConfig = () =>
   merge([
     getPlugins(
+      ErrorOverlay(),
+      WebpackErrorsPlugin(),
       HtmlPlugin(),
-      AutoDllPlugin({
-        inject: true,
-        debug: true,
-        filename: '[name]_[hash].js',
-        path: './dll',
-        entry: {
-          vendor: [
-            'react',
-            'react-dom',
-            'redux',
-            'react-redux',
-            'reselect',
-            'redux-thunk',
-            'axios',
-            'lazysizes',
-          ],
-        },
-      }),
       HotModulePlugin(),
       ...(settings.checkUnusedFiles ? [UnusedFilesPlugin()] : []),
       ...(settings.analyzeBundles ? [BundleAnalyzerPlugin()] : [])

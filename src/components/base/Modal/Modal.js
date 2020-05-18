@@ -13,7 +13,7 @@ const rootClass = 'modal';
 const modalOverlayClass = `${rootClass}__overlay`;
 
 const propTypes = {
-  actions: PropTypes.element,
+  actions: PropTypes.node,
   header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string,
   children: PropTypes.node,
