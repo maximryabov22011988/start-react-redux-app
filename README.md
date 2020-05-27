@@ -19,7 +19,7 @@
 - сборка js файлов, как для для современных (попадут только те полифилы, которые не поддерживаются),
   так и устаревших браузеров.
 - [AirBnb codestyle](https://github.com/airbnb/javascript/tree/master/react).
-- автоформатирование кода ([prettier](https://prettier.io/) + [eslint](https://eslint.org/)).
+- автоформатирование кода ([eslint](https://eslint.org/)).
 - поддержка [less](http://lesscss.org/), css-modules.
 - [stylelint](https://github.com/stylelint/stylelint).
 - настроенные тесты ([jest](https://jestjs.io/) + [enzyme](https://airbnb.io/enzyme/)).

@@ -1,82 +1,181 @@
+const OFF = 0;
+const WARN = 1;
+const ERROR = 2;
+
 module.exports = {
   env: {
     es6: true,
     browser: true,
     node: true,
+    jest: true,
   },
-  extends: ['airbnb', 'plugin:prettier/recommended'],
-  plugins: ['babel', 'import', 'jsx-a11y', 'react', 'prettier'],
+
+  // Глобальные переменные, которые нужно передать из webpack в приложение
+  globals: {},
+
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 10,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
+    jsx: true,
   },
+
+  extends: ['airbnb', 'airbnb/hooks'],
+  plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex'],
+
   rules: {
-    'linebreak-style': 'off', // с Windows работает плохо
-    'consistent-return': 'off', // нет смысла возвращать undefined из функции
-    'arrow-parens': 'off', // несовместимо с prettier
-    'object-curly-newline': 'off', // несовместимо с prettier
-    'no-mixed-operators': 'off', // несовместимо с prettier
-    'function-paren-newline': 'off', // несовместимо с prettier
-    'space-before-function-paren': 0, // несовместимо с prettier
-    'no-console': 'error', // airbnb использует warn
-    'no-alert': 'error', // airbnb использует warn
-    'no-param-reassign': 'off', // не дает корректно использовать reduce
-    'prefer-promise-reject-errors': 'off',
-    'class-methods-use-this': 'off',
-    'global-require': 'off',
-    'no-restricted-syntax': 'off',
-    'no-return-assign': 'off',
-    'func-names': 'off',
-    'radix': 'off',
-    'arrow-body-style': 1,
-    'no-use-before-define': [
-      'error',
-      { functions: false, variables: false, classes: true },
-    ],
-
-    'import/no-unresolved': 'off', // не работает с webpack alias
-    'import/extensions': 'off', // не подходит для react компонентов
-    'import/no-extraneous-dependencies': 'off',
-    'import/prefer-default-export': 'off',
-
-    'react/require-default-props': 'off', // airbnb использует error
-    'react/forbid-prop-types': 'off', // airbnb использует error
-    'react/no-did-update-set-state': 'off', // не дает работать с componentDidUpdate
-    'react/button-has-type': 'off',
-    'react/jsx-indent': 'off',
-    'react/no-array-index-key': 'off',
-    'react/state-in-constructor': 'off',
-    'react/no-did-mount-set-state': 'off',
-    'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
-    'react/jsx-props-no-spreading': [
-      'error',
+    // перенос строки, отключен т.к. в windows и unix системах различное поведение
+    'linebreak-style': OFF,
+    // запрет на использование alert
+    'no-alert': ERROR,
+    // позволяет записывать свойства в объект result при использовании в reduce
+    'no-param-reassign': [ERROR, {
+      "props": true,
+      "ignorePropertyModificationsFor": ["result"]
+    }],
+    // ++ только для for-цикла
+    'no-plusplus': [ERROR, {
+      allowForLoopAfterthoughts: true
+    }],
+    // базовый отступ 2 пробела, у case 2 пробела от switch
+    indent: [ERROR, 2, {
+      SwitchCase: 1,
+    }],
+    // длина строки
+    'max-len': [WARN, { code: 150 }],
+    // кавычки вокруг ключей объектов, единообразно с остальными ключами объекта
+    'quote-props': [ERROR, 'as-needed'],
+    // минимальная длина имен (по-умолчанию от 2 символов)
+    'id-length': [ERROR, {
+      exceptions: ['_', 'i', 'j', 'k']
+    }],
+    // наименования переменных, функций и тд только в camelСase
+    camelcase: [
+      ERROR,
       {
-        exceptions: [
-          'a',
-          'img',
-          'input',
-          'source',
-          'button',
-          'Component',
-          'Route',
-          'ReactRouterDomLink',
-          'Radio',
-          'RadioWithHelperText',
+        allow: [
+          'UNSAFE_componentDidMount',
+          'UNSAFE_componentWillReceiveProps',
+          'UNSAFE_componentWillUpdate',
+        ],
+      },
+    ],
+    // можно писать с большой буквы только имена классов (конструкторов)
+    'new-cap': [
+      ERROR,
+      {
+        capIsNewExceptions: [
+          'SortableContainer',
+          'SortableElement',
+          'List',
+          'Map',
+          'Set',
         ],
       },
     ],
 
-    'jsx-a11y/label-has-for': 'off', // deprecated
-    'jsx-a11y/label-has-associated-control': 'off',
-    'jsx-a11y/click-events-have-key-events': 'off',
-    'jsx-a11y/no-static-element-interactions': 'off',
-    'jsx-a11y/anchor-is-valid': 'off',
+    // порядок импортов
+    'import/order': [
+      ERROR,
+      {
+        alphabetize: {
+          order: 'asc',
+        },
+        groups: ['builtin', 'external', 'internal', 'unknown'],
+        'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: [''],
+        pathGroups: [
+          {
+            pattern: './*.+(less|css)',
+            group: 'sibling',
+            position: 'after',
+          },
+          {
+            pattern: '+(react|prop-types)',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+      },
+    ],
+    // экспорт по дефолту, отдаём преимущество именованному экспорту
+    'import/prefer-default-export': OFF,
+    // обязательное использование расширений при импорте файлов (кроме js)
+    'import/extensions': [ERROR, {
+      js: 'never',
+      less: 'always'
+    }],
 
-    'prettier/prettier': ['error'],
+    // проверка href в ссылке, не корректно работает с компонентами поверх html-ссылок
+    'jsx-a11y/anchor-is-valid': OFF,
+    // отключено правило для читалок и людей с ограниченными способностями
+    'jsx-a11y/click-events-have-key-events': OFF,
+    // разрешаем интерактивные события на статических элементах (div, span)
+    'jsx-a11y/no-static-element-interactions': OFF,
+    // устаревшее правила
+    'jsx-a11y/label-has-for': OFF,
+    // устаревшее правила
+    'jsx-a11y/label-has-associated-control': OFF,
+
+    // в каких файлах может содержаться jsx
+    'react/jsx-filename-extension': [ERROR, {
+      extensions: ['.js', '.jsx']
+    }],
+    // объявление state в конструкторе, в разработке не всегда нужен конструктор
+    'react/state-in-constructor': OFF,
+    // не всегда методы класса должны использовать логику с this
+    'class-methods-use-this': OFF,
+    // разрешает spread пропсов только для html, для остальных нужно перечислить в exceptions
+    'react/jsx-props-no-spreading': [ERROR, {
+      html: 'ignore',
+      exceptions: ['Component', 'Route'],
+    }],
+    // сортировка пропсов в компонентах
+    'react/jsx-sort-props': [
+      ERROR,
+      {
+        callbacksLast: true,
+        shorthandFirst: true,
+        shorthandLast: false,
+        ignoreCase: false,
+        noSortAlphabetically: false,
+        reservedFirst: false,
+      },
+    ],
+    // порядок методов в компоненте-классе
+    'react/sort-comp': [
+      ERROR,
+      {
+        order: [
+          'static-methods',
+          'lifecycle',
+          'everything-else',
+          '/^(get|set).+$/',
+          '/^handle.+$/',
+          'rendering',
+        ],
+        groups: {
+          lifecycle: [
+            'constructor',
+            'statics',
+            'contextTypes',
+            'childContextTypes',
+            'state',
+            'getDefaultProps',
+            'getInitialState',
+            'getChildContext',
+            'getDerivedStateFromProps',
+            'componentDidMount',
+            'shouldComponentUpdate',
+            'getSnapshotBeforeUpdate',
+            'componentDidUpdate',
+            'componentDidCatch',
+            'componentWillUnmount',
+          ],
+          rendering: ['/^render.+$/', 'render'],
+        },
+      },
+    ],
   },
   overrides: [
     {
@@ -85,30 +184,12 @@ module.exports = {
         jest: true,
       },
       plugins: ['jest'],
-      rules: {
-        'jest/no-disabled-tests': 'warn',
-        'jest/no-focused-tests': 'error',
-        'jest/no-identical-title': 'error',
-        'jest/prefer-to-have-length': 'warn',
-        'jest/valid-expect': 'error',
-        'no-undef': 'off',
-        'react/react-in-jsx-scope': 'off',
-      },
     },
     {
       files: ['./.storybook/**'],
-      rules: {
-        'no-use-before-define': 'off',
-        'import/newline-after-import': 'off',
-        'max-len': 'off',
-      },
     },
     {
       files: ['**/*.stories.js'],
-      rules: {
-        'react/jsx-props-no-spreading': 'off',
-        'react/prop-types': 'off',
-      },
     },
   ],
 };
