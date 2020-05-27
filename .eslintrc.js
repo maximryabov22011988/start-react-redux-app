@@ -10,6 +10,26 @@ module.exports = {
     jest: true,
   },
 
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['^api', './src/api'],
+          ['^assets', './src/assets'],
+          ['^components', './src/components'],
+          ['^constants', './src/constants'],
+          ['^hocs', './src/hocs'],
+          ['^layouts', './src/layouts'],
+          ['^pages', './src/pages'],
+          ['^store', './src/store'],
+          ['^utils', './src/utils'],
+          ['^styles', './src/styles/index.less'],
+        ],
+        extensions: ['.js', '.jsx', '.json', '.less', '.svg']
+      }
+    },
+  },
+
   // Глобальные переменные, которые нужно передать из webpack в приложение
   globals: {},
 
@@ -190,6 +210,10 @@ module.exports = {
     },
     {
       files: ['**/*.stories.js'],
+      rules: {
+        'react/jsx-props-no-spreading': OFF,
+        'react/prop-types': OFF,
+      },
     },
   ],
 };
