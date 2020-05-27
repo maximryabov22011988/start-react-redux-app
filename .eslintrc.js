@@ -101,19 +101,51 @@ module.exports = {
         alphabetize: {
           order: 'asc',
         },
-        groups: ['builtin', 'external', 'internal', 'unknown'],
-        'newlines-between': 'always',
-        pathGroupsExcludedImportTypes: [''],
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'unknown'],
+        'newlines-between': 'always-and-inside-groups',
+        pathGroupsExcludedImportTypes: ['builtin'],
         pathGroups: [
           {
-            pattern: './*.+(less|css)',
-            group: 'sibling',
-            position: 'after',
+            pattern: '+(react|react-dom|react-router-dom|prop-types|react-redux|redux|react-redux|redux|reselect|classnames|lodash)',
+            group: 'builtin',
+            position: 'before',
           },
           {
-            pattern: '+(react|prop-types)',
+            pattern: 'pages/**',
             group: 'external',
-            position: 'before',
+          },
+          {
+            pattern: 'components/**',
+            group: 'external',
+          },
+          {
+            pattern: 'hocs/**',
+            group: 'external',
+          },
+          {
+            pattern: 'store/**',
+            group: 'internal',
+          },
+          {
+            pattern: 'api/**',
+            group: 'internal',
+          },
+          {
+            pattern: 'constants/**',
+            group: 'sibling',
+          },
+          {
+            pattern: 'utils/**',
+            group: 'sibling',
+          },
+          {
+            pattern: 'assets/**',
+            group: 'sibling',
+          },
+          {
+            pattern: './*.+(less|css|svg)',
+            group: 'sibling',
+            position: 'after',
           },
         ],
       },
