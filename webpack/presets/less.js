@@ -11,8 +11,7 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
-        test: /\.less$/,
-        exclude: /node_modules/,
+        test: /\.(le|c)ss$/,
         use: [
           mode.isProduction(env) ? MiniCssExtractPlugin.loader : styleLoader(),
           cacheLoader(),

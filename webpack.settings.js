@@ -53,7 +53,7 @@ module.exports = {
   entries: {
     app: './src/index.js',
   },
-  css: [css.LESS],
+  css: css.LESS,
   supportedImageTypes,
   base64ImageLimit: 10000, // jpg, png, gif файлы
   devServerConfig: {

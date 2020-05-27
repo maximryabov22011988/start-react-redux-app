@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-
-import MainPage from 'pages/MainPage';
-import Page404 from 'pages/Page404';
-
-import Modal from 'components/base/Modal';
-import withModalControl from 'hocs/withModalControl';
-
 import modalName from 'constants/modalNames';
 import routePath from 'constants/routePath';
 
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import Modal from 'components/base/Modal';
+import withModalControl from 'hocs/withModalControl';
+import MainPage from 'pages/MainPage';
+import Page404 from 'pages/Page404';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { compose } from 'redux';
+
+import 'normalize.css/normalize.css';
 import '../styles/fonts.less';
 import '../styles/reset.less';
 import '../styles/global.less';
@@ -65,7 +65,7 @@ class App extends React.Component {
     return (
       <div className={rootClass}>
         <Switch>
-          <Route path={routePath.MAIN} exact>
+          <Route exact path={routePath.MAIN}>
             <>
               <MainPage
                 onLoginModalOpen={this.handleLoginModalOpen}
@@ -81,8 +81,8 @@ class App extends React.Component {
               </Modal>
 
               <Modal
-                header="Registration"
                 actions="Registration modal buttons ..."
+                header="Registration"
                 isOpen={modals.isOpenRegistration}
                 onClose={this.handleRegistrationModalClose}
               >
@@ -103,5 +103,5 @@ App.propTypes = propTypes;
 
 export default compose(
   withModalControl(modalName.LOGIN, modalName.REGISTRATION),
-  connect()
+  connect(),
 )(App);

@@ -1,4 +1,4 @@
-@import 'index';
+@import "index";
 
 .square(@num) {
   width: @num + 0;
@@ -23,7 +23,7 @@
 }
 
 .pseudo(@width: 0; @height: 0) {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: @width;
@@ -33,8 +33,8 @@
 .centering() {
   .offset();
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
 }
 
 .horizontal-centering() {
@@ -143,7 +143,7 @@
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.text(@size: @font-size-default; @lh: 1.4; @weight: @weight-normal; @color: @text-color) {
+.text(@size: @font-size--md; @lh: 1.4; @weight: @normal; @color: @text-color) {
   font-weight: @weight;
   font-size: @size;
   line-height: @lh;

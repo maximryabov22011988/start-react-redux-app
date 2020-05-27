@@ -81,7 +81,7 @@ const commonConfig = (env) => {
       env
     ),
     cssSupported.less(settings.css) && lessPreset(env),
-    cssSupported.CSSModule(settings.css) && [cssPreset(env)],
+    cssSupported.CSSModule(settings.css) && cssPreset(env),
     svgSpritePreset(),
     base64Preset(env),
     inlineSvgPreset(env),
