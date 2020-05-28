@@ -131,7 +131,7 @@ const productionConfig = ({ isOnlyModernBrowsers: isOnlyModern } = {}) =>
                         'reselect',
                         'redux-thunk',
                       ],
-                      other: ['axios', 'lazysizes'],
+                      other: ['axios'],
                     },
                   }),
                 ]

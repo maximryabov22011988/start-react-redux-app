@@ -42,7 +42,6 @@
 - [redux-thunk](https://github.com/reduxjs/redux-thunk)
 - [reselect](https://github.com/reduxjs/reselect)
 - [axios](https://github.com/axios/axios)
-- [lazysizes](https://github.com/aFarkas/lazysizes)
 
 
 ## Настройка webpack
