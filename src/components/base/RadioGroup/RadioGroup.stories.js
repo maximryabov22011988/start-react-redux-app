@@ -1,9 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { State, Store } from '@sambego/storybook-state';
 
-import RadioGroup from './RadioGroup';
+import { State, Store } from '@sambego/storybook-state';
+import { storiesOf } from '@storybook/react';
+
 import Radio from './Radio';
+import RadioGroup from './RadioGroup';
 
 import 'resetStyles';
 import 'globalStyles';
@@ -13,10 +14,9 @@ const store = new Store({
   selectedValues2: 4,
 });
 
-const handleChange = (radioGroupNumber) => (selectedValues) =>
-  store.set({
-    [`selectedValues${radioGroupNumber}`]: selectedValues,
-  });
+const handleChange = (radioGroupNumber) => (selectedValues) => store.set({
+  [`selectedValues${radioGroupNumber}`]: selectedValues,
+});
 
 storiesOf('Components|Base/RadioGroup', module).add('options in props', () => (
   <State store={store}>
@@ -77,5 +77,5 @@ storiesOf('Components|Base/RadioGroup', module).add(
         </RadioGroup>,
       ]}
     </State>
-  )
+  ),
 );

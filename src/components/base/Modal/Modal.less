@@ -89,6 +89,10 @@
     box-shadow: none;
     transform: translateZ(0);
 
+    @media (max-width: @screen-md - 1) {
+      display: none;
+    }
+
     .fade-in {
       animation: fadeIn-overlay @animation-open-duration alternate ease-in;
       animation-fill-mode: forwards;

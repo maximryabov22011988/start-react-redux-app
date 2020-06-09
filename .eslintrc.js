@@ -7,7 +7,6 @@ module.exports = {
     es6: true,
     browser: true,
     node: true,
-    jest: true,
   },
 
   settings: {
@@ -19,6 +18,7 @@ module.exports = {
           ['^components', './src/components'],
           ['^constants', './src/constants'],
           ['^hocs', './src/hocs'],
+          ['^hooks', './src/hooks'],
           ['^layouts', './src/layouts'],
           ['^pages', './src/pages'],
           ['^store', './src/store'],
@@ -41,7 +41,7 @@ module.exports = {
   },
 
   extends: ['airbnb', 'airbnb/hooks'],
-  plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex'],
+  plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex', 'sort-destructure-keys'],
 
   rules: {
     // перенос строки, отключен т.к. в windows и unix системах различное поведение
@@ -50,8 +50,8 @@ module.exports = {
     'no-alert': ERROR,
     // позволяет записывать свойства в объект result при использовании в reduce
     'no-param-reassign': [ERROR, {
-      "props": true,
-      "ignorePropertyModificationsFor": ["result"]
+      'props': true,
+      'ignorePropertyModificationsFor': ['result']
     }],
     // ++ только для for-цикла
     'no-plusplus': [ERROR, {
@@ -87,6 +87,7 @@ module.exports = {
         capIsNewExceptions: [
           'SortableContainer',
           'SortableElement',
+          'StoryRouter',
           'List',
           'Map',
           'Set',
@@ -98,49 +99,34 @@ module.exports = {
     'import/order': [
       ERROR,
       {
-        alphabetize: {
-          order: 'asc',
-        },
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'unknown'],
-        'newlines-between': 'always-and-inside-groups',
-        pathGroupsExcludedImportTypes: ['builtin'],
+        'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: [''],
         pathGroups: [
           {
-            pattern: '+(react|react-dom|react-router-dom|prop-types|react-redux|redux|react-redux|redux|reselect|classnames|lodash)',
-            group: 'builtin',
+            pattern: '+(react|react-dom|react-router-dom|prop-types|react-style-proptype|react-redux|redux|reselect|classnames|lodash)',
+            group: 'external',
             position: 'before',
           },
           {
-            pattern: 'pages/**',
-            group: 'external',
-          },
-          {
-            pattern: 'components/**',
-            group: 'external',
-          },
-          {
-            pattern: 'hocs/**',
-            group: 'external',
+            pattern: '+(pages|components|hocs|hooks)/**',
+            group: 'internal',
+            position: 'before',
           },
           {
             pattern: 'store/**',
             group: 'internal',
-          },
-          {
-            pattern: 'api/**',
-            group: 'internal',
+            position: 'before'
           },
           {
             pattern: 'constants/**',
-            group: 'sibling',
+            group: 'internal',
+            position: 'before',
           },
           {
             pattern: 'utils/**',
-            group: 'sibling',
-          },
-          {
-            pattern: 'assets/**',
-            group: 'sibling',
+            group: 'internal',
+            position: 'after',
           },
           {
             pattern: './*.+(less|css|svg)',
@@ -155,7 +141,12 @@ module.exports = {
     // обязательное использование расширений при импорте файлов (кроме js)
     'import/extensions': [ERROR, {
       js: 'never',
-      less: 'always'
+      less: 'always',
+      svg: 'always'
+    }],
+    // в dependencies передаем только зависимости, для работы приложения
+    'import/no-extraneous-dependencies': [ERROR, {
+      'devDependencies': true
     }],
 
     // проверка href в ссылке, не корректно работает с компонентами поверх html-ссылок
@@ -175,14 +166,19 @@ module.exports = {
     }],
     // объявление state в конструкторе, в разработке не всегда нужен конструктор
     'react/state-in-constructor': OFF,
+    // дефолтные пропсы только там, где это необходимо
+    'react/require-default-props': OFF,
     // не всегда методы класса должны использовать логику с this
     'class-methods-use-this': OFF,
     // разрешает spread пропсов только для html, для остальных нужно перечислить в exceptions
     'react/jsx-props-no-spreading': [ERROR, {
       html: 'ignore',
-      exceptions: ['Component', 'Route'],
+      exceptions: ['Component', 'Route', 'RouterLink'],
     }],
-    // сортировка пропсов в компонентах
+
+    // сортировка ключей при деструктуризации
+    'sort-destructure-keys/sort-destructure-keys': ERROR,
+    // сортировка props в компонентах
     'react/jsx-sort-props': [
       ERROR,
       {
@@ -192,6 +188,24 @@ module.exports = {
         ignoreCase: false,
         noSortAlphabetically: false,
         reservedFirst: false,
+      },
+    ],
+    // сортировка prop-types
+    'react/sort-prop-types': [
+      ERROR,
+      {
+        callbacksLast: true,
+        ignoreCase: false,
+        requiredFirst: true,
+        sortShapeProp: true,
+        noSortAlphabetically: false,
+      },
+    ],
+    // сортировка default props
+    'react/jsx-sort-default-props': [
+      ERROR,
+      {
+        ignoreCase: false,
       },
     ],
     // порядок методов в компоненте-классе
@@ -238,11 +252,9 @@ module.exports = {
       plugins: ['jest'],
     },
     {
-      files: ['./.storybook/**'],
-    },
-    {
       files: ['**/*.stories.js'],
       rules: {
+        'import/no-unresolved': OFF,
         'react/jsx-props-no-spreading': OFF,
         'react/prop-types': OFF,
       },

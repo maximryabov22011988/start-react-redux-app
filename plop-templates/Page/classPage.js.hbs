@@ -4,8 +4,6 @@ import cn from 'classnames';
 
 import './{{pascalCase name}}.less';
 
-const rootClass = '{{dashCase cssClass}}';
-
 const propTypes = {
   className: PropTypes.string,
 };
@@ -23,7 +21,7 @@ class {{pascalCase name}} extends React.Component {
     const { className } = this.props;
 
     return (
-      <div className={cn(rootClass, className)}>
+      <div className={cn('{{dashCase cssClass}}', className)}>
         {{pascalCase name}}
       </div>
     );

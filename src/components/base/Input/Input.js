@@ -3,85 +3,66 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import withInputHandlers from 'hocs/withInputHandlers';
+
 import isEmptyString from 'utils/isEmptyString';
 
 import './Input.less';
 
-const rootClass = 'input';
-
 const propTypes = {
-  className: PropTypes.string,
-  label: PropTypes.string,
-  type: PropTypes.oneOf(['email', 'number', 'password', 'tel', 'text']),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  getRef: PropTypes.func,
+  className: PropTypes.string,
+  isDisabled: PropTypes.bool,
   isError: PropTypes.bool,
   isFocused: PropTypes.bool,
-  isDisabled: PropTypes.bool,
+  setInputRef: PropTypes.func,
+  type: PropTypes.oneOf(['email', 'number', 'password', 'tel', 'text']),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
 };
 
 const defaultProps = {
   type: 'text',
 };
 
-class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputRef = React.createRef();
-    this.getRef = props.getRef || (() => null);
-  }
+const Input = ({
+  className,
+  isDisabled,
+  isError,
+  isFocused,
+  label,
+  onBlur,
+  onChange,
+  onFocus,
+  setInputRef,
+  type,
+  value,
+  ...props
+}) => (
+  <label
+    {...props}
+    className={cn('input', className, {
+      'is-error': isError,
+      'is-focused': isFocused,
+      'is-disabled': isDisabled,
+      'with-value': !isEmptyString(value),
+    })}
+  >
+    <input
+      className="input__input"
+      disabled={isDisabled}
+      ref={setInputRef}
+      type={type}
+      value={value}
+      onBlur={onBlur}
+      onChange={onChange}
+      onFocus={onFocus}
+    />
 
-  componentDidMount = () => {
-    if (this.inputRef) {
-      this.getRef(this.inputRef);
-    }
-  };
-
-  componentWillUnmount = () => {
-    this.getRef(null);
-  };
-
-  render() {
-    const {
-      className,
-      label,
-      type,
-      value,
-      isError,
-      isFocused,
-      isDisabled,
-      onChange,
-      onFocus,
-      onBlur,
-    } = this.props;
-
-    return (
-      <label
-        className={cn(rootClass, className, {
-          isError,
-          isFocused,
-          isDisabled,
-          withValue: !isEmptyString(value),
-        })}
-      >
-        <input
-          ref={this.inputRef}
-          className={`${rootClass}__input`}
-          disabled={isDisabled}
-          type={type}
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        />
-        <span className={`${rootClass}__placeholder`}>{label}</span>
-      </label>
-    );
-  }
-}
+    <span className="input__placeholder">{label}</span>
+  </label>
+);
 
 Input.propTypes = propTypes;
 Input.defaultProps = defaultProps;

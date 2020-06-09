@@ -7,73 +7,51 @@ import withInputHandlers from 'hocs/withInputHandlers';
 import { ReactComponent as TickIcon } from './tick.inline.svg';
 import './Checkbox.less';
 
-const rootClass = 'checkbox';
-
 const propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  isChecked: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  isFocused: PropTypes.bool,
+  isChecked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  getRef: PropTypes.func,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  errorText: PropTypes.string,
+  isDisabled: PropTypes.bool,
+  isError: PropTypes.bool,
+  isFocused: PropTypes.bool,
 };
 
-class Checkbox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputRef = React.createRef();
-    this.getRef = props.getRef || (() => null);
-  }
+const Checkbox = ({
+  children,
+  className,
+  errorText,
+  isChecked,
+  isDisabled,
+  isError,
+  isFocused,
+  onChange,
+  ...props
+}) => (
+  <label
+    className={cn('checkbox', className, {
+      'is-checked': isChecked,
+      'is-focused': isFocused,
+      'is-disabled': isDisabled,
+    })}
+  >
+    <input
+      {...props}
+      checked={isChecked}
+      className="checkbox__default-checkbox-input"
+      disabled={isDisabled}
+      type="checkbox"
+      onChange={onChange}
+    />
 
-  componentDidMount = () => {
-    if (this.inputRef) {
-      this.getRef(this.inputRef);
-    }
-  };
+    <span className="checkbox__custom-checkbox-input">
+      <TickIcon className="checkbox__icon" />
+    </span>
 
-  componentWillUnmount = () => {
-    this.getRef(null);
-  };
-
-  render() {
-    const {
-      className,
-      children,
-      isChecked,
-      isDisabled,
-      isFocused,
-      onChange,
-      ...props
-    } = this.props;
-
-    return (
-      <label
-        className={cn(rootClass, className, {
-          isChecked,
-          isFocused,
-          isDisabled,
-        })}
-      >
-        <input
-          {...props}
-          ref={this.inputRef}
-          className={`${rootClass}__default-checkbox-input`}
-          type="checkbox"
-          checked={isChecked}
-          disabled={isDisabled}
-          onChange={onChange}
-        />
-
-        <span className={`${rootClass}__custom-checkbox-input`}>
-          <TickIcon className={`${rootClass}__icon`} />
-        </span>
-        <span className={`${rootClass}__text`}>{children}</span>
-      </label>
-    );
-  }
-}
-
+    <span className="checkbox__text">{children}</span>
+  </label>
+);
 Checkbox.propTypes = propTypes;
 
 export default withInputHandlers(Checkbox);

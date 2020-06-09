@@ -1,6 +1,6 @@
 import requiredParamType from 'utils/requiredParamType';
 
-function operationHelper({ actionName, fetch }) {
+const operationHelper = ({ actionName, fetch }) => {
   requiredParamType({
     param: actionName,
     type: 'string',
@@ -48,7 +48,7 @@ function operationHelper({ actionName, fetch }) {
   const isLoadedFailure = (error) => ({ ...statuses, isError: true, ...error });
 
   // Reducer
-  const reducer = (state = { ...statuses }, { type, payload }) => {
+  const reducer = (state = { ...statuses }, { payload, type }) => {
     switch (type) {
       case actionType.REQUEST: {
         return {
@@ -100,6 +100,6 @@ function operationHelper({ actionName, fetch }) {
     },
     reducer,
   };
-}
+};
 
 export default operationHelper;

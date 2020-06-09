@@ -1,8 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { State, Store } from '@sambego/storybook-state';
+import { storiesOf } from '@storybook/react';
 
 import Checkbox from 'components/base/Checkbox';
+
 import CheckboxGroup from './CheckboxGroup';
 
 import 'resetStyles';
@@ -13,10 +15,9 @@ const store = new Store({
   selectedValues2: [],
 });
 
-const handleChange = (checkboxGroupNumber) => (selectedValues) =>
-  store.set({
-    [`selectedValues${checkboxGroupNumber}`]: selectedValues,
-  });
+const handleChange = (checkboxGroupNumber) => (selectedValues) => store.set({
+  [`selectedValues${checkboxGroupNumber}`]: selectedValues,
+});
 
 storiesOf('Components|Base/CheckboxGroup', module).add(
   'options in props',
@@ -46,7 +47,7 @@ storiesOf('Components|Base/CheckboxGroup', module).add(
         />,
       ]}
     </State>
-  )
+  ),
 );
 
 storiesOf('Components|Base/CheckboxGroup', module).add(
@@ -74,7 +75,7 @@ storiesOf('Components|Base/CheckboxGroup', module).add(
 
               if (props.selectedValues2.includes(value)) {
                 newSelectedValues = props.selectedValues2.filter(
-                  (optionValue) => value !== optionValue
+                  (optionValue) => value !== optionValue,
                 );
               } else {
                 newSelectedValues = [...props.selectedValues2, value];
@@ -96,5 +97,5 @@ storiesOf('Components|Base/CheckboxGroup', module).add(
         </CheckboxGroup>,
       ]}
     </State>
-  )
+  ),
 );

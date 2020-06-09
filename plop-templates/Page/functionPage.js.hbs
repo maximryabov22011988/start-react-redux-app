@@ -4,8 +4,6 @@ import cn from 'classnames';
 
 import './{{pascalCase name}}.less';
 
-const rootClass = '{{dashCase cssClass}}';
-
 const propTypes = {
   className: PropTypes.string,
 };
@@ -14,7 +12,7 @@ const defaultProps = {};
 
 function {{pascalCase name}}({ className }) {
   return (
-    <div className={cn(rootClass, className)}>
+    <div className={cn('{{dashCase cssClass}}', className)}>
       {{pascalCase name}}
     </div>
   );

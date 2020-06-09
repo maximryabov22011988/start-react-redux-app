@@ -1,7 +1,8 @@
 import React from 'react';
-import StoryRouter from 'storybook-react-router';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
 
 import Link from './Link';
 
@@ -23,7 +24,7 @@ storiesOf('Components|Base/Link', module)
 storiesOf('Components|Base/Link', module)
   .addDecorator(StoryRouter())
   .add('text disabled', () => (
-    <Link {...acitons} anchor="#" isDisabled>
+    <Link {...acitons} isDisabled anchor="#">
       Link
     </Link>
   ));
@@ -31,7 +32,7 @@ storiesOf('Components|Base/Link', module)
 storiesOf('Components|Base/Link', module)
   .addDecorator(StoryRouter())
   .add('button', () => (
-    <Link {...acitons} appearance="button" anchor="#">
+    <Link {...acitons} anchor="#" appearance="button">
       Link
     </Link>
   ));
@@ -39,7 +40,7 @@ storiesOf('Components|Base/Link', module)
 storiesOf('Components|Base/Link', module)
   .addDecorator(StoryRouter())
   .add('button disabled', () => (
-    <Link {...acitons} appearance="button" anchor="#" isDisabled>
+    <Link {...acitons} isDisabled anchor="#" appearance="button">
       Link
     </Link>
   ));

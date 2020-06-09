@@ -1,8 +1,6 @@
 @import "~styles";
 
-@root-class: helper-text;
-
-.@{root-class} {
+.helper-text {
   &__text {
     .text(13px; 1.2; @color: @gray-600);
     display: block;
@@ -10,15 +8,15 @@
     padding-top: 3px;
   }
 
-  &.isDisabled {
-    .@{root-class}__text {
+  &.is-disabled {
+    .helper-text__text {
       color: @gray-400;
     }
   }
 
-  &.isError,
-  &.isDisabled.isError {
-    .@{root-class}__text {
+  &.is-error,
+  &.is-disabled.is-error {
+    .helper-text__text {
       color: @error;
     }
   }

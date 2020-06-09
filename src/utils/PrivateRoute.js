@@ -1,7 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+
 import routePath from 'constants/routePath';
 
 const propTypes = {
@@ -11,19 +12,18 @@ const propTypes = {
 };
 
 const defaultProps = {
-  children: null,
   isAuthUser: false,
   userIsLogOut: false,
 };
 
-function PrivateRoute({ children, isAuthUser, userIsLogOut, ...props }) {
-  return (
-    <Route {...props}>
-      {!isAuthUser && !userIsLogOut && <Redirect to={routePath.LOGIN} />}
-      {isAuthUser && children}
-    </Route>
-  );
-}
+const PrivateRoute = ({
+  children, isAuthUser, userIsLogOut, ...props
+}) => (
+  <Route {...props}>
+    {!isAuthUser && !userIsLogOut && <Redirect to={routePath.LOGIN} />}
+    {isAuthUser && children}
+  </Route>
+);
 
 PrivateRoute.propTypes = propTypes;
 PrivateRoute.defaultProps = defaultProps;

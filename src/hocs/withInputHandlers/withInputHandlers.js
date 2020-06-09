@@ -1,84 +1,65 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import getDisplayName from 'hocs/getDisplayName';
+
 import checkAndRunFunction from 'utils/checkAndRunFunction';
 
-function withInputHandlers(Component) {
+const withInputHandlers = (Component) => {
   const propTypes = {
     isDisabled: PropTypes.bool,
+    onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
   };
 
-  class WithInputHandlers extends React.Component {
-    state = {
-      isFocused: false,
-    };
+  const WithInputHandlers = ({
+    isDisabled, onBlur, onChange, onFocus, ...props
+  }) => {
+    const [isFocused, setIsFocused] = useState(false);
 
-    handleChange = (event) => {
-      const { isDisabled, onChange } = this.props;
-
+    const handleChange = useCallback((event) => {
       if (isDisabled) {
         return;
       }
-
       const {
         target: { value },
       } = event;
-
       checkAndRunFunction(onChange, value);
-    };
+    }, [isDisabled, onChange]);
 
-    handleFocus = (event) => {
-      const { isDisabled, onFocus } = this.props;
-
+    const handleFocus = useCallback((event) => {
       if (isDisabled) {
         return;
       }
-
-      this.setState({
-        isFocused: true,
-      });
-
+      setIsFocused(true);
       checkAndRunFunction(onFocus, event);
-    };
+    }, [isDisabled, onFocus]);
 
-    handleBlur = (event) => {
-      const { isDisabled, onBlur } = this.props;
-
+    const handleBlur = useCallback((event) => {
       if (isDisabled) {
         return;
       }
-
-      this.setState({
-        isFocused: false,
-      });
-
+      setIsFocused(false);
       checkAndRunFunction(onBlur, event);
-    };
+    }, [isDisabled, onBlur]);
 
-    render() {
-      const { isFocused } = this.state;
+    return (
+      <Component
+        {...props}
+        isDisabled={isDisabled}
+        isFocused={isFocused}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onFocus={handleFocus}
+      />
+    );
+  };
 
-      return (
-        <Component
-          {...this.props}
-          isFocused={isFocused}
-          onChange={this.handleChange}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-        />
-      );
-    }
-  }
-
-  const componentName = getDisplayName(Component);
-  WithInputHandlers.displayName = `withInputHandlers(${componentName})`;
+  WithInputHandlers.displayName = `withInputHandlers(${getDisplayName(Component)})`;
   WithInputHandlers.propTypes = propTypes;
 
   return WithInputHandlers;
-}
+};
 
 export default withInputHandlers;

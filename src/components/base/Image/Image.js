@@ -1,60 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 
 const propTypes = {
-  className: PropTypes.string,
-  src: PropTypes.string,
-  path: PropTypes.string,
-  filename: PropTypes.string,
-  extension: PropTypes.string,
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  extension: PropTypes.string,
+  filename: PropTypes.string,
   isSupportedWebp: PropTypes.bool,
-  isLazy: PropTypes.bool,
+  path: PropTypes.string,
+  src: PropTypes.string,
 };
 
 const defaultProps = {
   isSupportedWebp: false,
-  isLazy: false,
 };
 
-function Image({
-  className,
-  src,
-  path,
-  filename,
-  extension,
-  width,
-  height,
+const Image = ({
   alt,
+  className,
+  extension,
+  filename,
+  height,
   isSupportedWebp,
-  isLazy,
-}) {
-  const getSrcProps = (tagName) => {
-    // Проверить, работает ли с webp
-    const isSourceTag = tagName === 'source';
-    const lazySrc = `${path}${filename}.${isSourceTag ? 'webp' : extension}`;
-    if (isLazy && !src) {
-      return {
-        [isLazy
-          ? `data-src${isSourceTag ? 'set' : ''}`
-          : `src${isSourceTag ? 'Set' : ''}`]: lazySrc,
-      };
-    }
-
-    return { src };
-  };
+  path,
+  src,
+  width,
+  ...props
+}) => {
+  const getSrcProps = (tagName) => ({
+    src: src || `${path}${filename}.${tagName === 'source' ? 'webp' : extension}`,
+  });
 
   const img = (
     <img
-      className={cn(className, {
-        lazyload: isLazy,
-      })}
-      width={width}
-      height={height}
+      {...props}
       alt={alt}
+      className={className}
+      height={height}
+      width={width}
       {...getSrcProps()}
     />
   );
@@ -62,9 +47,6 @@ function Image({
   return isSupportedWebp ? (
     <picture>
       <source
-        className={cn({
-          lazyload: isLazy,
-        })}
         type="image/webp"
         {...getSrcProps('source')}
       />
@@ -73,7 +55,7 @@ function Image({
   ) : (
     img
   );
-}
+};
 
 Image.propTypes = propTypes;
 Image.defaultProps = defaultProps;

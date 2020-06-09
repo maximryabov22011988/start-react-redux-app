@@ -1,20 +1,20 @@
 @import "~styles";
 
-@root-class: with-collapsing;
 @button-size: 50px;
 
-.@{root-class} {
+.with-collapsing {
   position: relative;
 
   &__header {
     padding: 12px @button-size 12px 12px;
+    outline: none;
   }
 
   &__button {
     .radius(3px);
     .square(@button-size);
     position: absolute;
-    top: -1px;
+    top: 0;
     right: 3px;
     display: flex;
     justify-content: center;
@@ -40,12 +40,12 @@
   }
 
   &.isExpanded {
-    .@{root-class}__arrow-icon {
+    .with-collapsing__arrow-icon {
       fill: @primary;
       transform: rotate(-180deg);
     }
 
-    .@{root-class}__content {
+    .with-collapsing__content {
       .transition(max-height; @function: linear);
       .transition(opacity; @function: linear);
       opacity: 1;

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import nameSpace from 'store/name-spaces';
 import banksReducer from 'store/data/banks';
+import nameSpace from 'store/name-spaces';
 
 const rootReducer = combineReducers({
   [nameSpace.BANKS]: banksReducer,

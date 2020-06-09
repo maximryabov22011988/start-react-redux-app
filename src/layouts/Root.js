@@ -6,14 +6,12 @@ import store from 'store';
 
 import App from './App';
 
-function Root() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  );
-}
+const Root = () => (
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
+);
 
 export default Root;

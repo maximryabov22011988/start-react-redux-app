@@ -17,11 +17,7 @@ const getBaseAPI = (baseURL) => {
       response: { data },
     } = error;
 
-    return Promise.reject({
-      error: {
-        data,
-      },
-    });
+    return Promise.reject(new Error(data));
   };
 
   api.interceptors.request.use(onSuccessRequest, onFailRequest);
@@ -32,11 +28,7 @@ const getBaseAPI = (baseURL) => {
       response: { data },
     } = error;
 
-    return Promise.reject({
-      error: {
-        data,
-      },
-    });
+    return Promise.reject(new Error(data));
   };
 
   api.interceptors.response.use(onSuccessResponse, onFailResponse);
@@ -47,43 +39,39 @@ const getBaseAPI = (baseURL) => {
 const makeAPI = (baseURL) => {
   const baseAPI = getBaseAPI(baseURL);
 
-  const get = (url, conf = {}) =>
-    baseAPI
-      .get(url, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const get = (url, conf = {}) => baseAPI
+    .get(url, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  const post = (url, data = {}, conf = {}) =>
-    baseAPI
-      .post(url, data, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const post = (url, data = {}, conf = {}) => baseAPI
+    .post(url, data, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  const put = (url, data = {}, conf = {}) =>
-    baseAPI
-      .put(url, data, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const put = (url, data = {}, conf = {}) => baseAPI
+    .put(url, data, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  const head = (url, conf = {}) =>
-    baseAPI
-      .head(url, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const head = (url, conf = {}) => baseAPI
+    .head(url, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  const options = (url, conf = {}) =>
-    baseAPI
-      .options(url, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const options = (url, conf = {}) => baseAPI
+    .options(url, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  const patch = (url, data = {}, conf = {}) =>
-    baseAPI
-      .patch(url, data, conf)
-      .then((response) => Promise.resolve(response))
-      .catch((error) => Promise.reject(error));
+  const patch = (url, data = {}, conf = {}) => baseAPI
+    .patch(url, data, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
 
-  return { get, post, put, head, options, patch };
+  return {
+    get, post, put, head, options, patch,
+  };
 };
 
 export { makeAPI };

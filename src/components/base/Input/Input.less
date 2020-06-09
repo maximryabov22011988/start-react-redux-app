@@ -15,9 +15,7 @@
 @border-color--disabled: @gray-400;
 @bg-color--disabled: @gray-100;
 
-@root-class: input;
-
-.@{root-class} {
+.input {
   .transition(background-color);
   position: relative;
   display: block;
@@ -26,8 +24,8 @@
 
   &__input {
     .transition(border-color);
-    .label-text();
     .radius(@border-radius);
+    .label-text();
     position: relative;
     z-index: @zIndex-base + 2;
     height: 60px;
@@ -53,64 +51,65 @@
     user-select: none;
   }
 
-  &.isFocused.withValue,
-  &.isFocused,
-  &.withValue {
-    .@{root-class}__input {
+  &.is-focused.with-value,
+  &.is-focused,
+  &.with-value {
+    .input__input {
       padding-top: 12px;
     }
 
-    .@{root-class}__placeholder {
+    .input__placeholder {
       transform: translate(4px, -12px) scale(0.85);
     }
   }
 
-  &.isDisabled.withValue,
-  &.isDisabled {
+  &.is-disabled.with-value,
+  &.is-disabled {
     cursor: not-allowed;
 
-    .@{root-class}__input {
+    .input__input {
       color: @label-color--disabled;
       background-color: @bg-color--disabled;
       border-color: @border-color--disabled;
     }
 
-    .@{root-class}__placeholder {
+    .input__placeholder {
       z-index: @zIndex-base + 2;
       color: @label-color--disabled;
     }
 
-    .@{root-class}__input,
-    .@{root-class}__placeholder {
+    .input__input,
+    .input__placeholder {
       cursor: not-allowed;
     }
   }
 
-  &.withValue.isFocused,
-  &.isFocused {
-    .@{root-class}__input {
+  &.with-value.is-focused,
+  &.is-focused {
+    .input__input {
       border-color: @border-color--focus;
+      outline: none;
     }
 
-    .@{root-class}__placeholder {
+    .input__placeholder {
       color: @gray-600;
     }
   }
 
-  &.isError {
-    .@{root-class}__input {
+  &.is-error {
+    .input__input {
       border-color: @border-color--error;
     }
   }
 
-  &.isError.isFocused {
-    .@{root-class}__input {
+  &.is-error.is-focused {
+    .input__input {
       border-color: @border-color--error;
       box-shadow: 0 0 0 3px fade(@error, 25%);
     }
   }
 
-  &.withValue {
+  &.with-value {
     background-color: @white;
   }
 

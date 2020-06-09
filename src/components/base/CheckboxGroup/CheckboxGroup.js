@@ -3,23 +3,22 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Checkbox, { CheckboxWithHelperText } from 'components/base/Checkbox';
-import isEmptyString from 'utils/isEmptyString';
+
 import isArray from 'utils/isArray';
+import isEmptyString from 'utils/isEmptyString';
 
 import './CheckboxGroup.less';
 
-const rootClass = 'checkbox-group';
-
 const propTypes = {
-  className: PropTypes.string,
   children: PropTypes.node,
+  className: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       helperText: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       isDisabled: PropTypes.bool,
-    })
+    }),
   ),
   value: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.number),
@@ -30,20 +29,20 @@ const propTypes = {
   onChange: PropTypes.func,
 };
 
-function CheckboxGroup({
-  className,
+const CheckboxGroup = ({
   children,
-  value: selectedValues,
-  options,
+  className,
   onChange,
+  options,
+  value: selectedValues,
   ...props
-}) {
+}) => {
   const handleChange = (value) => {
     let newSelectedValues;
 
     if (selectedValues.includes(value)) {
       newSelectedValues = selectedValues.filter(
-        (optionValue) => value !== optionValue
+        (optionValue) => value !== optionValue,
       );
     } else {
       newSelectedValues = [...selectedValues, value];
@@ -53,32 +52,34 @@ function CheckboxGroup({
   };
 
   return (
-    <div className={cn(rootClass, className)}>
+    <div className={cn('checkbox-group', className)}>
       {!children && isArray(options)
         ? options.map(
-            ({ value, label, helperText = '', isDisabled }, index) => {
-              const Component = !isEmptyString(helperText)
-                ? CheckboxWithHelperText
-                : Checkbox;
+          ({
+            helperText = '', isDisabled, label, value,
+          }) => {
+            const Component = !isEmptyString(helperText)
+              ? CheckboxWithHelperText
+              : Checkbox;
 
-              return (
-                <Component
-                  {...props}
-                  {...(!isEmptyString(helperText) ? { helperText } : {})}
-                  key={index}
-                  isDisabled={isDisabled}
-                  isChecked={selectedValues.includes(value)}
-                  onChange={() => handleChange(value)}
-                >
-                  {label}
-                </Component>
-              );
-            }
-          )
+            return (
+              <Component
+                {...props}
+                {...(!isEmptyString(helperText) ? { helperText } : {})}
+                isChecked={selectedValues.includes(value)}
+                isDisabled={isDisabled}
+                key={value}
+                onChange={() => handleChange(value)}
+              >
+                {label}
+              </Component>
+            );
+          },
+        )
         : children}
     </div>
   );
-}
+};
 
 CheckboxGroup.propTypes = propTypes;
 

@@ -1,6 +1,5 @@
 @import "~styles";
 
-@root-class: checkbox;
 @checkbox-size: 24px;
 @border-radius: 3px;
 
@@ -17,12 +16,12 @@
 @border-color--disabled: @gray-400;
 @bg-color--disabled: @gray-100;
 
-.@{root-class} {
+.checkbox {
   position: relative;
   display: flex;
 
-  &:not(.isDisabled):hover {
-    .@{root-class}__custom-checkbox-input {
+  &:not(.is-disabled):hover {
+    .checkbox__custom-checkbox-input {
       border-color: @border-color--hover;
 
       .isChecked {
@@ -69,45 +68,45 @@
     padding-top: 1px;
   }
 
-  &.isFocused {
-    .@{root-class}__custom-checkbox-input {
+  &.is-focused {
+    .checkbox__custom-checkbox-input {
       .custom-outline();
       border-color: @border-color--focus;
     }
   }
 
-  &.isChecked {
-    .@{root-class}__custom-checkbox-input {
+  &.is-checked {
+    .checkbox__custom-checkbox-input {
       border-color: @border-color--focus;
     }
 
-    .@{root-class}__icon {
+    .checkbox__icon {
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
   }
 
-  &.isDisabled {
+  &.is-disabled {
     cursor: not-allowed;
 
-    .@{root-class}__default-checkbox-input {
+    .checkbox__default-checkbox-input {
       cursor: not-allowed;
     }
 
-    .@{root-class}__custom-checkbox-input {
+    .checkbox__custom-checkbox-input {
       background-color: @bg-color--disabled;
       border-color: @border-color--disabled;
     }
 
-    .@{root-class}__icon {
+    .checkbox__icon {
       fill: @tick-color--disabled;
     }
 
-    .@{root-class}__text {
+    .checkbox__text {
       color: @label-color--disabled;
     }
 
-    .isChecked {
+    .is-checked {
       .checkbox__custom-checkbox-input {
         background-color: @bg-color--disabled;
       }

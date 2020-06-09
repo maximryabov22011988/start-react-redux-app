@@ -77,7 +77,7 @@ module.exports = {
     'selector-combinator-space-after': 'always',
     'selector-combinator-space-before': 'always',
     'selector-descendant-combinator-no-non-space': true,
-    'selector-max-id': 0,
+    'selector-max-id': 2,
     'selector-pseudo-class-case': 'lower',
     'selector-pseudo-class-no-unknown': true,
     'selector-pseudo-class-parentheses-space-inside': 'never',

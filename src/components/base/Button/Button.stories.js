@@ -1,6 +1,7 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 
 import Button from './Button';
 
@@ -22,5 +23,5 @@ storiesOf('Components|Base/Button', module).add('disabled', () => (
 ));
 
 storiesOf('Components|Base/Button', module).add('without text', () => (
-  <Button {...acitons} />
+  <Button {...acitons}>{null}</Button>
 ));

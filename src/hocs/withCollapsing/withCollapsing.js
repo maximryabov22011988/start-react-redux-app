@@ -1,111 +1,69 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Icon from 'components/base/Icon';
 import Button from 'components/base/Button';
-
 import getDisplayName from 'hocs/getDisplayName';
 
 import arrow from 'assets/images/icons/sprite/arrow.svg';
+
 import './withCollapsing.less';
 
-const rootClass = 'with-collapsing';
-
-function withCollapsing(Component) {
+const withCollapsing = (Component) => {
   const propTypes = {
-    className: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    isCollapsed: PropTypes.bool,
-    onCollapseToggle: PropTypes.func,
+    className: PropTypes.string,
   };
 
-  class WithCollapsing extends React.Component {
-    constructor(props) {
-      super(props);
+  const WithCollapsing = ({
+    children, className, ...props
+  }) => {
+    const [isCollapsed, setIsCollapsed] = useState(true);
+    const contentRef = useRef(null);
 
-      this.state = {
-        isCollapsed: true,
-        isTouched: false,
-      };
+    const getContentHeight = () => ({
+      maxHeight: !isCollapsed && contentRef.current ? contentRef.current.scrollHeight : 0,
+    });
 
-      this.contentRef = React.createRef();
-      this.componentHeight = null;
-    }
+    const toggleCollapse = useCallback(() => {
+      setIsCollapsed((prevIsCollapsed) => !prevIsCollapsed);
+    }, []);
 
-    componentDidUpdate(prevProps, prevState) {
-      const { isCollapsed, isTouched } = this.state;
-      if (
-        (prevProps.isCollapsed !== isCollapsed ||
-          prevState.isCollapsed !== isCollapsed) &&
-        !isTouched &&
-        this.contentRef
-      ) {
-        this.setState(
-          {
-            isTouched: true,
-          },
-          () => {
-            this.componentHeight = this.contentRef.current.scrollHeight;
-          }
-        );
-      }
-    }
-
-    getContentHeight() {
-      return {
-        maxHeight: !this.isCollapsed() ? this.componentHeight : 0,
-      };
-    }
-
-    handleCollapseToggle = () => {
-      this.setState((prevState) => ({
-        isCollapsed: !prevState.isCollapsed,
-      }));
-    };
-
-    isCollapsed() {
-      const { props, state } = this;
-      return typeof props.isCollapsed === 'boolean'
-        ? props.isCollapsed
-        : state.isCollapsed;
-    }
-
-    render() {
-      const { className, children, onCollapseToggle } = this.props;
-
-      return (
-        <div
-          className={cn(rootClass, className, {
-            isExpanded: !this.isCollapsed(),
-          })}
-        >
-          {children && <div className={`${rootClass}__header`}>{children}</div>}
-
-          <Button
-            className={`${rootClass}__button`}
-            onClick={onCollapseToggle || this.handleCollapseToggle}
-          >
-            <Icon className={`${rootClass}__arrow-icon`} src={arrow} />
-          </Button>
-
-          <div
-            className={`${rootClass}__content`}
-            style={this.getContentHeight()}
-            ref={this.contentRef}
-          >
-            <Component {...this.props} />
+    return (
+      <div
+        className={cn('with-collapsing', className, {
+          isExpanded: !isCollapsed,
+        })}
+      >
+        {children && (
+          <div className="with-collapsing__header">
+            {children}
           </div>
-        </div>
-      );
-    }
-  }
+        )}
 
-  const componentName = getDisplayName(Component);
-  WithCollapsing.displayName = `withCollapsing(${componentName})`;
+        <Button
+          className="with-collapsing__button"
+          onClick={toggleCollapse}
+        >
+          <Icon className="with-collapsing__arrow-icon" src={arrow} />
+        </Button>
+
+        <div
+          className="with-collapsing__content"
+          ref={contentRef}
+          style={getContentHeight()}
+        >
+          <Component {...props} />
+        </div>
+      </div>
+    );
+  };
+
+  WithCollapsing.displayName = `withCollapsing(${getDisplayName(Component)})`;
   WithCollapsing.propTypes = propTypes;
 
   return WithCollapsing;
-}
+};
 
 export default withCollapsing;

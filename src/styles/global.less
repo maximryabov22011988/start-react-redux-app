@@ -15,6 +15,14 @@ body {
   .font-family();
   .text();
   -webkit-font-smoothing: antialiased;
+
+  &.use-mouse {
+    :focus,
+    .checkbox.is-focused .checkbox__custom-checkbox-input,
+    .radio.is-focused .radio__custom-radio-input::before {
+      box-shadow: none;
+    }
+  }
 }
 
 a {
@@ -26,6 +34,6 @@ svg path {
   fill: inherit;
 }
 
-*:focus {
+:focus {
   .custom-outline();
 }

@@ -4,33 +4,33 @@ import cn from 'classnames';
 
 import './Button.less';
 
-const rootClass = 'button';
-
 const propTypes = {
-  className: PropTypes.string,
-  type: PropTypes.string,
-  children: PropTypes.node,
-  isDisabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  isDisabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 const defaultProps = {
-  type: 'button',
+  children: 'Button',
 };
 
-function Button({ className, type, children, isDisabled, onClick, ...props }) {
-  return (
-    <button
-      {...props}
-      className={cn(rootClass, className, { withOutText: !children })}
-      type={type}
-      disabled={isDisabled}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+const Button = ({
+  children, className, isDisabled, onClick, ...props
+}) => (
+  <button
+    type="button"
+    {...props}
+    className={cn('button', className, {
+      'without-text': !children,
+    })}
+    disabled={isDisabled}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;

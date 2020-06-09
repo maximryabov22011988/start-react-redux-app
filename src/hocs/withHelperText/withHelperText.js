@@ -6,14 +6,12 @@ import getDisplayName from 'hocs/getDisplayName';
 
 import './withHelperText.less';
 
-const rootClass = 'helper-text';
-
-function withHelperText(Component) {
+const withHelperText = (Component) => {
   const propTypes = {
+    errorText: PropTypes.string,
+    helperText: PropTypes.string,
     isDisabled: PropTypes.bool,
     isShowHelperText: PropTypes.bool,
-    helperText: PropTypes.string,
-    errorText: PropTypes.string,
   };
 
   const defaultProps = {
@@ -21,39 +19,42 @@ function withHelperText(Component) {
     isShowHelperText: true,
   };
 
-  function WithHelperText({
-    isDisabled,
-    isShowHelperText,
+  const WithHelperText = ({
     errorText,
     helperText,
+    isDisabled,
+    isShowHelperText,
     ...props
-  }) {
+  }) => {
     const isError = Boolean(errorText);
 
     return (
-      <div className={cn(rootClass, { isError, isDisabled })}>
+      <div className={cn('helper-text', {
+        'is-error': isError,
+        'is-disabled': isDisabled,
+      })}
+      >
         <Component
           {...props}
           errorText={errorText}
-          isError={isError}
           isDisabled={isDisabled}
+          isError={isError}
         />
 
         {isShowHelperText && (
-          <span className={cn(`${rootClass}__text`)}>
+          <span className="helper-text__text">
             {errorText || helperText}
           </span>
         )}
       </div>
     );
-  }
+  };
 
-  const componentName = getDisplayName(Component);
-  WithHelperText.displayName = `withHelperText(${componentName})`;
+  WithHelperText.displayName = `withHelperText(${getDisplayName(Component)})`;
   WithHelperText.propTypes = propTypes;
   WithHelperText.defaultProps = defaultProps;
 
   return WithHelperText;
-}
+};
 
 export default withHelperText;

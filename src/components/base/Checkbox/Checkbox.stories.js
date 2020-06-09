@@ -1,6 +1,7 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { State, Store } from '@sambego/storybook-state';
+import { storiesOf } from '@storybook/react';
 
 import Checkbox from './Checkbox';
 
@@ -12,10 +13,9 @@ const store = new Store({
   checkbox2: false,
 });
 
-const handleChange = (checkboxNumber) => () =>
-  store.set({
-    [`checkbox${checkboxNumber}`]: !store.get(`checkbox${checkboxNumber}`),
-  });
+const handleChange = (checkboxNumber) => () => store.set({
+  [`checkbox${checkboxNumber}`]: !store.get(`checkbox${checkboxNumber}`),
+});
 
 storiesOf('Components|Base/Checkbox', module).add('no label', () => (
   <State store={store}>

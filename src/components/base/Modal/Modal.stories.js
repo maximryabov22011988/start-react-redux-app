@@ -1,8 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { State, Store } from '@sambego/storybook-state';
+import { storiesOf } from '@storybook/react';
 
 import Button from 'components/base/Button';
+
 import Modal from './Modal';
 
 const store = new Store({
@@ -27,8 +29,8 @@ storiesOf('Components|Base/Modal', module).add('default', () => (
       <>
         <Button onClick={handleOpen}>Open modal</Button>
         <Modal
-          header="Header"
           actions="Modal buttons ..."
+          header="Header"
           isOpen={props.isOpen}
           onClose={handleClose}
         >

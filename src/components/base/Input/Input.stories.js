@@ -1,6 +1,7 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { State, Store } from '@sambego/storybook-state';
+import { storiesOf } from '@storybook/react';
 
 import Input, { InputWithHelperText } from './index';
 
@@ -63,7 +64,7 @@ storiesOf('Components|Base/Input', module).add(
         ]}
       </State>
     </InputWrapper>
-  )
+  ),
 );
 
 storiesOf('Components|Base/Input', module).add('with label and value', () => (
@@ -87,8 +88,8 @@ storiesOf('Components|Base/Input', module).add('with helper text', () => (
     <State store={store}>
       {(props) => [
         <InputWithHelperText
-          label="Label"
           helperText="Helper text"
+          label="Label"
           value={props.value5}
           onChange={(value) => {
             store.set({ value5: value });
@@ -104,8 +105,8 @@ storiesOf('Components|Base/Input', module).add('error', () => (
     <State store={store}>
       {(props) => [
         <Input
-          label="Label"
           isError
+          label="Label"
           value={props.value6}
           onChange={(value) => {
             store.set({ value6: value });
@@ -119,7 +120,7 @@ storiesOf('Components|Base/Input', module).add('error', () => (
 storiesOf('Components|Base/Input', module).add('disable', () => (
   <InputWrapper>
     <State store={store}>
-      {() => [<Input label="Label" value="Some value" isDisabled />]}
+      {() => [<Input isDisabled label="Label" value="Some value" />]}
     </State>
   </InputWrapper>
 ));

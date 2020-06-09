@@ -1,107 +1,81 @@
-import modalName from 'constants/modalNames';
-import routePath from 'constants/routePath';
+import React, { useCallback, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
-import React from 'react';
-
-import Modal from 'components/base/Modal';
-import withModalControl from 'hocs/withModalControl';
 import MainPage from 'pages/MainPage';
 import Page404 from 'pages/Page404';
-import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import { compose } from 'redux';
+import Modal from 'components/base/Modal';
+import useModalControl from 'hooks/useModalControl';
+
+import modalName from 'constants/modalNames';
+import routePath from 'constants/routePath';
+import keyCode from 'constants/keyCode';
 
 import 'normalize.css/normalize.css';
 import '../styles/fonts.less';
 import '../styles/reset.less';
 import '../styles/global.less';
 
-const rootClass = 'app';
+const App = () => {
+  const [modalsState, openModal, closeModal] = useModalControl(modalName.LOGIN, modalName.REGISTRATION);
 
-const propTypes = {
-  modals: PropTypes.shape({
-    isOpenLogin: PropTypes.bool,
-    isOpenRegistration: PropTypes.bool,
-  }),
-  onModalOpen: PropTypes.func,
-  onModalClose: PropTypes.func,
-};
-
-class App extends React.Component {
-  componentDidMount() {
-    this.addModalsContainer();
-  }
-
-  addModalsContainer = () => {
+  const addModalsContainer = useCallback(() => {
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modals';
     document.body.appendChild(modalContainer);
-  };
+  }, []);
 
-  handleLoginModalOpen = () => {
-    const { onModalOpen } = this.props;
-    onModalOpen(modalName.LOGIN)();
-  };
+  const addMouseClass = useCallback(() => {
+    document.body.classList.add('use-mouse');
+  }, []);
 
-  handleLoginModalClose = () => {
-    const { onModalClose } = this.props;
-    onModalClose(modalName.LOGIN)();
-  };
+  const removeMouseClass = useCallback((event) => {
+    if (event.keyCode === keyCode.TAB) {
+      document.body.classList.remove('use-mouse');
+    }
+  }, []);
 
-  handleRegistrationModalOpen = () => {
-    const { onModalOpen } = this.props;
-    onModalOpen(modalName.REGISTRATION)();
-  };
+  useEffect(() => {
+    addModalsContainer();
+    // Показывает стили фокуса только при управлении с клавиатуры
+    document.body.addEventListener('mousedown', addMouseClass);
+    document.body.addEventListener('keydown', removeMouseClass);
+  }, [addModalsContainer, addMouseClass, removeMouseClass]);
 
-  handleRegistrationModalClose = () => {
-    const { onModalClose } = this.props;
-    onModalClose(modalName.REGISTRATION)();
-  };
+  return (
+    <div className="app">
+      <Switch>
+        <Route exact path={routePath.MAIN}>
+          <>
+            <MainPage
+              openLoginModal={openModal(modalName.LOGIN)}
+              openRegistrationModal={openModal(modalName.REGISTRATION)}
+            />
 
-  render() {
-    const { modals } = this.props;
+            <Modal
+              actions="Login modal buttons ..."
+              isOpen={modalsState.isOpenLogin}
+              onClose={closeModal(modalName.LOGIN)}
+            >
+              Login content
+            </Modal>
 
-    return (
-      <div className={rootClass}>
-        <Switch>
-          <Route exact path={routePath.MAIN}>
-            <>
-              <MainPage
-                onLoginModalOpen={this.handleLoginModalOpen}
-                onRegistrationModalOpen={this.handleRegistrationModalOpen}
-              />
+            <Modal
+              actions="Registration modal buttons ..."
+              header="Registration"
+              isOpen={modalsState.isOpenRegistration}
+              onClose={closeModal(modalName.REGISTRATION)}
+            >
+              Registration content
+            </Modal>
+          </>
+        </Route>
 
-              <Modal
-                actions="Login modal buttons ..."
-                isOpen={modals.isOpenLogin}
-                onClose={this.handleLoginModalClose}
-              >
-                Login content
-              </Modal>
+        <Route path={routePath.NOT_FOUND}>
+          <Page404 />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
-              <Modal
-                actions="Registration modal buttons ..."
-                header="Registration"
-                isOpen={modals.isOpenRegistration}
-                onClose={this.handleRegistrationModalClose}
-              >
-                Registration content
-              </Modal>
-            </>
-          </Route>
-          <Route path={routePath.NOT_FOUND}>
-            <Page404 />
-          </Route>
-        </Switch>
-      </div>
-    );
-  }
-}
-
-App.propTypes = propTypes;
-
-export default compose(
-  withModalControl(modalName.LOGIN, modalName.REGISTRATION),
-  connect(),
-)(App);
+export default App;

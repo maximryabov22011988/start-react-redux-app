@@ -1,151 +1,128 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import cn from 'classnames';
 
 import Button from 'components/base/Button';
+
 import keyCode from 'constants/keyCode';
 
 import { ReactComponent as CloseIcon } from './close.inline.svg';
 import './Modal.less';
 
-const rootClass = 'modal';
-const modalOverlayClass = `${rootClass}__overlay`;
-
 const propTypes = {
-  actions: PropTypes.node,
-  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  className: PropTypes.string,
-  children: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  actions: PropTypes.node,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 };
 
-const defaultProps = {};
+const defaultProps = {
+  children: 'Content',
+  header: 'Header',
+};
 
-class Modal extends React.Component {
-  state = {
-    fadeType: 'out',
-  };
+const Modal = ({
+  actions,
+  children,
+  className,
+  header,
+  isOpen,
+  onClose,
+}) => {
+  const [fadeType, setFadeType] = useState('out');
 
-  componentDidMount() {
-    this.html = document.querySelector('html');
-
-    const { isOpen } = this.props;
-
-    if (isOpen) {
-      this.lockHtmlScroll();
-      this.addEventListeners();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    this.modalsContainer = document.getElementById('modals');
-
-    const { isOpen } = this.props;
-
-    if (prevProps.isOpen !== isOpen) {
-      if (isOpen) {
-        this.lockHtmlScroll();
-        this.addEventListeners();
-        setTimeout(() => this.setState({ fadeType: 'in' }), 0);
-      } else {
-        this.unlockHtmlScroll();
-        this.removeEventListeners();
-        setTimeout(() => this.setState({ fadeType: 'out' }), 0);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.unlockHtmlScroll();
-    this.removeEventListeners();
-  }
-
-  handleKeyUp = (event) => {
-    const { onClose } = this.props;
-
+  const handleKeyUp = useCallback((event) => {
     if (event.keyCode === keyCode.ESC) {
       onClose();
     }
-  };
+  }, [onClose]);
 
-  handleOutsideClick = (event) => {
-    const { onClose } = this.props;
+  const handleOutsideClick = useCallback((event) => {
     const { target } = event;
-
-    if (!target.classList.contains(modalOverlayClass)) {
+    if (!target.classList.contains('modal__overlay')) {
       return;
     }
-
     onClose();
-  };
+  }, [onClose]);
 
-  lockHtmlScroll = () => {
-    this.html.classList.add('isLockScroll');
-  };
+  const htmlElement = useRef();
+  const modalsContainerElement = useRef();
+  useEffect(() => {
+    htmlElement.current = document.querySelector('html');
+    modalsContainerElement.current = document.getElementById('modals');
+  });
 
-  unlockHtmlScroll = () => {
-    this.html.classList.remove('isLockScroll');
-  };
+  useEffect(() => {
+    const lockHtmlScroll = () => {
+      htmlElement.current.classList.add('isLockScroll');
+    };
+    const unlockHtmlScroll = () => {
+      htmlElement.current.classList.remove('isLockScroll');
+    };
 
-  addEventListeners() {
-    window.addEventListener('keyup', this.handleKeyUp, false);
-    document.addEventListener('click', this.handleOutsideClick, false);
-  }
+    const addEventListeners = () => {
+      window.addEventListener('keyup', handleKeyUp, false);
+      document.addEventListener('click', handleOutsideClick, false);
+    };
+    const removeEventListeners = () => {
+      window.removeEventListener('keyup', handleKeyUp, false);
+      document.removeEventListener('click', handleOutsideClick, false);
+    };
 
-  removeEventListeners() {
-    window.removeEventListener('keyup', this.handleKeyUp, false);
-    document.removeEventListener('click', this.handleOutsideClick, false);
-  }
+    if (isOpen) {
+      lockHtmlScroll();
+      addEventListeners();
+      setTimeout(() => setFadeType('in'), 0);
+    } else {
+      unlockHtmlScroll();
+      removeEventListeners();
+      setTimeout(() => setFadeType('out'), 0);
+    }
 
-  render() {
-    const {
-      actions,
-      children,
-      className,
-      header,
-      isOpen,
-      onClose,
-    } = this.props;
-    const { fadeType } = this.state;
+    return () => {
+      unlockHtmlScroll();
+      removeEventListeners();
+    };
+  }, [isOpen, handleKeyUp, handleOutsideClick]);
 
-    const modal = (
-      <div>
-        <div
-          className={cn(modalOverlayClass, `fade-${fadeType}`)}
-          onClick={this.handleOutsideClick}
-          tabIndex="-1"
-        />
-        <div className={cn(rootClass, className, `fade-${fadeType}`)}>
-          {isOpen && (
-            <>
-              <Button
-                className={`${rootClass}__close-button`}
-                onClick={onClose}
-              >
-                <span className={`${rootClass}__close-text`}>Закрыть</span>
-                <CloseIcon />
-              </Button>
+  return ReactDOM.createPortal(
+    <div>
+      <div
+        className={cn('modal__overlay', `fade-${fadeType}`)}
+        tabIndex="-1"
+        onClick={handleOutsideClick}
+      />
 
-              {header && <div className={`${rootClass}__header`}>{header}</div>}
+      <div className={cn('modal', className, `fade-${fadeType}`)}>
+        {isOpen && (
+          <>
+            <Button
+              className="modal__close-button"
+              onClick={onClose}
+            >
+              <span className="modal__close-text">Закрыть</span>
+              <CloseIcon />
+            </Button>
 
-              <div className={`${rootClass}__content`}>{children}</div>
+            {header && <div className="modal__header">{header}</div>}
 
-              {actions && (
-                <div className={`${rootClass}__actions`}>{actions}</div>
-              )}
-            </>
-          )}
-        </div>
+            <div className="modal__content">{children}</div>
+
+            {actions && (
+              <div className="modal__actions">{actions}</div>
+            )}
+          </>
+        )}
       </div>
-    );
-
-    return this.modalsContainer
-      ? ReactDOM.createPortal(modal, this.modalsContainer)
-      : modal;
-  }
-}
+    </div>,
+    modalsContainerElement.current || document.body,
+  );
+};
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;

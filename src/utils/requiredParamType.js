@@ -1,5 +1,5 @@
 /* eslint valid-typeof: 0 */
-export default ({ param, type, message = 'Invalid param type' }) => {
+export default ({ message = 'Invalid param type', param, type }) => {
   if (typeof param !== type) {
     throw new Error(message);
   }

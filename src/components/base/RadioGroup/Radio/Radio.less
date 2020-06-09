@@ -1,6 +1,5 @@
 @import "~styles";
 
-@root-class: radio;
 @radio-size: 24px;
 
 @label-color: @gray-700;
@@ -16,15 +15,15 @@
 @border-color--disabled: @gray-400;
 @bg-color--disabled: @gray-100;
 
-.@{root-class} {
+.radio {
   position: relative;
   display: flex;
 
-  &:not(.isDisabled):hover {
-    .@{root-class}__custom-radio-input::before {
+  &:not(.is-disabled):hover {
+    .radio__custom-radio-input::before {
       border-color: @border-color--hover;
 
-      .isChecked {
+      .is-checked {
         border-color: @dot-color;
       }
     }
@@ -76,16 +75,16 @@
     padding-top: 1px;
   }
 
-  &.isFocused {
-    .@{root-class}__custom-radio-input {
+  &.is-focused {
+    .radio__custom-radio-input {
       &::before {
         .custom-outline();
       }
     }
   }
 
-  &.isChecked {
-    .@{root-class}__custom-radio-input {
+  &.is-checked {
+    .radio__custom-radio-input {
       &::before {
         border-color: @border-color--focus;
       }
@@ -96,24 +95,24 @@
     }
   }
 
-  &.isDisabled {
+  &.is-disabled {
     cursor: not-allowed;
 
-    .@{root-class}__default-radio-input {
+    .radio__default-radio-input {
       cursor: not-allowed;
     }
 
-    .@{root-class}__custom-radio-input::before {
+    .radio__custom-radio-input::before {
       background-color: @bg-color--disabled;
       border-color: @border-color--disabled;
     }
 
-    .@{root-class}__text {
+    .radio__text {
       color: @label-color--disabled;
     }
 
-    &.isChecked {
-      .@{root-class}__custom-radio-input {
+    &.is-checked {
+      .radio__custom-radio-input {
         &::before {
           background-color: @bg-color--disabled;
         }

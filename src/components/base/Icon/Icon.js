@@ -1,37 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import stylePropType from 'react-style-proptype';
 
 const propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
   src: PropTypes.shape({
     symbol: PropTypes.string,
     viewBox: PropTypes.string,
   }).isRequired,
-  width: PropTypes.string,
+  className: PropTypes.string,
   height: PropTypes.string,
+  style: stylePropType,
+  width: PropTypes.string,
 };
 
 const defaultProps = {
-  width: '40',
   height: '40',
+  width: '40',
 };
 
 // Для использования с svgSprite
-function Icon({ className, width, height, src, style }) {
-  return (
-    <svg
-      className={className}
-      style={style}
-      width={width}
-      height={height}
-      viewBox={src.viewBox}
-      role="img"
-    >
-      <use xlinkHref={src.symbol} />
-    </svg>
-  );
-}
+const Icon = ({
+  className, height, src, style, width, ...props
+}) => (
+  <svg
+    {...props}
+    className={className}
+    height={height}
+    role="img"
+    style={style}
+    viewBox={src.viewBox}
+    width={width}
+  >
+    <use xlinkHref={src.symbol} />
+  </svg>
+);
 
 Icon.propTypes = propTypes;
 Icon.defaultProps = defaultProps;

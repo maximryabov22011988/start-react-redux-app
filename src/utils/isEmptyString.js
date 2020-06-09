@@ -6,5 +6,5 @@ export default (value) => {
     type: 'string',
     message: 'Param "value" expected type "string"',
   });
-  return value.length === 0;
+  return typeof value === 'string' && value.length === 0;
 };
