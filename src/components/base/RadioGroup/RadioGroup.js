@@ -7,7 +7,7 @@ import isEmptyString from 'utils/isEmptyString';
 
 import Radio, { RadioWithHelperText } from './Radio';
 
-import './RadioGroup.less';
+import styles from './RadioGroup.less';
 
 const propTypes = {
   children: PropTypes.node,
@@ -32,7 +32,7 @@ const RadioGroup = ({
   value: selectedValue,
   ...props
 }) => (
-  <div className={cn('radio-group', className)}>
+  <div className={cn(className, styles.radio_group)}>
     {!children && isArray(options)
       ? options.map(
         ({
@@ -43,16 +43,18 @@ const RadioGroup = ({
             : Radio;
 
           return (
-            <Component
-              {...props}
-              {...(!isEmptyString(helperText) ? { helperText } : {})}
-              isChecked={selectedValue === value}
-              isDisabled={isDisabled}
-              key={value}
-              onChange={() => onChange(value)}
-            >
-              {label}
-            </Component>
+            <div className={styles.radio_group__wrap}>
+              <Component
+                {...props}
+                {...(!isEmptyString(helperText) ? { helperText } : {})}
+                isChecked={selectedValue === value}
+                isDisabled={isDisabled}
+                key={value}
+                onChange={() => onChange(value)}
+              >
+                {label}
+              </Component>
+            </div>
           );
         },
       )

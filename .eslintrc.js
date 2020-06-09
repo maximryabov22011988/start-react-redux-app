@@ -104,7 +104,7 @@ module.exports = {
         pathGroupsExcludedImportTypes: [''],
         pathGroups: [
           {
-            pattern: '+(react|react-dom|react-router-dom|prop-types|react-style-proptype|react-redux|redux|reselect|classnames|lodash)',
+            pattern: '+(react|react-dom|react-router-dom|prop-types|react-styles-proptype|react-redux|redux|reselect|classnames|lodash)',
             group: 'external',
             position: 'before',
           },

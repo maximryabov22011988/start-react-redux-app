@@ -12,42 +12,37 @@ const AutoDllPlugin = require('./webpack/plugins/AutoDllPlugin');
 const BundleAnalyzerPlugin = require('./webpack/plugins/BundleAnalyzerPlugin');
 const ErrorOverlay = require('./webpack/plugins/ErrorOverlayPlugin');
 const WebpackErrorsPlugin = require('./webpack/plugins/FriendlyErrorsWebpackPlugin');
-
 const HtmlPlugin = require('./webpack/plugins/HtmlWebpackPlugin');
 const MiniCssExtractPlugin = require('./webpack/plugins/MiniCssExtractPlugin');
 const SvgStorePlugin = require('./webpack/plugins/SvgStorePlugin');
-const CriticalCSSPlugin = require('./webpack/plugins/CriticalCSSPlugin');
-
 const MinifyCSSPlugin = require('./webpack/plugins/MinifyCSSPlugin');
 const MinifyJSPlugin = require('./webpack/plugins/MinifyJSPlugin');
 const ImageminPlugin = require('./webpack/plugins/ImageminPlugin');
 const ImageminWebpPlugin = require('./webpack/plugins/ImageminWebpPlugin');
 
-const babelPreset = require('./webpack/presets/babel');
-const lessPreset = require('./webpack/presets/less');
-const cssPreset = require('./webpack/presets/css');
-const inlineSvgPreset = require('./webpack/presets/inlineSvg.js');
-const svgSpritePreset = require('./webpack/presets/svgSprite');
-const base64Preset = require('./webpack/presets/base64');
-const fontsPreset = require('./webpack/presets/fonts');
+const babelRules = require('./webpack/rules/babel');
+const lessRules = require('./webpack/rules/less');
+const inlineSvgRules = require('./webpack/rules/inlineSvg.js');
+const svgSpriteRules = require('./webpack/rules/svgSprite');
+const base64Rules = require('./webpack/rules/base64');
+const fontsRules = require('./webpack/rules/fonts');
 
-const { browserslist } = require('./package.json');
 const settings = require('./webpack.settings');
 const devServer = require('./webpack/devServer');
 const {
   mode,
   browsers,
-  cssSupported,
   supportedImages,
   getPlugins,
   transformFilename,
 } = require('./webpack/utils');
+const { browserslist } = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === mode.PRODUCTION;
 const isLegacyBrowsers = process.env.BROWSERS_ENV === browsers.LEGACY;
 const isOnlyModernBrowsers = process.env.BROWSERS_ENV === browsers.ONLY_MODERN;
 
-const commonConfig = (env) => {
+const commonConfig = () => {
   const filenameWithTargetBrowsersPostfix = transformFilename(
     '[name]',
     isLegacyBrowsers ? browsers.LEGACY : browsers.MODERN
@@ -58,15 +53,15 @@ const commonConfig = (env) => {
       entry: settings.entries,
       output: {
         path: path.resolve(__dirname, settings.paths.DIST),
-        publicPath: mode.isProduction(env)
+        publicPath: isProduction
           ? settings.urls.serverPath()
           : settings.urls.publicPath(),
-        filename: mode.isProduction(env)
+        filename: isProduction
           ? `${filenameWithTargetBrowsersPostfix}.[hash].js`
           : `${filenameWithTargetBrowsersPostfix}.js`,
       },
-      mode: mode.isProduction(env) ? mode.PRODUCTION : mode.DEVELOPMENT,
-      devtool: mode.isProduction(env)
+      mode: isProduction ? mode.PRODUCTION : mode.DEVELOPMENT,
+      devtool: isProduction
         ? 'source-map'
         : 'cheap-module-source-map',
       resolve: {
@@ -74,18 +69,16 @@ const commonConfig = (env) => {
         modules: [settings.paths.SRC, 'node_modules'],
       },
     },
-    babelPreset(
+    babelRules(
       isLegacyBrowsers
         ? browserslist.legacyBrowsers
         : browserslist.modernBrowsers,
-      env
     ),
-    cssSupported.less(settings.css) && lessPreset(env),
-    cssSupported.CSSModule(settings.css) && cssPreset(env),
-    svgSpritePreset(),
-    base64Preset(env),
-    inlineSvgPreset(env),
-    fontsPreset(env),
+    lessRules(),
+    svgSpriteRules(),
+    base64Rules(),
+    inlineSvgRules(),
+    fontsRules(),
     getPlugins(
       ...(supportedImages.WEBP ? [ImageminWebpPlugin()] : []),
       CopyPlugin([{ from: `${settings.paths.FAVICON}/`, to: 'favicon' }]),
@@ -139,7 +132,6 @@ const productionConfig = ({ isOnlyModernBrowsers: isOnlyModern } = {}) =>
             ...(isOnlyModern ? [] : [LegacyScriptPlugin()]),
           ]),
       MiniCssExtractPlugin(mode.PRODUCTION),
-      ...(typeof settings.criticalCSS === 'object' ? [CriticalCSSPlugin()] : [])
     ),
     {
       optimization: {
@@ -151,9 +143,9 @@ const productionConfig = ({ isOnlyModernBrowsers: isOnlyModern } = {}) =>
 
 if (isProduction) {
   module.exports = merge([
-    commonConfig(mode.PRODUCTION),
+    commonConfig(),
     productionConfig({ isOnlyModernBrowsers }),
   ]);
 } else {
-  module.exports = merge([commonConfig(mode.DEVELOPMENT), developmentConfig()]);
+  module.exports = merge([commonConfig(), developmentConfig()]);
 }

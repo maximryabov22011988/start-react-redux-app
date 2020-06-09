@@ -3,38 +3,38 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import cn from 'classnames';
 
-import './Link.less';
+import styles from './Link.less';
 
 const propTypes = {
   anchor: PropTypes.string,
-  appearance: PropTypes.oneOf(['text', 'button']),
   children: PropTypes.node,
   className: PropTypes.string,
   isDisabled: PropTypes.bool,
+  theme: PropTypes.oneOf(['text', 'button']),
   to: PropTypes.string,
   url: PropTypes.string,
 };
 
 const defaultProps = {
-  appearance: 'text',
   children: 'Link',
+  theme: 'text',
 };
 
 const Link = ({
   anchor,
-  appearance,
   children,
   className,
   isDisabled,
+  theme,
   to,
   url,
   ...props
 }) => {
-  const classes = cn('link', className, {
-    'without-text': !children,
-    'is-disabled': isDisabled,
-    'link--text': appearance === 'text',
-    'link--button': appearance === 'button',
+  const classes = cn(className, styles.link, {
+    [styles['without-text']]: !children,
+    [styles['is-disabled']]: isDisabled,
+    [styles['link--text']]: theme === 'text',
+    [styles['link--button']]: theme === 'button',
   });
 
   const Component = (anchor || url) ? 'a' : RouterLink;

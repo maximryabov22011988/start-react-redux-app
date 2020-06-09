@@ -7,7 +7,7 @@ import Checkbox, { CheckboxWithHelperText } from 'components/base/Checkbox';
 import isArray from 'utils/isArray';
 import isEmptyString from 'utils/isEmptyString';
 
-import './CheckboxGroup.less';
+import styles from './CheckboxGroup.less';
 
 const propTypes = {
   children: PropTypes.node,
@@ -52,7 +52,7 @@ const CheckboxGroup = ({
   };
 
   return (
-    <div className={cn('checkbox-group', className)}>
+    <div className={cn(className, styles.checkbox_group)}>
       {!children && isArray(options)
         ? options.map(
           ({
@@ -63,16 +63,19 @@ const CheckboxGroup = ({
               : Checkbox;
 
             return (
-              <Component
-                {...props}
-                {...(!isEmptyString(helperText) ? { helperText } : {})}
-                isChecked={selectedValues.includes(value)}
-                isDisabled={isDisabled}
-                key={value}
-                onChange={() => handleChange(value)}
-              >
-                {label}
-              </Component>
+              <div className={styles.checkbox_group__wrap}>
+                <Component
+                  {...props}
+                  {...(!isEmptyString(helperText) ? { helperText } : {})}
+                  isChecked={selectedValues.includes(value)}
+                  isDisabled={isDisabled}
+                  key={value}
+                  onChange={() => handleChange(value)}
+                >
+                  {label}
+                </Component>
+              </div>
+
             );
           },
         )

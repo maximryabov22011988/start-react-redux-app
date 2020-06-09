@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import withInputHandlers from 'hocs/withInputHandlers';
 
-import './Radio.less';
+import styles from './Radio.less';
 
 const propTypes = {
   isChecked: PropTypes.bool.isRequired,
@@ -25,24 +25,24 @@ const Radio = ({
   ...props
 }) => (
   <label
-    className={cn('radio', className, {
-      'is-checked': isChecked,
-      'is-focused': isFocused,
-      'is-disabled': isDisabled,
+    className={cn(className, styles.radio, {
+      [styles['is-checked']]: isChecked,
+      [styles['is-focused']]: isFocused,
+      [styles['is-disabled']]: isDisabled,
     })}
   >
     <input
       {...props}
       checked={isChecked}
-      className="radio__default-radio-input"
+      className={styles.radio__default_radio_input}
       disabled={isDisabled}
       type="radio"
       onChange={onChange}
     />
 
-    <span className="radio__custom-radio-input" />
+    <span className={styles.radio__custom_radio_input} />
 
-    <span className="radio__text">{children}</span>
+    <span className={styles.radio__text}>{children}</span>
   </label>
 );
 

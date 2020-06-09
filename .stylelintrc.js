@@ -262,7 +262,7 @@ module.exports = {
       'font-effect',
       'font-emphasize',
       'font-emphasize-position',
-      'font-emphasize-style',
+      'font-emphasize-styles',
       'font-smooth',
       'text-align-last',
       'letter-spacing',

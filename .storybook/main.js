@@ -3,10 +3,10 @@ const merge = require('webpack-merge');
 const settings = require('../webpack.settings');
 const projectConfig = require('../webpack.config.js');
 
-const babelPreset = require('../webpack/presets/babel');
-const lessPreset = require('../webpack/presets/less');
-const inlineSvgPreset = require('../webpack/presets/inlineSvg.js');
-const fontsPreset = require('../webpack/presets/fonts');
+const babelPreset = require('../webpack/rules/babel');
+const lessPreset = require('../webpack/rules/less');
+const inlineSvgPreset = require('../webpack/rules/inlineSvg.js');
+const fontsPreset = require('../webpack/rules/fonts');
 
 const NotifierPlugin = require('../webpack/plugins/WebpackNotifierPlugin');
 const { getPlugins } = require('../webpack/utils');

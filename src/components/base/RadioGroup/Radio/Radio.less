@@ -20,7 +20,7 @@
   display: flex;
 
   &:not(.is-disabled):hover {
-    .radio__custom-radio-input::before {
+    .radio__custom_radio_input::before {
       border-color: @border-color--hover;
 
       .is-checked {
@@ -33,11 +33,11 @@
     margin-left: 20px;
   }
 
-  &__default-radio-input {
+  &__default_radio_input {
     .visually-hidden();
   }
 
-  &__custom-radio-input {
+  &__custom_radio_input {
     .circle(@radio-size);
     position: relative;
     margin-right: 10px;
@@ -76,7 +76,7 @@
   }
 
   &.is-focused {
-    .radio__custom-radio-input {
+    .radio__custom_radio_input {
       &::before {
         .custom-outline();
       }
@@ -84,7 +84,7 @@
   }
 
   &.is-checked {
-    .radio__custom-radio-input {
+    .radio__custom_radio_input {
       &::before {
         border-color: @border-color--focus;
       }
@@ -98,11 +98,11 @@
   &.is-disabled {
     cursor: not-allowed;
 
-    .radio__default-radio-input {
+    .radio__default_radio_input {
       cursor: not-allowed;
     }
 
-    .radio__custom-radio-input::before {
+    .radio__custom_radio_input::before {
       background-color: @bg-color--disabled;
       border-color: @border-color--disabled;
     }
@@ -112,7 +112,7 @@
     }
 
     &.is-checked {
-      .radio__custom-radio-input {
+      .radio__custom_radio_input {
         &::before {
           background-color: @bg-color--disabled;
         }

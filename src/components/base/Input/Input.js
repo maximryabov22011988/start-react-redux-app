@@ -6,7 +6,7 @@ import withInputHandlers from 'hocs/withInputHandlers';
 
 import isEmptyString from 'utils/isEmptyString';
 
-import './Input.less';
+import styles from './Input.less';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -42,15 +42,15 @@ const Input = ({
 }) => (
   <label
     {...props}
-    className={cn('input', className, {
-      'is-error': isError,
-      'is-focused': isFocused,
-      'is-disabled': isDisabled,
-      'with-value': !isEmptyString(value),
+    className={cn(className, styles.input, {
+      [styles['is-error']]: isError,
+      [styles['is-focused']]: isFocused,
+      [styles['is-disabled']]: isDisabled,
+      [styles['with-value']]: !isEmptyString(value),
     })}
   >
     <input
-      className="input__input"
+      className={styles.input__input}
       disabled={isDisabled}
       ref={setInputRef}
       type={type}
@@ -60,7 +60,7 @@ const Input = ({
       onFocus={onFocus}
     />
 
-    <span className="input__placeholder">{label}</span>
+    <span className={styles.input__placeholder}>{label}</span>
   </label>
 );
 

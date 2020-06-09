@@ -1,11 +1,11 @@
 const { debugTargetBrowsers } = require('../../webpack.settings');
 const { mode } = require('../utils');
 
-module.exports = (browserList, env) => ({
+module.exports = (browserList) => ({
   loader: 'babel-loader',
   options: {
-    babelrc: mode.isTest(env),
-    configFile: mode.isTest(env),
+    babelrc: process.env.NODE_ENV === mode.TEST,
+    configFile: process.env.NODE_ENV === mode.TEST,
     presets: [
       [
         '@babel/preset-env',

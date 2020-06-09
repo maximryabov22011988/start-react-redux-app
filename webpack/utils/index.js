@@ -14,15 +14,6 @@ const browsers = {
   ONLY_MODERN: 'only_modern',
 };
 
-const cssSupported = {
-  less(css) {
-    return css.includes('less');
-  },
-  CSSModule(css) {
-    return css.includes('css-module');
-  },
-};
-
 const isSupportedJpg = supportedImageTypes.includes('jpg');
 const isSupportedJpeg = supportedImageTypes.includes('jpeg');
 const isSupportedPng = supportedImageTypes.includes('png');
@@ -38,10 +29,8 @@ const supportedImages = {
 module.exports = {
   mode,
   browsers,
-  cssSupported,
   supportedImages,
-  transformFilename: (filename, targetBrowsers) =>
-    `${filename}.${targetBrowsers}`,
+  transformFilename: (filename, targetBrowsers) => `${filename}.${targetBrowsers}`,
   getPlugins: (...plugins) => ({
     plugins,
   }),

@@ -1,11 +1,9 @@
 const { paths } = require('../../webpack.settings');
 
-const { mode } = require('../utils');
-
-module.exports = (env) => ({
+module.exports = () => ({
   loader: 'postcss-loader',
   options: {
-    sourceMap: !mode.isProduction(env),
+    sourceMap: true,
     config: {
       path: `${paths.ROOT}/postcss.config.js`,
     },

@@ -9,25 +9,7 @@ const resolve = (targetPath) => (relativePath) => path.resolve(targetPath, relat
 const appPath = fs.realpathSync(process.cwd());
 const resolveApp = resolve(appPath);
 
-const css = {
-  LESS: 'less',
-  CSS_MODULE: 'css_module',
-};
-
 const supportedImageTypes = ['svg', 'jpg', 'png', 'webp'];
-
-const isEnabledCriticalCSS = ({ isEnable }) => (isEnable
-  ? {
-    HTMLFile: 'index.html',
-    inline: true,
-    minify: true,
-    extract: true,
-    viewport: {
-      width: 900,
-      height: 600,
-    },
-  }
-  : false);
 
 // noinspection WebpackConfigHighlighting
 module.exports = {
@@ -52,7 +34,6 @@ module.exports = {
   entries: {
     app: './src/index.js',
   },
-  css: css.LESS,
   supportedImageTypes,
   base64ImageLimit: 10000, // jpg, png, gif файлы
   devServerConfig: {
@@ -87,5 +68,4 @@ module.exports = {
   debugTargetBrowsers: false,
   checkUnusedFiles: false,
   analyzeBundles: false,
-  criticalCSS: isEnabledCriticalCSS({ isEnable: false }),
 };

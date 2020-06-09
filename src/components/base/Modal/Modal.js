@@ -5,12 +5,14 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cn from 'classnames';
 
+import FocusLock from 'react-focus-lock';
+
 import Button from 'components/base/Button';
 
 import keyCode from 'constants/keyCode';
 
 import { ReactComponent as CloseIcon } from './close.inline.svg';
-import './Modal.less';
+import styles from './Modal.less';
 
 const propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -44,7 +46,7 @@ const Modal = ({
 
   const handleOutsideClick = useCallback((event) => {
     const { target } = event;
-    if (!target.classList.contains('modal__overlay')) {
+    if (!target.classList.contains(styles.modal__overlay)) {
       return;
     }
     onClose();
@@ -59,10 +61,10 @@ const Modal = ({
 
   useEffect(() => {
     const lockHtmlScroll = () => {
-      htmlElement.current.classList.add('isLockScroll');
+      htmlElement.current.classList.add(styles['is-lock-scroll']);
     };
     const unlockHtmlScroll = () => {
-      htmlElement.current.classList.remove('isLockScroll');
+      htmlElement.current.classList.remove(styles['is-lock-scroll']);
     };
 
     const addEventListeners = () => {
@@ -90,36 +92,40 @@ const Modal = ({
     };
   }, [isOpen, handleKeyUp, handleOutsideClick]);
 
+  const fadeStyles = fadeType === 'in' ? styles['fade-in'] : styles['fade-out'];
+
   return ReactDOM.createPortal(
-    <div>
-      <div
-        className={cn('modal__overlay', `fade-${fadeType}`)}
-        tabIndex="-1"
-        onClick={handleOutsideClick}
-      />
+    <FocusLock>
+      <div>
+        <div
+          className={cn(styles.modal__overlay, fadeStyles)}
+          tabIndex="-1"
+          onClick={handleOutsideClick}
+        />
 
-      <div className={cn('modal', className, `fade-${fadeType}`)}>
-        {isOpen && (
-          <>
-            <Button
-              className="modal__close-button"
-              onClick={onClose}
-            >
-              <span className="modal__close-text">Закрыть</span>
-              <CloseIcon />
-            </Button>
+        <div className={cn(className, styles.modal, fadeStyles)}>
+          {isOpen && (
+            <>
+              <Button
+                className={styles.modal__close_button}
+                onClick={onClose}
+              >
+                <span className={styles.modal__close_text}>Закрыть</span>
+                <CloseIcon />
+              </Button>
 
-            {header && <div className="modal__header">{header}</div>}
+              {header && <div className={styles.modal__header}>{header}</div>}
 
-            <div className="modal__content">{children}</div>
+              <div className={styles.modal__content}>{children}</div>
 
-            {actions && (
-              <div className="modal__actions">{actions}</div>
-            )}
-          </>
-        )}
+              {actions && (
+                <div className={styles.modal__actions}>{actions}</div>
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>,
+    </FocusLock>,
     modalsContainerElement.current || document.body,
   );
 };

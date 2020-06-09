@@ -4,14 +4,14 @@ const svgrLoader = require('../loaders/inlineSvg');
 const urlLoader = require('../loaders/url');
 const { mode } = require('../utils');
 
-module.exports = (env) => ({
+module.exports = () => ({
   module: {
     rules: [
       {
         test: /\.inline.svg$/,
         exclude: [paths.ICONS_TO_SPRITE],
         use: [
-          ...(mode.isProduction(env) ? [] : [cacheLoader()]),
+          ...(process.env.NODE_ENV === mode.PRODUCTION ? [] : [cacheLoader()]),
           svgrLoader(),
           urlLoader(),
         ],

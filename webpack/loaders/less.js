@@ -1,8 +1,6 @@
-const { mode } = require('../utils');
-
-module.exports = (env) => ({
+module.exports = () => ({
   loader: 'less-loader',
   options: {
-    sourceMap: !mode.isProduction(env),
+    sourceMap: true,
   },
 });

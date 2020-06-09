@@ -32,7 +32,7 @@ storiesOf('Components|Base/Link', module)
 storiesOf('Components|Base/Link', module)
   .addDecorator(StoryRouter())
   .add('button', () => (
-    <Link {...acitons} anchor="#" appearance="button">
+    <Link {...acitons} anchor="#" theme="button">
       Link
     </Link>
   ));
@@ -40,7 +40,7 @@ storiesOf('Components|Base/Link', module)
 storiesOf('Components|Base/Link', module)
   .addDecorator(StoryRouter())
   .add('button disabled', () => (
-    <Link {...acitons} isDisabled anchor="#" appearance="button">
+    <Link {...acitons} isDisabled anchor="#" theme="button">
       Link
     </Link>
   ));

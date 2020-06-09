@@ -1,22 +1,17 @@
 @import "~styles";
 
-.checkbox-group {
+.checkbox_group {
   display: flex;
 
-  .checkbox + .helper-text,
-  .helper-text + .checkbox {
+  &__wrap {
     margin-left: 20px;
-  }
 
-  .helper-text {
-    flex: 1 0 auto;
-
-    &__text {
-      margin-left: 34px;
+    &:first-child {
+      margin-left: 0;
     }
-  }
 
-  .helper-text + .helper-text {
-    margin-left: 20px;
+    label + span {
+      padding-left: 34px;
+    }
   }
 }
