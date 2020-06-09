@@ -46,6 +46,8 @@ module.exports = {
   rules: {
     // перенос строки, отключен т.к. в windows и unix системах различное поведение
     'linebreak-style': OFF,
+    // это правило устарело в ESLint v7.0.0
+    'global-require': OFF,
     // запрет на использование alert
     'no-alert': ERROR,
     // позволяет записывать свойства в объект result при использовании в reduce
@@ -103,6 +105,11 @@ module.exports = {
         'newlines-between': 'always',
         pathGroupsExcludedImportTypes: [''],
         pathGroups: [
+          {
+            pattern: 'react-hot-loader/root',
+            group: 'builtin',
+            position: 'before',
+          },
           {
             pattern: '+(react|react-dom|react-router-dom|prop-types|react-styles-proptype|react-redux|redux|reselect|classnames|lodash)',
             group: 'external',

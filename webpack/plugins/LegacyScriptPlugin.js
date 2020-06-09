@@ -1,10 +1,10 @@
 /* eslint-disable */
 const path = require('path');
 
-const { entries } = require('../../webpack.settings');
+const { entry } = require('../../webpack.settings');
 const createPlugin = require('./createPlugin');
 
-const entryNames = Object.keys(entries);
+const entryNames = Object.keys(entry);
 
 class LegacyScriptPlugin {
   apply(compiler) {

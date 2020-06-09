@@ -29,6 +29,7 @@ module.exports = (browserList) => ({
       '@babel/plugin-proposal-class-properties',
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-optional-chaining',
+      'react-hot-loader/babel',
     ],
   },
 });

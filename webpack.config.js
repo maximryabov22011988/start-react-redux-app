@@ -44,13 +44,13 @@ const isOnlyModernBrowsers = process.env.BROWSERS_ENV === browsers.ONLY_MODERN;
 
 const commonConfig = () => {
   const filenameWithTargetBrowsersPostfix = transformFilename(
-    '[name]',
+    'app',
     isLegacyBrowsers ? browsers.LEGACY : browsers.MODERN
   );
 
   return merge([
     {
-      entry: settings.entries,
+      entry: ['react-hot-loader/patch', settings.entry],
       output: {
         path: path.resolve(__dirname, settings.paths.DIST),
         publicPath: isProduction

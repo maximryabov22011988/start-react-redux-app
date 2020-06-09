@@ -5,7 +5,6 @@ import MainPage from 'pages/MainPage';
 import Page404 from 'pages/Page404';
 import Modal from 'components/base/Modal';
 import useModalControl from 'hooks/useModalControl';
-import Button from 'components/base/Button';
 
 import modalName from 'constants/modalNames';
 import routePath from 'constants/routePath';
@@ -51,8 +50,6 @@ const App = () => {
               openLoginModal={openModal(modalName.LOGIN)}
               openRegistrationModal={openModal(modalName.REGISTRATION)}
             />
-
-            <Button>Test</Button>
 
             <Modal
               actions="Login modal buttons ..."

@@ -31,9 +31,7 @@ module.exports = {
     publicPath: () => process.env.PUBLIC_PATH || '/',
     serverPath: () => process.env.SERVER_PATH || undefined,
   },
-  entries: {
-    app: './src/index.js',
-  },
+  entry: './src/index.js',
   supportedImageTypes,
   base64ImageLimit: 10000, // jpg, png, gif файлы
   devServerConfig: {
