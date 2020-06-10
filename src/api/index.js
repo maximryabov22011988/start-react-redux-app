@@ -12,24 +12,12 @@ const getBaseAPI = (baseURL) => {
   const api = axios.create(options);
 
   const onSuccessRequest = (request) => request;
-  const onFailRequest = (error) => {
-    const {
-      response: { data },
-    } = error;
-
-    return Promise.reject(new Error(data));
-  };
+  const onFailRequest = (error = {}) => Promise.reject(new Error(error?.response?.data));
 
   api.interceptors.request.use(onSuccessRequest, onFailRequest);
 
   const onSuccessResponse = (response) => response;
-  const onFailResponse = (error) => {
-    const {
-      response: { data },
-    } = error;
-
-    return Promise.reject(new Error(data));
-  };
+  const onFailResponse = (error = {}) => Promise.reject(new Error(error?.response?.data));
 
   api.interceptors.response.use(onSuccessResponse, onFailResponse);
 
