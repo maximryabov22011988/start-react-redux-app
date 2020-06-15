@@ -1,17 +1,22 @@
 @import "~styles";
 
-.radio_group {
+.radio-group {
   display: flex;
 
-  &__wrap {
+  .radio + .helper-text,
+  .helper-text + .radio {
     margin-left: 20px;
+  }
 
-    &:first-child {
-      margin-left: 0;
-    }
+  .helper-text {
+    flex: 1 0 auto;
 
-    label + span {
-      padding-left: 34px;
+    &__text {
+      margin-left: 34px;
     }
+  }
+
+  .helper-text + .helper-text {
+    margin-left: 20px;
   }
 }

@@ -1,7 +1,9 @@
 import withHelperText from 'hocs/withHelperText';
+import withInputHandlers from 'hocs/withInputHandlers';
 
 import Checkbox from './Checkbox';
 
-export const CheckboxWithHelperText = withHelperText(Checkbox);
+const CheckboxWithHandlers = withInputHandlers(Checkbox);
 
-export default Checkbox;
+export const CheckboxWithHelperText = withHelperText(CheckboxWithHandlers);
+export default CheckboxWithHandlers;

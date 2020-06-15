@@ -3,12 +3,13 @@
 /.git
 /.vscode
 /.idea
-/.storybook
+/.storybook/
 
 /build/
 /dist/
 /plop-templates/
 
 webpack.config.js
-postcss.config.js
+webpack.develop.js
+webpack.production.js
 plopfile.js

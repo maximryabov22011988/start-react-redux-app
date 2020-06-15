@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './Link.less';
+import './Link.less';
 
 const propTypes = {
   anchor: PropTypes.string,
@@ -30,11 +30,11 @@ const Link = ({
   url,
   ...props
 }) => {
-  const classes = cn(className, styles.link, {
-    [styles['without-text']]: !children,
-    [styles['is-disabled']]: isDisabled,
-    [styles['link--text']]: theme === 'text',
-    [styles['link--button']]: theme === 'button',
+  const classes = cn(className, 'link', {
+    'without-text': !children,
+    'is-disabled': isDisabled,
+    'link--text': theme === 'text',
+    'link--button': theme === 'button',
   });
 
   const Component = (anchor || url) ? 'a' : RouterLink;

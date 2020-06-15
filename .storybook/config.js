@@ -2,6 +2,7 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 import { configureActions } from '@storybook/addon-actions';
 import { withPropsTable } from 'storybook-addon-react-docgen';
 
+import { pageTitle } from '../project.settings';
 import CenterDecorator from './CenterDecorator';
 
 addDecorator(CenterDecorator);
@@ -13,8 +14,7 @@ configureActions({
 
 addParameters({
   options: {
-    name: 'Project name',
-    url: 'git url',
+    name: pageTitle,
     showNav: true,
     showPanel: true,
     panelPosition: 'right',

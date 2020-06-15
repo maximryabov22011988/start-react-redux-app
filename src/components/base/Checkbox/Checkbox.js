@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import withInputHandlers from 'hocs/withInputHandlers';
-
 import { ReactComponent as TickIcon } from './tick.inline.svg';
-import styles from './Checkbox.less';
+import './Checkbox.less';
 
 const propTypes = {
   isChecked: PropTypes.bool.isRequired,
@@ -30,28 +28,28 @@ const Checkbox = ({
   ...props
 }) => (
   <label
-    className={cn(className, styles.checkbox, {
-      [styles['is-checked']]: isChecked,
-      [styles['is-focused']]: isFocused,
-      [styles['is-disabled']]: isDisabled,
+    className={cn(className, 'checkbox', {
+      'is-checked': isChecked,
+      'is-focused': isFocused,
+      'is-disabled': isDisabled,
     })}
   >
     <input
       {...props}
       checked={isChecked}
-      className={styles.checkbox__default_checkbox_input}
+      className="checkbox__default-checkbox-input"
       disabled={isDisabled}
       type="checkbox"
       onChange={onChange}
     />
 
-    <span className={styles.checkbox__custom_checkbox_input}>
-      <TickIcon className={styles.checkbox__icon} />
+    <span className="checkbox__custom-checkbox-input">
+      <TickIcon className="checkbox__icon" />
     </span>
 
-    <span className={styles.checkbox__text}>{children}</span>
+    <span className="checkbox__text">{children}</span>
   </label>
 );
 Checkbox.propTypes = propTypes;
 
-export default withInputHandlers(Checkbox);
+export default Checkbox;

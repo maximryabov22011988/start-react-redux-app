@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import stylePropType from 'react-style-proptype';
 
 const propTypes = {
   src: PropTypes.shape({
@@ -9,7 +8,6 @@ const propTypes = {
   }).isRequired,
   className: PropTypes.string,
   height: PropTypes.string,
-  style: stylePropType,
   width: PropTypes.string,
 };
 
@@ -20,14 +18,13 @@ const defaultProps = {
 
 // Для использования с svgSprite
 const Icon = ({
-  className, height, src, style, width, ...props
+  className, height, src, width, ...props
 }) => (
   <svg
     {...props}
     className={className}
     height={height}
     role="img"
-    style={style}
     viewBox={src.viewBox}
     width={width}
   >

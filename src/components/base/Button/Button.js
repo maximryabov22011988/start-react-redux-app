@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './Button.less';
+import './Button.less';
 
 const propTypes = {
   onClick: PropTypes.func.isRequired,
@@ -22,8 +22,8 @@ const Button = ({
   <button
     type="button"
     {...props}
-    className={cn(className, styles.button, {
-      [styles['without-text']]: !children,
+    className={cn(className, 'button', {
+      'without-text': !children,
     })}
     disabled={isDisabled}
     onClick={onClick}

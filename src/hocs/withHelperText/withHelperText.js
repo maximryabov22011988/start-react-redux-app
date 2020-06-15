@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import getDisplayName from 'hocs/getDisplayName';
 
-import styles from './withHelperText.less';
+import './withHelperText.less';
 
 const withHelperText = (Component) => {
   const propTypes = {
@@ -29,9 +29,9 @@ const withHelperText = (Component) => {
     const isError = Boolean(errorText);
 
     return (
-      <div className={cn(styles.helper_text, {
-        [styles['is-error']]: isError,
-        [styles['is-disabled']]: isDisabled,
+      <div className={cn('helper-text', {
+        'is-error': isError,
+        'is-disabled': isDisabled,
       })}
       >
         <Component
@@ -42,7 +42,7 @@ const withHelperText = (Component) => {
         />
 
         {isShowHelperText && (
-          <span className={styles.helper_text__text}>
+          <span className="helper-text__text">
             {errorText || helperText}
           </span>
         )}
