@@ -37,7 +37,7 @@ module.exports = {
     },
   },
   extensions: ['.jsx', '.js', '.less', '.svg'],
-  modules: [], // для внутри-проектных библиотек / npm-модулей
+  modules: [],
   isNeedCheckUnusedFiles: true,
   isNeedAnalyzeBundles: true,
 };

@@ -1,4 +1,4 @@
-# Стартовый проект с webpack + react + redux (WRR)
+# Стартовый проект с webpack + react + redux 
 
 
 ## Парадигма
@@ -7,7 +7,7 @@
 - Используется относительно жёсткий codestyle на базе AirBnb.
 - Перед созданием коммита происходит проверка индексированных js и less
 файлов. При ошибках коммит не происходит, ошибки выводятся в терминал.
-- В hocs, utils находятся частоиспользуемые межпроектные хоки, утилиты.
+- В hocs, hooks, utils находятся частоиспользуемые межпроектные хоки, хуки, утилиты.
 
 
 ## Возможности сборки:
@@ -15,21 +15,19 @@
 - масштабируемая структура проекта.
 - CLI-команды для генерации новых компонентов, stories, hocs, разделов store.
 - [storybook](https://storybook.js.org/docs/guides/guide-react/) + библиотека базовых компонентов.
-- поддержка source-map для js, css файлов.
 - сборка js файлов, как для современных (попадут только те полифилы, которые не поддерживаются),
   так и устаревших браузеров.
 - [AirBnb codestyle](https://github.com/airbnb/javascript/tree/master/react).
 - автоформатирование кода ([eslint](https://eslint.org/)).
-- поддержка [less](http://lesscss.org/), css-modules.
+- поддержка [less](http://lesscss.org/).
 - [stylelint](https://github.com/stylelint/stylelint).
 - настроенные тесты ([jest](https://jestjs.io/) + [enzyme](https://airbnb.io/enzyme/)).
 - сборка svg-спрайтов.
 - автогенерация React-компонента при импорте svg-файла.
 - конвертирование изображений в base64 формат.
-- сжатие изображений + поддержка генерации webp (production сборка).
 - минификация html, css, js (production сборка).
 - поиск неиспользуемых файлов.
-- анализ размеров бандла.
+- анализ содержимого js бандла.
 - деплой на gh-pages.
 
 
@@ -45,60 +43,53 @@
 
 ## Настройка webpack
 
-Все основные настройки находятся в файле `webpack.settings.js`.
-
-`name` - название проекта.
-
-`copyright` - разработчик проекта, лицензия.
+Все основные настройки находятся в файле `project.settings.js`.
 
 `pageTitle` - заголовок html-страницы.
 
-`paths` - пути, используемые в `webpack.config.js`.
+`publicPath`
+- `develop` - путь при dev-разработке (по умолчанию `/`).
+- `production` - путь до проекта на сервере (по умолчанию `/`).
 
-`urls`
-- `publicPath` - путь при dev-разработке (по умолчанию `/`).
-- `serverPath` - путь до проекта на сервере.
+`devServer`
+- `port` - порт, на котором будет запускаться приложение.
+- `proxyConfig` - прокси-настройки для обращения к backend API.
 
-`entry` - точка входа.
-
-`base64ImageLimit` - размер jpg/jpeg/png-изображений, ниже которого будут преобразованы в формат base64.
-
-`devServerConfig` - настройки dev-сервера.
-
-`resolve`
 - `alias` - [webpack-алиасы](https://webpack.js.org/configuration/resolve/#resolvealias), используемые на проекте.
+
 - `extensions` - файлы, которые поддерживаются на проекте.
 
-`storybook`
-- `alias` - webpack-алиасы для storybook.
-
-`debugTargetBrowsers` - если `true`, в консоль будут выведены подключаемые полифилы, на основе списка браузеров browserslist, указанных в package.json.
+- `modules` - для внутри-проектных библиотек / npm-модулей.
 
 `checkUnusedFiles` - если `true`, проект будет проверен, есть ли неиспользуемые файлы.
 
-`analyzeBundles` - если `true`, будет сформирован файл с размерами js-бандлов. Предварительно необходимо запустить скрипт `npm start`, после успешной сборки остановить его. Далее запустить скрипт `npm run build-report`.
+`analyzeBundles` - если `true`, будет сформирован файл с размерами js-бандлов. Предварительно необходимо запустить скрипт `npm run build:modern` / `npm run build:old`, после успешной сборки остановить его. Далее запустить скрипт `npm run build-report`.
 
 
 ## Команды
 
 ```bash
-npm start                # запуск сервера разработки (для browserslist - modernBrowsers)
-npm start:fallback       # запуск сервера разработки (для browserslist - legacyBrowsers)
-npm run build            # сборка (для browserslist - modernBrowsers), без запуска сервера разработки
-npm run build:fallback   # сборка (для browserslist - legacyBrowsers), без запуска сервера разработки
-npm run predeploy        # запуск сборки
-npm run deploy           # отправка содержимого папки сборки на gh-pages (нужен репозиторий на github.com)
-npm run generate         # генерация компонентов, stories, hocs, раздела store
-npm run storybook        # запуск сервера разработки storybook
-npm run storybook:build  # сборка storybook
-npm run lint:js          # проверить js-файлы
-npm run lint:styles      # проверить less-файлы
-npm run format:js        # отформатировать js-файлы
-npm run format:styles    # отформатировать less-файлы
-npm test                 # запуск тестов
-npm run test:watch       # запуск тестов в watch-режиме
-npm run test:coverage    # проверить покрытие кода тестами
-npm run build-report     # сгенерировать страницу с размерами бандлов
+npm start                      # запуск сервера разработки
+npm run build:old              # сборка для устаревших браузеров, без запуска сервера разработки
+npm run build:modern           # сборка для современных браузеров, без запуска сервера разработки
+npm run prod                   # сборка для устаревших и современных браузеров, без запуска сервера разработки
+npm run generate               # генерация компонентов, stories, hocs, раздела store
+npm run lint:scripts           # проверить js-файлы
+npm run format:scripts         # отформатировать js-файлы
+npm run lint:styles            # проверить less-файлы
+npm run format:styles          # отформатировать less-файлы
+npm test                       # запуск тестов
+npm run test:watch             # запуск тестов в watch-режиме
+npm run new:component          # создать новый компонент
+npm run new:stories            # создать stories для компонента
+npm run new:page               # создать новый компонент-страницу
+npm run new:hoc                # создать новый хок
+npm run new:store:section      # создать новый раздел в store
+npm run storybook              # запуск сервера разработки storybook
+npm run storybook:build        # сборка storybook
+npm run predeploy              # запуск сборки
+npm run deploy                 # отправка содержимого папки сборки на gh-pages (нужен репозиторий на github.com)
+npm run build-report           # сгенерировать страницу с размерами бандлов
 ```
 
 
@@ -177,7 +168,7 @@ src/                     # Исходники
 - `UI` - установленные фильтры, сортировки и т.п.
 - `app` - данные пользователя, глобальные ошибки и т.п.
 
-В каждом из вышеописанных разделов с помощью `npm run generate store` можно создать подраздел, который будет иметь [ducks-структуру](https://www.freecodecamp.org/news/scaling-your-redux-app-with-ducks-6115955638be/).
+В каждом из вышеописанных разделов с помощью `npm run new:store:section` можно создать подраздел, который будет иметь [ducks-структуру](https://www.freecodecamp.org/news/scaling-your-redux-app-with-ducks-6115955638be/).
 
 ## Routing
 
@@ -191,7 +182,7 @@ src/                     # Исходники
 Используемый постпроцессинг:
 - [autoprefixer](https://github.com/postcss/autoprefixer)
 
-### CSS-module + Less
+### Less
 
 Все глобальные проектные стили находятся в `src/styles`:
 - `breakpoints.less` - контрольные точки для адаптивного/резинового дизайна.
@@ -204,7 +195,6 @@ src/                     # Исходники
 - `reset.less` - сброс браузерных стилей.
 - `typography.less` - базовая типографика.
 
-При production-сборке все CSS-классы буду минифицированы.
 
 ### Стилевой codestyle
 
@@ -225,25 +215,6 @@ src/                     # Исходники
     - Сторонние вложенные селекторы
 
 
-## Скрипты
-
-Точка входа (`src/index.js`) обрабатывается webpack-ом. 
-
-`Важно!` babel-loader в webpack подключает полифилы на основе списка браузеров в `browserslist` в package.json, поэтому важно указывать именно актуальные браузеры, т.к. в последних версиях многие ES-фичи уже поддерживаются и не требуют полифилов.
-
-Если необходимо поддерживать современные и устаревшие браузеры, и при этом для современных браузеров загружать оптимизированный js-бандл, а для устаревших - загружать js-бандл с полифилами, нужно заполнить `modernBrowsers` и `legacyBrowsers` в `browserslist` в package.json и запустить скрипт `npm run build:fallback`. 
-
-В итоге в html файле будут созданы два скрипта (один с `type="module"` - загрузиться только в современных браузерах; второй - параметром `nomodule` - загрузиться только в устаревших браузерах). [Подробнее](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) о данном подходе.
-
-При сборке для современных браузеров `npm run build` есть поддержка разделения js кода на следующие бандлы:
-- код приложения.
-- библиотеки `react` и `react-dom`.
-- библиотеки `react-redux`, `redux`, `redux-thunk`, `reselect`.
-- остальные библиотеки.
-
-Такое разделение позволит кэшировать у пользователей js-бандлы, и обновлять только соответствующий бандл (например, в случае обновления библиотек). [Подробнее](https://medium.com/hackernoon/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758) о подобном подходе.
-
-
 ## Изображения
 
 Для jpg/jpeg/png-изображений есть возможность трансформации в формат base64, необходимо лишь задать размер изображений, ниже которых будет происходить преобразование в base64.
@@ -252,6 +223,6 @@ src/                     # Исходники
 
 - если иконка используется во многих местах, лучше поместить ее в спрайт. Для этого достаточно поместить svg-файл в `assets/images/icons/sprite`. Для использования в компоненте достаточно импортировать иконку (пример - `import arrow from 'assets/images/icons/sprite/arrow.svg';`), компонент `import Icon from 'components/base/Icon';` и передать в src иконку (пример - `<Icon src={arrow} />`).
 
-- если иконка / изображение используется разово, можно импортировать в формате `import { ReactComponent as Icon } from './icon.inline.svg';` и использовать как обычный react-компонент.
+- если иконка / изображение используется разово, можно импортировать в формате `import { ReactComponent as Icon } from './icon.inline.svg';` и использовать как обычный react-компонент. Для корректной работы лоадера название файла иконки должно быть `название_иконки.inline.svg`.
 
 Сжатие изображений, оптимизация svg происходит только в production-сборке.
