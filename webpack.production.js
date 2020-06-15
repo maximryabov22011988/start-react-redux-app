@@ -83,10 +83,7 @@ module.exports = {
             options: {
               plugins: () => [postcssFlexbugsFixes, autoprefixer({
                 flexbox: 'no-2009',
-                overrideBrowserslist: [
-                  ...browsers,
-                  'not ie < 9', // React не поддерживает IE8
-                ],
+                overrideBrowserslist: browsers,
               })],
             },
           },

@@ -1,6 +1,6 @@
 const { browsers } = require('./browsers');
 
-const developConfig = {
+const baseConfig = {
   presets: [
     '@babel/preset-react',
     ['@babel/preset-env', {
@@ -17,7 +17,6 @@ const developConfig = {
     }],
   ],
   plugins: [
-    'react-hot-loader/babel',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-export-default-from',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
@@ -45,44 +44,16 @@ const jestConfig = {
   ],
 };
 
-const productionConfig = {
-  presets: [
-    '@babel/preset-react',
-    ['@babel/preset-env', {
-      modules: false,
-      loose: true,
-      useBuiltIns: 'usage',
-      corejs: {
-        version: 3,
-        proposals: true,
-      },
-      targets: {
-        browsers,
-      },
-    }],
-  ],
-  plugins: [
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-export-default-from',
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    ['@babel/plugin-proposal-optional-chaining', { loose: true }],
-    ['module:fast-async', { spec: true }],
-  ],
-  env: {
-    production: {
-      plugins: [
-        ['transform-react-remove-prop-types', { removeImport: true }],
-      ],
-    },
-  },
-};
-
-module.exports = function getConfig(api) {
-  if (api.env('development')) {
-    return developConfig;
-  }
+function getConfig(api) {
   if (api.env('test')) {
     return jestConfig;
   }
-  return productionConfig;
-};
+
+  if (api.env('development')) {
+    baseConfig.plugins.push('react-hot-loader/babel');
+  }
+
+  return baseConfig;
+}
+
+module.exports = getConfig;

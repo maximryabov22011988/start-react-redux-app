@@ -11,15 +11,18 @@ const getBaseAPI = (baseURL) => {
 
   const api = axios.create(options);
 
-  const onSuccessRequest = (request) => request;
-  const onFailRequest = (error = {}) => Promise.reject(new Error(error?.response?.data));
-
-  api.interceptors.request.use(onSuccessRequest, onFailRequest);
+  const onSuccessRequest = (config) => config;
+  const onFailureRequest = (error) => Promise.reject(error);
+  api.interceptors.request.use(onSuccessRequest, onFailureRequest);
 
   const onSuccessResponse = (response) => response;
-  const onFailResponse = (error = {}) => Promise.reject(new Error(error?.response?.data));
-
-  api.interceptors.response.use(onSuccessResponse, onFailResponse);
+  const onFailureResponse = (error) => {
+    if (error.response && error.response.data) {
+      return Promise.reject(error.response.data);
+    }
+    return Promise.reject(error.message);
+  };
+  api.interceptors.response.use(onSuccessResponse, onFailureResponse);
 
   return api;
 };
