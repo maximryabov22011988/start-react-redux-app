@@ -31,7 +31,7 @@ const htmlMinify = {
 module.exports = {
   mode: 'production',
   entry: {
-    app: [...polyfills, path.resolve('src', 'index.js')],
+    app: [...polyfills, path.resolve('src', 'index.production.js')],
   },
   output: {
     filename: `${process.env.BROWSERS}_js/[name].[chunkhash].js`,

@@ -38,6 +38,6 @@ module.exports = {
   },
   extensions: ['.jsx', '.js', '.less', '.svg'],
   modules: [],
-  isNeedCheckUnusedFiles: true,
-  isNeedAnalyzeBundles: true,
+  isNeedCheckUnusedFiles: false,
+  isNeedAnalyzeBundles: false,
 };

@@ -1,6 +1,4 @@
-const production = require('./webpack.production');
-const develop = require('./webpack.develop');
+const developConfig = require('./webpack.develop');
+const productionConfig = require('./webpack.production');
 
-module.exports = function getConfig(env) {
-  return env === 'develop' ? develop : production;
-};
+module.exports = process.env.NODE_ENV === 'development' ? developConfig : productionConfig;

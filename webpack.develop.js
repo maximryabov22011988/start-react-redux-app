@@ -30,7 +30,7 @@ const stats = {
 module.exports = {
   mode: 'development',
   entry: {
-    app: ['react-hot-loader/patch', ...polyfills, path.resolve('src', 'index.js')],
+    app: ['react-hot-loader/patch', ...polyfills, path.resolve('src', 'index.develop.js')],
   },
   output: {
     filename: `${process.env.BROWSERS}_js/[name].bundle.js`,

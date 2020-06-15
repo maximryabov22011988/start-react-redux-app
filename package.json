@@ -120,9 +120,9 @@
     ]
   },
   "scripts": {
-    "start": "cross-env BROWSERS=modern webpack-dev-server --env=develop",
-    "build:old": "cross-env BROWSERS=old webpack --env=production --progress",
-    "build:modern": "cross-env BROWSERS=modern webpack --env=production --progress",
+    "start": "cross-env NODE_ENV=development BROWSERS=modern webpack-dev-server",
+    "build:modern": "cross-env NODE_ENV=production BROWSERS=modern webpack --progress",
+    "build:old": "cross-env NODE_ENV=production BROWSERS=old webpack --progress",
     "prod": "rimraf ./dist && npm run build:modern & npm run build:old",
     "clean": "rimraf ./dist",
     "lint:scripts": "eslint --max-warnings=0 --no-ignore src/",
