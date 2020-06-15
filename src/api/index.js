@@ -45,6 +45,11 @@ const makeAPI = (baseURL) => {
     .then((response) => Promise.resolve(response))
     .catch((error) => Promise.reject(error));
 
+  const del = (url, conf = {}) => baseAPI
+    .delete(url, conf)
+    .then((response) => Promise.resolve(response))
+    .catch((error) => Promise.reject(error));
+
   const head = (url, conf = {}) => baseAPI
     .head(url, conf)
     .then((response) => Promise.resolve(response))
@@ -61,7 +66,7 @@ const makeAPI = (baseURL) => {
     .catch((error) => Promise.reject(error));
 
   return {
-    get, post, put, head, options, patch,
+    get, post, put, head, options, patch, delete: del,
   };
 };
 
