@@ -50,7 +50,7 @@
     "error-overlay-webpack-plugin": "0.4.1",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.0.1",
-    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-import-resolver-webpack": "0.12.2",
     "eslint-plugin-babel": "5.3.0",
     "eslint-plugin-compat": "3.7.0",
     "eslint-plugin-import": "2.20.2",
@@ -81,9 +81,10 @@
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "prop-types": "15.7.2",
-    "rimraf": "2.6.3",
+    "react-hot-loader": "4.12.21",
     "react-test-renderer": "16.12.0",
     "redux-devtools-extension": "2.13.8",
+    "rimraf": "2.6.3",
     "storybook-addon-react-docgen": "1.2.28",
     "storybook-react-router": "1.0.8",
     "style-loader": "1.1.1",
@@ -96,8 +97,7 @@
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "3.10.1",
     "webpack-manifest-plugin": "2.2.0",
-    "webpack-merge": "4.2.2",
-    "react-hot-loader": "4.12.21"
+    "webpack-merge": "4.2.2"
   },
   "engines": {
     "node": ">=10.16.0"
@@ -133,7 +133,7 @@
     "generate": "plop",
     "new:component": "plop component",
     "new:stories": "plop story",
-    "new:page": "plop component",
+    "new:page": "plop page",
     "new:hoc": "plop hoc",
     "new:store:section": "plop store",
     "storybook": "cross-env BROWSERS=modern start-storybook",
@@ -141,6 +141,6 @@
     "clean:storybook": "rimraf ./.out",
     "predeploy": "rimraf ./dist && npm run build:modern",
     "deploy": "gh-pages -d dist",
-    "build-report": "webpack-bundle-analyzer --port 47777 dist/stats.json"
+    "build:report": "webpack-bundle-analyzer --port 47777 dist/stats.json"
   }
 }

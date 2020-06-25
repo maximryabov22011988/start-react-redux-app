@@ -11,22 +11,13 @@ module.exports = {
 
   settings: {
     'import/resolver': {
-      alias: {
-        map: [
-          ['^api', './src/api'],
-          ['^assets', './src/assets'],
-          ['^components', './src/components'],
-          ['^constants', './src/constants'],
-          ['^hocs', './src/hocs'],
-          ['^hooks', './src/hooks'],
-          ['^layouts', './src/layouts'],
-          ['^pages', './src/pages'],
-          ['^store', './src/store'],
-          ['^utils', './src/utils'],
-          ['^styles', './src/styles/index.less'],
-        ],
-        extensions: ['.js', '.jsx', '.json', '.less', '.svg']
-      }
+      webpack: {
+        config: {
+          resolve: {
+            modules: ['node_modules', 'src/'],
+          },
+        },
+      },
     },
   },
 
