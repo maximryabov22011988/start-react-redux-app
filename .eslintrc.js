@@ -35,6 +35,8 @@ module.exports = {
   plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex', 'sort-destructure-keys'],
 
   rules: {
+    // оператор всегда впереди при переносе выражений на новую строку
+    'operator-linebreak': [ERROR, 'before'],
     // перенос строки, отключен т.к. в windows и unix системах различное поведение
     'linebreak-style': OFF,
     // это правило устарело в ESLint v7.0.0
@@ -53,6 +55,8 @@ module.exports = {
     // базовый отступ 2 пробела, у case 2 пробела от switch
     indent: [ERROR, 2, {
       SwitchCase: 1,
+      MemberExpression: 1,
+      ignoredNodes: ['JSXElement'],
     }],
     // длина строки
     'max-len': [WARN, { code: 150 }],
@@ -60,7 +64,7 @@ module.exports = {
     'quote-props': [ERROR, 'as-needed'],
     // минимальная длина имен (по-умолчанию от 2 символов)
     'id-length': [ERROR, {
-      exceptions: ['_', 'i', 'j', 'k']
+      exceptions: ['_', 'i', 'j', 'x', 'y', 'z', 'a', 'b', 'e']
     }],
     // наименования переменных, функций и тд только в camelСase
     camelcase: [
@@ -153,9 +157,10 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': OFF,
     // разрешаем интерактивные события на статических элементах (div, span)
     'jsx-a11y/no-static-element-interactions': OFF,
+    'jsx-a11y/no-noninteractive-element-interactions': OFF,
     // устаревшее правила
     'jsx-a11y/label-has-for': OFF,
-    // устаревшее правила
+    // отключена обязательная привязка label к полю ввода
     'jsx-a11y/label-has-associated-control': OFF,
 
     // в каких файлах может содержаться jsx
@@ -172,6 +177,10 @@ module.exports = {
     'react/jsx-props-no-spreading': [ERROR, {
       html: 'ignore',
       exceptions: ['Component', 'Route', 'RouterLink'],
+    }],
+    // многострочная jsx разметка, кроме единственного вложенного элемента
+    'react/jsx-one-expression-per-line': [ERROR, {
+      allow: 'single-child'
     }],
 
     // сортировка ключей при деструктуризации
