@@ -6,6 +6,7 @@ import Page404 from 'pages/Page404';
 import Modal from 'components/base/Modal';
 import Icon from 'components/base/Icon';
 import Button from 'components/base/Button';
+import Link from 'components/base/Link';
 import Image from 'components/base/Image';
 import Input from 'components/base/Input';
 import useModalControl from 'hooks/useModalControl';
@@ -63,6 +64,8 @@ const App = () => {
             {/* Test HMR */}
             <Button onClick={() => setCount((prev) => prev + 1)}>Test 12</Button>
             <span>{count}</span>
+
+            <Link url="https://www.google.com/">Link</Link>
 
             <Input
               label="Label"

@@ -119,9 +119,9 @@
     ]
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development BROWSERS=modern webpack-dev-server",
-    "build:modern": "cross-env NODE_ENV=production BROWSERS=modern webpack --progress",
-    "build:old": "cross-env NODE_ENV=production BROWSERS=old webpack --progress",
+    "start": "cross-env NODE_ENV=development BROWSERS=modern BACKEND_URL=https://some.url.ru webpack-dev-server",
+    "build:modern": "cross-env NODE_ENV=production BROWSERS=modern BACKEND_URL=https://some.url.ru webpack --progress",
+    "build:old": "cross-env NODE_ENV=production BROWSERS=old BACKEND_URL=https://some.url.ru webpack --progress",
     "prod": "rimraf ./dist && npm run build:modern & npm run build:old",
     "clean": "rimraf ./dist",
     "lint:scripts": "eslint --max-warnings=0 --no-ignore src/",

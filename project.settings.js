@@ -8,14 +8,13 @@ module.exports = {
   },
   devServer: {
     port: 7777,
-    proxyConfig: {
-      '/api': {
-        target: 'https://',
-        auth: 'login:password',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    proxyConfig: [{
+      context: ['/api_1', '/api_2', '/api_3'],
+      target: process.env.BACKEND_URL,
+      auth: 'login:password',
+      changeOrigin: true,
+      secure: false,
+    }],
   },
   alias: {
     webpack: {

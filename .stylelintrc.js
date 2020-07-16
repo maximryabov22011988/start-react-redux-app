@@ -154,6 +154,7 @@ module.exports = {
     'no-missing-end-of-source-newline': true,
 
     'order/order': [
+      'less-mixins',
       'declarations',
       {
         type: 'at-rule',
@@ -191,7 +192,6 @@ module.exports = {
         type: 'rule',
         selector: '^.',
       },
-      'rules',
     ],
 
     'order/properties-order': [

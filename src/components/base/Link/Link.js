@@ -37,13 +37,14 @@ const Link = ({
     'link--button': theme === 'button',
   });
 
-  const Component = (anchor || url) ? 'a' : RouterLink;
+  const isNativeLink = anchor || url;
+  const Component = (isNativeLink) ? 'a' : RouterLink;
 
   return (
     <Component
       className={classes}
       {...{
-        [(anchor || url) ? 'href' : 'to']: isDisabled ? undefined : anchor || url || to,
+        [(isNativeLink) ? 'href' : 'to']: isDisabled ? undefined : anchor || url || to,
       }}
       {...props}
     >
