@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 
 import Button from 'components/base/Button';
 
-import Modal from './Modal';
+import Dialog from './Dialog';
 
 const store = new Store({
   isOpen: false,
@@ -23,15 +23,15 @@ const handleClose = () => {
   });
 };
 
-storiesOf('Components|Base/Modal', module).add('default', () => (
+storiesOf('Components|Base/Dialog', module).add('default', () => (
   <State store={store}>
     {(props) => [
       <>
-        <Button onClick={handleOpen}>Open modal</Button>
-        <Modal
-          actions="Modal buttons ..."
-          header="Header"
+        <Button onClick={handleOpen}>Open dialog</Button>
+        <Dialog
+          footer="Dialog buttons ..."
           isOpen={props.isOpen}
+          title="Title"
           onClose={handleClose}
         >
           <div style={{ marginBottom: 30 }}>
@@ -49,7 +49,7 @@ storiesOf('Components|Base/Modal', module).add('default', () => (
             infomediaries. Rapidiously generate fully researched architectures
             for fully researched applications.
           </div>
-        </Modal>
+        </Dialog>
       </>,
     ]}
   </State>

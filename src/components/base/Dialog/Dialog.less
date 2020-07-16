@@ -1,0 +1,62 @@
+@import "~styles";
+
+.rc-dialog {
+  @media (max-width: @screen-md - 1) {
+    top: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    margin: 0 !important;
+  }
+
+  &-title {
+    .h3();
+  }
+
+  &-mask {
+    @media (max-width: @screen-md - 1) {
+      display: none;
+    }
+  }
+
+  &-close {
+    .transition(opacity);
+    opacity: 1;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      opacity: 1;
+
+      svg {
+        fill: @primary;
+      }
+    }
+  }
+
+  &-content {
+    @media (max-width: @screen-md - 1) {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+  }
+
+  &-header,
+  &-footer {
+    @media (max-width: @screen-md - 1) {
+      flex: 0 0 auto;
+    }
+  }
+
+  &-body {
+    background-color: @white;
+
+    @media (max-width: @screen-md - 1) {
+      flex: 1 0 auto;
+    }
+  }
+}

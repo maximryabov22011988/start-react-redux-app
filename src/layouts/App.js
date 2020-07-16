@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import MainPage from 'pages/MainPage';
 import Page404 from 'pages/Page404';
-import Modal from 'components/base/Modal';
+import Dialog from 'components/base/Dialog';
 import Icon from 'components/base/Icon';
 import Button from 'components/base/Button';
 import Link from 'components/base/Link';
@@ -18,6 +18,7 @@ import keyCode from 'constants/keyCode';
 
 import { ReactComponent as ArrowIcon } from 'assets/images/icons/arrow.inline.svg';
 import arrow from 'assets/images/icons/sprite/arrow.svg';
+
 import 'normalize.css/normalize.css';
 import '../styles/fonts.less';
 import '../styles/reset.less';
@@ -85,25 +86,31 @@ const App = () => {
             <Image alt="" height={270} src={testImage} width={480} />
             {/* Test use jpg image */}
 
-            {/* Test use Modal */}
-            <Button onClick={openModal(modalName.LOGIN)}>Open login modal</Button>
-            <Modal
-              actions="Login modal buttons ..."
+            {/* Test use Dialog */}
+            <div style={{ marginTop: 200 }}>
+              <Button onClick={openModal(modalName.LOGIN)}>Open login modal</Button>
+            </div>
+
+            <Dialog
+              footer="Buttons ..."
               isOpen={modalsState.isOpenLogin}
+              title="Title"
               onClose={closeModal(modalName.LOGIN)}
             >
-              Login content
-            </Modal>
+              <p>Login content</p>
+              <div style={{ height: 200 }} />
+            </Dialog>
 
             <Button onClick={openModal(modalName.REGISTRATION)}>Open registration modal</Button>
-            <Modal
-              actions="Registration modal buttons ..."
-              header="Registration"
+            <Dialog
+              footer="Buttons ..."
               isOpen={modalsState.isOpenRegistration}
+              title="Title"
               onClose={closeModal(modalName.REGISTRATION)}
             >
-              Registration content
-            </Modal>
+              <p>Registration content</p>
+              <div style={{ height: 1000 }} />
+            </Dialog>
             {/* Test use Modal */}
           </>
         </Route>
