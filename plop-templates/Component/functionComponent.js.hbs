@@ -10,13 +10,13 @@ const propTypes = {
 
 const defaultProps = {};
 
-function {{pascalCase name}}({ className }) {
+const {{pascalCase name}} = ({ className }) => {
   return (
-    <div className={cn('{{dashCase cssClass}}', className)}>
+    <div className={cn(className, '{{dashCase cssClass}}')}>
       {{pascalCase name}}
     </div>
   );
-}
+};
 
 {{pascalCase name}}.propTypes = propTypes;
 {{pascalCase name}}.defaultProps = defaultProps;

@@ -5,7 +5,7 @@ import getDisplayName from 'hocs/getDisplayName';
 
 import './{{camelCase name}}.less';
 
-function {{camelCase name}}(Component) {
+const {{camelCase name}} = (Component) => {
   const propTypes = {};
 
   const defaultProps = {};
@@ -26,9 +26,7 @@ function {{camelCase name}}(Component) {
     }
   }
 
-  const componentName = getDisplayName(Component);
-  {{pascalCase name}}.displayName = `{{camelCase name}}(${componentName})`;
-
+  {{pascalCase name}}.displayName = `{{camelCase name}}(${getDisplayName(Component);})`;
   {{pascalCase name}}.propTypes = propTypes;
   {{pascalCase name}}.defaultProps = defaultProps;
 

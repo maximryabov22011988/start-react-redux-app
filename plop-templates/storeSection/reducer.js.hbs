@@ -3,10 +3,11 @@ import types from './types';
 
 const initialState = {};
 
-function reducer(state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    default:
+    default: {
       return state;
+    }
   }
 }
 

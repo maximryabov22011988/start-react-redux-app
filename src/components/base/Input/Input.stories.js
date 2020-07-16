@@ -17,6 +17,8 @@ const store = new Store({
   value6: '',
 });
 
+const InputWrapper = ({ children }) => <div style={{ width: 400 }}>{children}</div>;
+
 storiesOf('Components|Base/Input', module).add('no label', () => (
   <InputWrapper>
     <State store={store}>
@@ -124,7 +126,3 @@ storiesOf('Components|Base/Input', module).add('disable', () => (
     </State>
   </InputWrapper>
 ));
-
-function InputWrapper({ children }) {
-  return <div style={{ width: 400 }}>{children}</div>;
-}
