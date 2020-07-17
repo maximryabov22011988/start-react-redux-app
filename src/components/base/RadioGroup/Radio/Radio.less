@@ -40,6 +40,7 @@
   &__custom-radio-input {
     .circle(@radio-size);
     position: relative;
+    flex: 0 0 @radio-size;
     margin-right: 10px;
 
     &::before,
@@ -54,24 +55,30 @@
       top: 0;
       left: 0;
       z-index: @zIndex-base;
+      min-width: @radio-size;
+      min-height: @radio-size;
       background-color: @white;
       border: 1px solid @border-color;
     }
 
     &::after {
-      .transition(transform);
+      .transition(opacity; 400ms);
       .circle(10px);
       top: 50%;
       left: 50%;
       z-index: @zIndex-icons;
+      min-width: 10px;
+      min-height: 10px;
       background-color: @dot-color;
-      transform: translate(calc(50% - 10px), -50%) scale(0);
+      transform: translate(-5px, -5px);
+      opacity: 0;
     }
   }
 
   &__text {
     .text(@font-size--md; 1.4; @color: @label-color);
     .transition(color);
+    flex: 0 1 auto;
     padding-top: 1px;
   }
 
@@ -90,7 +97,7 @@
       }
 
       &::after {
-        transform: translate(calc(50% - 10px), -50%) scale(1);
+        opacity: 1;
       }
     }
   }
