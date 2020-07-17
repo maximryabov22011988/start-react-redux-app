@@ -1,0 +1,266 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation|Help" />
+
+
+
+
+## Как добавить компонент в storybook
+
+1) Создать файл `ComponentName.stories.js`.
+
+2) Импортировать React для использования JSX-синтаксиса.
+
+```js
+import React from 'react';
+```
+
+3) Импортировать компонент _(файл со stories лучше класть рядом с компонентом)_.
+
+```js
+import ComponentName from './ComponentName';
+```
+
+4) Добавить базовое описание.
+
+```js
+export default {
+  title: 'Components|Base/Component',
+  component: Component,
+  id: 'demo-component-id',
+};
+```
+
+5) Добавить stories.
+
+```js
+export const Default = () => <ComponentName />;
+Default.story = {
+  name: 'Default',
+};
+```
+
+Компоненты можно группировать с помощью символа `|`.
+
+```js
+export default {
+  title: 'GroupName|ComponentName',
+  ...
+};
+```
+
+Компоненты можно группировать в папки с помощью символа `/`.
+
+```js
+export default {
+  title: 'GroupName|FolderName/ComponentName',
+  ...
+};
+```
+
+Добавить к stories декоратор можно с помощью поля `decorators`.
+
+```js
+export const Default = () => <ComponentName />; // Функция, которая должны возвращать компонент
+Default.story = {
+  name: 'Default', // Описание модификации компонента
+  decorators: [(storyFn) => <div style={{ color: 'red' }}>{storyFn()}</ div>]
+};
+```
+
+
+
+
+## Как заполнить вкладку Knobs?
+
+1) Создать мапы title и defaultValue.
+
+```js
+const title = {};
+
+const defaultValue = {};
+```
+
+В `title` будут храниться все заголовки.
+
+В `defaultValue` будут храниться все дефолтные значения.
+
+2) Импортировать withKnobs.
+
+```js
+import { withKnobs } from '@storybook/addon-knobs/react';
+```
+
+3) Добавить к stories декоратор `withKnobs` в поле `decorators`.
+
+```js
+export const Default = () => <ComponentName />;
+Default.story = {
+  name: 'Default',
+  decorators: [withKnobs]
+};
+```
+
+4) Для создания вкладок необходимо создать мапу внутри stories.
+
+```js
+export const Default = () => {
+  const tabId = {
+    TAB_1: 'Tab 1',
+    TAB_2: 'Tab 2',
+  };
+
+  return <ComponentName />;
+};
+Default.story = {
+  name: 'Default',
+  decorators: [withKnobs]
+};
+```
+
+5) Для примера создадим интерактивное представления для props `isShow`.
+
+Импортируем `boolean`
+
+```js
+import { withKnobs, boolean } from '@storybook/addon-knobs/react';
+```
+
+запишем заголовок в `title`
+
+```js
+const title = {
+  IS_SHOW: 'Show component'
+};
+```
+
+запишем заголовок в `defaultValue`
+
+```js
+const defaultValue = {
+  IS_SHOW: false
+};
+```
+
+использование в stories
+
+```js
+export const Default = () => {
+  const tabId = {
+    TAB_1: 'Tab 1',
+    TAB_2: 'Tab 2',
+  };
+
+  /*
+   * tabId.TAB_1 необязательный параметр (поместит управление props isShow в Tab 1).
+   * Для отображения второй вкладки необходимо создать интерактивное управление
+   * еще одним props и положить в tabId.TAB_2
+  */
+  const isShow = boolean(title.IS_SHOW, defaultValue.IS_SHOW, tabId.TAB_1);
+
+  return <ComponentName isShow={isShow} />;
+};
+Default.story = {
+  name: 'Default',
+  decorators: [withKnobs]
+};
+```
+
+[Еще примеры](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
+
+
+
+
+## Как заполнить вкладку Actions?
+
+1) Импортировать action.
+
+```js
+import { action } from '@storybook/addon-actions';
+```
+
+2) Добавить мапу actions.
+
+```js
+// Event handlers
+const actions = {
+  onClick: action('onClick'),
+  onFocus: action('onFocus'),
+  onBlur: action('onBlur'),
+};
+```
+
+3) Добавить actions компоненту в stories.
+
+```js
+export const Default = () => <ComponentName {...actions} />;
+Default.story = {
+  name: 'Default',
+};
+```
+
+
+
+
+## Как добавить state в stories
+
+1) Импортировать State и Store.
+
+```js
+import { State, Store } from '@sambego/storybook-state';
+```
+
+2) Создать store.
+
+```js
+const store = new Store({
+  value: '',
+});
+```
+
+3) Обернуть компонент компонентом State.
+
+```js
+export const Default = () => (
+  <State store={store}>
+    {(props) => [
+      <Component {...actions} value={props.value} />
+    ]}
+  </State>
+);
+Default.story = {
+  name: 'Default',
+};
+```
+
+Для получения данных - `store.get(key)`, где key - ключ в store, в строковом формате.
+
+Для изменения данных - `store.set({ key: value })`, где key - ключ в store; value - новое значение.
+
+Для переключения значений (например: модальные окна, чекбоксы):
+
+```js
+const acitons = {
+  onChange: () => {
+    store.set({ isChecked: !store.get('isChecked') });
+  },
+};
+```
+
+
+
+
+## Как добавить описание props в stories
+
+1) Открыть файл с компонентом.
+
+2) Добавить описание пропсов компоненту с помощью PropTypes. На основании этого будет автоматически сформирована таблица описания пропсов.
+
+3) Если есть необходимость добавить дополнительное описание в столбец description, нужно добавить комментарий перед пропсом, например:
+
+```js
+const propTypes = {
+  /** C помощью тегов picture/source */
+  isSupportedWebp: PropTypes.string,
+};
+```
