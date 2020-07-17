@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { storiesOf } from '@storybook/react';
 
 const howAddStories = `
@@ -295,54 +296,52 @@ const liStyles = {
   marginBottom: 12,
 };
 
+const TabsDesc = () => (
+  <div style={wrapStyles}>
+    <ul style={ulStyles}>
+      <li style={liStyles}>
+          Notes - текстовое описание в строчном формате, либо *.md файла.
+      </li>
+      <li style={liStyles}>
+          Knobs - интерактивное представление API компонента.
+      </li>
+      <li style={liStyles}>Props - описание props компонента.</li>
+      <li style={liStyles}>Actions - обработка аргументов любых handlers.</li>
+    </ul>
+  </div>
+);
+
 storiesOf(
   'Documentation|Intro',
-  module
+  module,
 ).add('Как добавить компонент в storybook', TabsDesc, { notes: howAddStories });
 
 storiesOf('Documentation|Intro', module).add(
   'Как заполнить вкладку Knobs?',
   TabsDesc,
-  { notes: howAddInfoToKnobs }
+  { notes: howAddInfoToKnobs },
 );
 
 storiesOf('Documentation|Intro', module).add(
   'Как заполнить вкладку Props?',
   TabsDesc,
-  { notes: howAddInfoToProps }
+  { notes: howAddInfoToProps },
 );
 
 storiesOf('Documentation|Intro', module).add(
   'Как заполнить вкладку Actions?',
   TabsDesc,
-  { notes: howAddInfoToActions }
+  { notes: howAddInfoToActions },
 );
 
 storiesOf('Documentation|Intro', module).add(
   'Как заполнить вкладку Notes?',
   TabsDesc,
-  { notes: howAddInfoToNotes }
+  { notes: howAddInfoToNotes },
 );
 
 storiesOf('Documentation|Intro', module).add(
   'Как добавить state в stories?',
   TabsDesc,
-  { notes: howAddStateToStories }
+  { notes: howAddStateToStories },
 );
-
-function TabsDesc() {
-  return (
-    <div style={wrapStyles}>
-      <ul style={ulStyles}>
-        <li style={liStyles}>
-          Notes - текстовое описание в строчном формате, либо *.md файла.
-        </li>
-        <li style={liStyles}>
-          Knobs - интерактивное представление API компонента.
-        </li>
-        <li style={liStyles}>Props - описание props компонента.</li>
-        <li style={liStyles}>Actions - обработка аргументов любых handlers.</li>
-      </ul>
-    </div>
-  );
-}

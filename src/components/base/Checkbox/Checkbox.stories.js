@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
-import { storiesOf } from '@storybook/react';
 
 import Checkbox from './Checkbox';
 
@@ -17,15 +16,31 @@ const handleChange = (checkboxNumber) => () => store.set({
   [`checkbox${checkboxNumber}`]: !store.get(`checkbox${checkboxNumber}`),
 });
 
-storiesOf('Components|Base/Checkbox', module).add('no label', () => (
+export default {
+  title: 'Components|Base/Checkbox',
+  component: Checkbox,
+  id: 'demo-checkbox-id',
+  parameters: {
+    props: {
+      propTables: [
+        Checkbox,
+      ],
+    },
+  },
+};
+
+export const NoLabel = () => (
   <State store={store}>
     {(props) => [
       <Checkbox isChecked={props.checkbox1} onChange={handleChange(1)} />,
     ]}
   </State>
-));
+);
+NoLabel.story = {
+  name: 'no label',
+};
 
-storiesOf('Components|Base/Checkbox', module).add('with label', () => (
+export const WithLabel = () => (
   <State store={store}>
     {(props) => [
       <Checkbox isChecked={props.checkbox2} onChange={handleChange(2)}>
@@ -33,8 +48,15 @@ storiesOf('Components|Base/Checkbox', module).add('with label', () => (
       </Checkbox>,
     ]}
   </State>
-));
+);
+WithLabel.story = {
+  name: 'with label',
+};
 
-storiesOf('Components|Base/Checkbox', module).add('disabled', () => (
+
+export const Disabled = () => (
   <State store={store}>{() => [<Checkbox isDisabled>Label</Checkbox>]}</State>
-));
+);
+Disabled.story = {
+  name: 'disabled',
+};

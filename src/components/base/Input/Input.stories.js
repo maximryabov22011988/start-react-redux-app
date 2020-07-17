@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
-import { storiesOf } from '@storybook/react';
 
-import Input, { InputWithHelperText } from './index';
+import Input, { InputWithHelperText, InputWithoutHandler } from './index';
 
 import 'resetStyles';
 import 'globalStyles';
@@ -19,7 +18,19 @@ const store = new Store({
 
 const InputWrapper = ({ children }) => <div style={{ width: 400 }}>{children}</div>;
 
-storiesOf('Components|Base/Input', module).add('no label', () => (
+export default {
+  title: 'Components|Base/Input',
+  component: InputWithHelperText,
+  id: 'demo-input-id',
+  parameters: {
+    props: {
+      propTables: [InputWithoutHandler],
+      propTablesExclude: [InputWithHelperText, InputWrapper],
+    },
+  },
+};
+
+export const NoLabel = () => (
   <InputWrapper>
     <State store={store}>
       {(props) => [
@@ -32,9 +43,12 @@ storiesOf('Components|Base/Input', module).add('no label', () => (
       ]}
     </State>
   </InputWrapper>
-));
+);
+NoLabel.story = {
+  name: 'no label',
+};
 
-storiesOf('Components|Base/Input', module).add('no value', () => (
+export const NoValue = () => (
   <InputWrapper>
     <State store={store}>
       {(props) => [
@@ -48,28 +62,31 @@ storiesOf('Components|Base/Input', module).add('no value', () => (
       ]}
     </State>
   </InputWrapper>
-));
-
-storiesOf('Components|Base/Input', module).add(
-  'with label and no value',
-  () => (
-    <InputWrapper>
-      <State store={store}>
-        {(props) => [
-          <Input
-            label="Label"
-            value={props.value3}
-            onChange={(value) => {
-              store.set({ value3: value });
-            }}
-          />,
-        ]}
-      </State>
-    </InputWrapper>
-  ),
 );
+NoValue.story = {
+  name: 'no value',
+};
 
-storiesOf('Components|Base/Input', module).add('with label and value', () => (
+export const WithLabelAndNoValue = () => (
+  <InputWrapper>
+    <State store={store}>
+      {(props) => [
+        <Input
+          label="Label"
+          value={props.value3}
+          onChange={(value) => {
+            store.set({ value3: value });
+          }}
+        />,
+      ]}
+    </State>
+  </InputWrapper>
+);
+WithLabelAndNoValue.story = {
+  name: 'with label and no value',
+};
+
+export const WithLabelAndValue = () => (
   <InputWrapper>
     <State store={store}>
       {(props) => [
@@ -83,9 +100,12 @@ storiesOf('Components|Base/Input', module).add('with label and value', () => (
       ]}
     </State>
   </InputWrapper>
-));
+);
+WithLabelAndValue.story = {
+  name: 'with label and value',
+};
 
-storiesOf('Components|Base/Input', module).add('with helper text', () => (
+export const WithHelperText = () => (
   <InputWrapper>
     <State store={store}>
       {(props) => [
@@ -100,9 +120,12 @@ storiesOf('Components|Base/Input', module).add('with helper text', () => (
       ]}
     </State>
   </InputWrapper>
-));
+);
+WithHelperText.story = {
+  name: 'with helper text',
+};
 
-storiesOf('Components|Base/Input', module).add('error', () => (
+export const Error = () => (
   <InputWrapper>
     <State store={store}>
       {(props) => [
@@ -117,12 +140,18 @@ storiesOf('Components|Base/Input', module).add('error', () => (
       ]}
     </State>
   </InputWrapper>
-));
+);
+Error.story = {
+  name: 'error',
+};
 
-storiesOf('Components|Base/Input', module).add('disable', () => (
+export const Disable = () => (
   <InputWrapper>
     <State store={store}>
       {() => [<Input isDisabled label="Label" value="Some value" />]}
     </State>
   </InputWrapper>
-));
+);
+Disable.story = {
+  name: 'disable',
+};

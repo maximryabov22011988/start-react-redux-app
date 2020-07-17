@@ -3,8 +3,17 @@ const path = require('path');
 const projectSettings = require('../project.settings');
 
 module.exports = {
+  stories: ['../src/components/**/*.stories.js', './*.stories.js'],
+  addons: [
+    '@storybook/addon-notes/register',
+    '@storybook/addon-knobs/register',
+    'storybook-addon-react-docgen/register',
+    '@storybook/addon-actions/register',
+  ],
   webpackFinal: (config) => {
-    config.module.rules = config.module.rules.map((rule) => {
+    const customConfig = config;
+
+    customConfig.module.rules = customConfig.module.rules.map((rule) => {
       // Отключаем дефолтную обработку svg, т.к. конфликует с svgr
       if (rule.test.test('.svg')) {
         const newRule = rule;
@@ -13,7 +22,7 @@ module.exports = {
       }
 
       // Переопределяем обработку css, т.к. не корректно обрабатывает стили из node_modules
-      if (rule.test.test('.less') || rule.test.test('.css')) {
+      if (rule.test.test('.css')) {
         return {
           test: /\.(less|css)$/,
           use: [
@@ -32,7 +41,7 @@ module.exports = {
             },
           ],
           exclude: /node_modules\/(?!(rc-dialog))/,
-        }
+        };
       }
 
       return rule;
@@ -54,13 +63,12 @@ module.exports = {
       },
     ]);
 
-    config.resolve.alias = Object.assign(
-        {},
-        config.resolve.alias,
-        projectSettings.alias.webpack,
-        projectSettings.alias.storybook
-    );
+    customConfig.resolve.alias = {
+      ...customConfig.resolve.alias,
+      ...projectSettings.alias.webpack,
+      ...projectSettings.alias.storybook,
+    };
 
-    return config;
+    return customConfig;
   },
 };

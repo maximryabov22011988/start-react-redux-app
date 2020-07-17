@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
-import StoryRouter from 'storybook-react-router';
 
 import Link from './Link';
 
@@ -13,34 +11,44 @@ const acitons = {
   onClick: action('onClick'),
 };
 
-storiesOf('Components|Base/Link', module)
-  .addDecorator(StoryRouter())
-  .add('text', () => (
-    <Link {...acitons} anchor="#">
-      Link
-    </Link>
-  ));
+export default {
+  title: 'Components|Base/Link',
+  component: Link,
+  id: 'demo-link-id',
+};
 
-storiesOf('Components|Base/Link', module)
-  .addDecorator(StoryRouter())
-  .add('text disabled', () => (
-    <Link {...acitons} isDisabled anchor="#">
-      Link
-    </Link>
-  ));
+export const Text = () => (
+  <Link {...acitons} anchor="#">
+        Link
+  </Link>
+);
+Text.story = {
+  name: 'text',
+};
 
-storiesOf('Components|Base/Link', module)
-  .addDecorator(StoryRouter())
-  .add('button', () => (
-    <Link {...acitons} anchor="#" theme="button">
-      Link
-    </Link>
-  ));
+export const TextDisabled = () => (
+  <Link {...acitons} isDisabled anchor="#">
+        Link
+  </Link>
+);
+TextDisabled.story = {
+  name: 'text disabled',
+};
 
-storiesOf('Components|Base/Link', module)
-  .addDecorator(StoryRouter())
-  .add('button disabled', () => (
-    <Link {...acitons} isDisabled anchor="#" theme="button">
-      Link
-    </Link>
-  ));
+export const Button = () => (
+  <Link {...acitons} anchor="#" theme="button">
+        Link
+  </Link>
+);
+Button.story = {
+  name: 'button',
+};
+
+export const ButtonDisabled = () => (
+  <Link {...acitons} isDisabled anchor="#" theme="button">
+        Link
+  </Link>
+);
+ButtonDisabled.story = {
+  name: 'button disabled',
+};

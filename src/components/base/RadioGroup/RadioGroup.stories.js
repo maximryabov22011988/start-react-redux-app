@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
-import { storiesOf } from '@storybook/react';
 
 import Radio from './Radio';
 import RadioGroup from './RadioGroup';
@@ -18,7 +17,20 @@ const handleChange = (radioGroupNumber) => (selectedValues) => store.set({
   [`selectedValues${radioGroupNumber}`]: selectedValues,
 });
 
-storiesOf('Components|Base/RadioGroup', module).add('options in props', () => (
+export default {
+  title: 'Components|Base/RadioGroup',
+  component: RadioGroup,
+  id: 'demo-radio-group-id',
+  parameters: {
+    props: {
+      propTables: [
+        RadioGroup,
+      ],
+    },
+  },
+};
+
+export const OptionsInProps = () => (
   <State store={store}>
     {(props) => [
       <RadioGroup
@@ -44,38 +56,41 @@ storiesOf('Components|Base/RadioGroup', module).add('options in props', () => (
       />,
     ]}
   </State>
-));
-
-storiesOf('Components|Base/RadioGroup', module).add(
-  'options in children',
-  () => (
-    <State store={store}>
-      {(props) => [
-        <RadioGroup>
-          {[
-            {
-              label: 'Radio 4',
-              value: 4,
-            },
-            {
-              label: 'Radio 5',
-              value: 5,
-            },
-            {
-              label: 'Radio 6',
-              value: 6,
-            },
-          ].map((option) => (
-            <Radio
-              isChecked={props.selectedValues2 === option.value}
-              isDisabled={option.isDisabled}
-              onChange={() => handleChange(2)(option.value)}
-            >
-              {option.label}
-            </Radio>
-          ))}
-        </RadioGroup>,
-      ]}
-    </State>
-  ),
 );
+OptionsInProps.story = {
+  name: 'options in props',
+};
+
+export const OptionsInChildren = () => (
+  <State store={store}>
+    {(props) => [
+      <RadioGroup>
+        {[
+          {
+            label: 'Radio 4',
+            value: 4,
+          },
+          {
+            label: 'Radio 5',
+            value: 5,
+          },
+          {
+            label: 'Radio 6',
+            value: 6,
+          },
+        ].map((option) => (
+          <Radio
+            isChecked={props.selectedValues2 === option.value}
+            isDisabled={option.isDisabled}
+            onChange={() => handleChange(2)(option.value)}
+          >
+            {option.label}
+          </Radio>
+        ))}
+      </RadioGroup>,
+    ]}
+  </State>
+);
+OptionsInChildren.story = {
+  name: 'options in children',
+};

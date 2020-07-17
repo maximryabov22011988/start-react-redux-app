@@ -9,6 +9,8 @@
 /dist/
 /plop-templates/
 
+/src/**/*.inline.svg
+
 webpack.config.js
 webpack.develop.js
 webpack.production.js
