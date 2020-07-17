@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Checkbox from './Checkbox';
 
@@ -27,6 +28,7 @@ export default {
       ],
     },
   },
+  decorators: [withA11y],
 };
 
 export const NoLabel = () => (

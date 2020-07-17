@@ -8,6 +8,7 @@ const propTypes = {
   className: PropTypes.string,
   extension: PropTypes.string,
   filename: PropTypes.string,
+  /** C помощью тегов picture/source */
   isSupportedWebp: PropTypes.bool,
   path: PropTypes.string,
   src: PropTypes.string,

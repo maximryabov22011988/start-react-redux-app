@@ -2,12 +2,20 @@ import { addDecorator, addParameters } from '@storybook/react';
 import { withPropsTable } from 'storybook-addon-react-docgen';
 import StoryRouter from 'storybook-react-router';
 import { configureActions } from '@storybook/addon-actions';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 import { pageTitle } from '../project.settings';
 
-configureActions({
-  depth: 100,
-  limit: 100, // Limit the number of items logged into the actions panel
+addParameters({
+  darkMode: {
+    current: 'light',
+  },
+});
+
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+  },
 });
 
 addParameters({
@@ -27,3 +35,8 @@ addParameters({
 
 addDecorator(withPropsTable);
 addDecorator(StoryRouter());
+
+configureActions({
+  depth: 100,
+  limit: 100,
+});

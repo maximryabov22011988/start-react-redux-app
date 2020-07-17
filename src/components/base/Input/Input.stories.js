@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Input, { InputWithHelperText, InputWithoutHandler } from './index';
 
@@ -22,6 +23,7 @@ export default {
   title: 'Components|Base/Input',
   component: InputWithHelperText,
   id: 'demo-input-id',
+  decorators: [withA11y],
   parameters: {
     props: {
       propTables: [InputWithoutHandler],

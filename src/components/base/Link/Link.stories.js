@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { action } from '@storybook/addon-actions';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Link from './Link';
 
@@ -15,6 +16,7 @@ export default {
   title: 'Components|Base/Link',
   component: Link,
   id: 'demo-link-id',
+  decorators: [withA11y],
 };
 
 export const Text = () => (

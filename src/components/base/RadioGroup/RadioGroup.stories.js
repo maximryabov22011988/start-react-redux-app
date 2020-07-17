@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { State, Store } from '@sambego/storybook-state';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Radio from './Radio';
 import RadioGroup from './RadioGroup';
@@ -21,6 +22,7 @@ export default {
   title: 'Components|Base/RadioGroup',
   component: RadioGroup,
   id: 'demo-radio-group-id',
+  decorators: [withA11y],
   parameters: {
     props: {
       propTables: [

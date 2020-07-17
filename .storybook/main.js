@@ -6,11 +6,13 @@ module.exports = {
   stories: ['../src/**/*.stories.@(js|mdx)', './*.stories.@(js|mdx)'],
   addons: [
     '@storybook/addon-docs',
+    'storybook-dark-mode/register',
     '@storybook/addon-viewport/register',
-    '@storybook/addon-storysource/register',
-    '@storybook/addon-knobs/register',
     'storybook-addon-react-docgen/register',
+    '@storybook/addon-knobs/register',
+    '@storybook/addon-a11y/register',
     '@storybook/addon-actions/register',
+    '@storybook/addon-storysource/register',
   ],
   webpackFinal: (config) => {
     const customConfig = config;
