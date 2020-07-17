@@ -1,0 +1,20 @@
+import { Meta, Story, Preview, Props, Description } from '@storybook/addon-docs/blocks';
+
+import Button from './Button';
+
+<Meta title="Documentation|Button" component={Button} />
+
+# Button
+
+Здесь можно комбинировать JSX и Markdown формат.
+<Preview withToolbar>
+  <Story name="button" height="200px">
+    <Button />
+  </Story>
+</Preview>
+
+Кнопка заблокирована.
+<Button isDisabled />
+
+Компонент принимает следующие props:
+<Props of={Button} />

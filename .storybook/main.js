@@ -3,9 +3,11 @@ const path = require('path');
 const projectSettings = require('../project.settings');
 
 module.exports = {
-  stories: ['../src/components/**/*.stories.js', './*.stories.js'],
+  stories: ['../src/**/*.stories.@(js|mdx)', './*.stories.@(js|mdx)'],
   addons: [
-    '@storybook/addon-notes/register',
+    '@storybook/addon-docs',
+    '@storybook/addon-viewport/register',
+    '@storybook/addon-storysource/register',
     '@storybook/addon-knobs/register',
     'storybook-addon-react-docgen/register',
     '@storybook/addon-actions/register',
@@ -60,6 +62,16 @@ module.exports = {
             name: 'fonts/[name].[ext]',
           },
         }],
+      },
+      {
+        test: /\.stories\.js$/,
+        loaders: [
+          {
+            loader: require.resolve('@storybook/source-loader'),
+            options: { parser: 'javascript' },
+          },
+        ],
+        enforce: 'pre',
       },
     ]);
 
