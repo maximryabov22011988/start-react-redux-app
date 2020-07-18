@@ -1,14 +1,14 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 
-import UIReducer from 'store/UI';
-import appReducer from 'store/app';
-import dataReducer from 'store/data';
-import nameSpace from 'store/name-spaces';
+import { nameSpaces } from 'store/nameSpaces';
+import offersSliceReducer from 'features/offers/storeSlice';
 
 const rootReducer = combineReducers({
-  [nameSpace.DATA]: dataReducer,
-  [nameSpace.UI]: UIReducer,
-  [nameSpace.APP]: appReducer,
+  [nameSpaces.DATA]: combineReducers({
+    [nameSpaces.OFFERS]: offersSliceReducer,
+  }),
+  [nameSpaces.UI]: combineReducers({}),
+  [nameSpaces.APP]: combineReducers({}),
 });
 
-export default rootReducer;
+export { rootReducer };
