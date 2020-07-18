@@ -1,7 +1,17 @@
 import axios from 'axios';
 
 const TIMEOUT = 5000;
-const mockApiUrl = 'http://5dd870fc505c590014d3bcbf.mockapi.io/domrf/';
+const MOCK_API_URL = 'http://5dd870fc505c590014d3bcbf.mockapi.io/domrf/';
+
+const httpMethod = {
+  GET: 'get',
+  POST: 'post',
+  PUT: 'put',
+  HEAD: 'head',
+  OPTIONS: 'options',
+  PATCH: 'patch',
+  DELETE: 'delete',
+};
 
 const getBaseAPI = (baseURL) => {
   const options = {
@@ -27,52 +37,40 @@ const getBaseAPI = (baseURL) => {
   return api;
 };
 
-const makeAPI = (baseURL) => {
+const makeAPI = (baseURL, httpMethods = Object.values(httpMethod)) => {
   const baseAPI = getBaseAPI(baseURL);
 
-  const get = (url, conf = {}) => baseAPI
-    .get(url, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
+  return httpMethods.reduce((result, method) => {
+    switch (method) {
+      case httpMethod.GET:
+      case httpMethod.HEAD:
+      case httpMethod.OPTIONS:
+      case httpMethod.DELETE: {
+        result[method] = (url, config = {}) => baseAPI[method](url, config)
+          .then((response) => Promise.resolve(response))
+          .catch((error) => Promise.reject(error));
 
-  const post = (url, data = {}, conf = {}) => baseAPI
-    .post(url, data, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
+        return result;
+      }
 
-  const put = (url, data = {}, conf = {}) => baseAPI
-    .put(url, data, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
+      case httpMethod.POST:
+      case httpMethod.PUT:
+      case httpMethod.PATCH: {
+        result[method] = (url, data = {}, config = {}) => baseAPI[method](url, data, config)
+          .then((response) => Promise.resolve(response))
+          .catch((error) => Promise.reject(error));
 
-  const del = (url, conf = {}) => baseAPI
-    .delete(url, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
+        return result;
+      }
 
-  const head = (url, conf = {}) => baseAPI
-    .head(url, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
-
-  const options = (url, conf = {}) => baseAPI
-    .options(url, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
-
-  const patch = (url, data = {}, conf = {}) => baseAPI
-    .patch(url, data, conf)
-    .then((response) => Promise.resolve(response))
-    .catch((error) => Promise.reject(error));
-
-  return {
-    get, post, put, head, options, patch, delete: del,
-  };
+      default: {
+        return result;
+      }
+    }
+  }, {});
 };
-
-export { makeAPI };
 
 export default {
   PROJECT: makeAPI(),
-  MOCK: makeAPI(mockApiUrl),
+  MOCK: makeAPI(MOCK_API_URL, [httpMethod.GET, httpMethod.POST, httpMethod.DELETE]),
 };
