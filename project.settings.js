@@ -19,6 +19,7 @@ module.exports = {
   alias: {
     webpack: {
       api: path.resolve('src/api'),
+      features: path.resolve('src/features'),
       assets: path.resolve('src/assets'),
       components: path.resolve('src/components'),
       constants: path.resolve('src/constants'),

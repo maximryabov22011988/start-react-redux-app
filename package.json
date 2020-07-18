@@ -8,8 +8,10 @@
   "license": "ISC",
   "author": "Ryabov Maxim",
   "dependencies": {
+    "@reduxjs/toolkit": "1.4.0",
     "axios": "0.19.1",
     "normalize.css": "8.0.1",
+    "normalizr": "3.6.0",
     "rc-dialog": "8.1.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",

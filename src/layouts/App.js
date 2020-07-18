@@ -1,20 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { fetchOffers } from 'features/offers/storeSlice';
 
 import MainPage from 'pages/MainPage';
 import Page404 from 'pages/Page404';
-import Dialog from 'components/base/Dialog';
-import Icon from 'components/base/Icon';
-import Button from 'components/base/Button';
-import Link from 'components/base/Link';
-import Image from 'components/base/Image';
-import Input from 'components/base/Input';
-import useModalControl from 'hooks/useModalControl';
-import testImage from 'components/base/Image/reactJS.jpg';
+import Dialog from 'components/Dialog';
+import Icon from 'components/Icon';
+import Button from 'components/Button';
+import Link from 'components/Link';
+import Image from 'components/Image';
+import Input from 'components/Input';
+import { useModalControl } from 'hooks/useModalControl';
+import testImage from 'components/Image/reactJS.jpg';
 
-import modalName from 'constants/modalNames';
-import routePath from 'constants/routePath';
-import keyCode from 'constants/keyCode';
+import { modalNames } from 'constants/modalNames';
+import { routePath } from 'constants/routePath';
+import { keyCode } from 'constants/keyCode';
 
 import { ReactComponent as ArrowIcon } from 'assets/images/icons/arrow.inline.svg';
 import arrow from 'assets/images/icons/sprite/arrow.svg';
@@ -27,7 +30,7 @@ import '../styles/global.less';
 const App = () => {
   const [count, setCount] = useState(0);
   const [input, setInput] = useState('');
-  const [modalsState, openModal, closeModal] = useModalControl(modalName.LOGIN, modalName.REGISTRATION);
+  const [modalsState, openModal, closeModal] = useModalControl(modalNames.LOGIN, modalNames.REGISTRATION);
 
   const addModalsContainer = useCallback(() => {
     const modalContainer = document.createElement('div');
@@ -52,21 +55,26 @@ const App = () => {
     document.body.addEventListener('keydown', removeMouseClass);
   }, [addModalsContainer, addMouseClass, removeMouseClass]);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchOffers());
+  }, [dispatch]);
+
   return (
     <div className="app">
       <Switch>
         <Route exact path={routePath.MAIN}>
           <>
             <MainPage
-              openLoginModal={openModal(modalName.LOGIN)}
-              openRegistrationModal={openModal(modalName.REGISTRATION)}
+              openLoginModal={openModal(modalNames.LOGIN)}
+              openRegistrationModal={openModal(modalNames.REGISTRATION)}
             />
+
+            <Link url="https://www.google.com/">Link</Link>
 
             {/* Test HMR */}
             <Button onClick={() => setCount((prev) => prev + 1)}>Test 12</Button>
             <span>{count}</span>
-
-            <Link url="https://www.google.com/">Link</Link>
 
             <Input
               label="Label"
@@ -88,25 +96,25 @@ const App = () => {
 
             {/* Test use Dialog */}
             <div style={{ marginTop: 200 }}>
-              <Button onClick={openModal(modalName.LOGIN)}>Open login modal</Button>
+              <Button onClick={openModal(modalNames.LOGIN)}>Open login modal</Button>
             </div>
 
             <Dialog
               footer="Buttons ..."
               isOpen={modalsState.isOpenLogin}
               title="Title"
-              onClose={closeModal(modalName.LOGIN)}
+              onClose={closeModal(modalNames.LOGIN)}
             >
               <p>Login content</p>
               <div style={{ height: 200 }} />
             </Dialog>
 
-            <Button onClick={openModal(modalName.REGISTRATION)}>Open registration modal</Button>
+            <Button onClick={openModal(modalNames.REGISTRATION)}>Open registration modal</Button>
             <Dialog
               footer="Buttons ..."
               isOpen={modalsState.isOpenRegistration}
               title="Title"
-              onClose={closeModal(modalName.REGISTRATION)}
+              onClose={closeModal(modalNames.REGISTRATION)}
             >
               <p>Registration content</p>
               <div style={{ height: 1000 }} />

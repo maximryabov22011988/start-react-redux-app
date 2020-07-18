@@ -43,14 +43,14 @@ module.exports = {
     'global-require': OFF,
     // запрет на использование alert
     'no-alert': ERROR,
-    // позволяет записывать свойства в объект result при использовании в reduce
+    // позволяет записывать свойства в объект (например: result при использовании в reduce)
     'no-param-reassign': [ERROR, {
-      'props': true,
-      'ignorePropertyModificationsFor': ['result']
+      props: true,
+      ignorePropertyModificationsFor: ['result', 'state'],
     }],
     // ++ только для for-цикла
     'no-plusplus': [ERROR, {
-      allowForLoopAfterthoughts: true
+      allowForLoopAfterthoughts: true,
     }],
     // базовый отступ 2 пробела, у case 2 пробела от switch
     indent: [ERROR, 2, {
@@ -64,7 +64,7 @@ module.exports = {
     'quote-props': [ERROR, 'as-needed'],
     // минимальная длина имен (по-умолчанию от 2 символов)
     'id-length': [ERROR, {
-      exceptions: ['_', 'i', 'j', 'x', 'y', 'z', 'a', 'b', 'e']
+      exceptions: ['_', 'i', 'j', 'x', 'y', 'z', 'a', 'b', 'e'],
     }],
     // наименования переменных, функций и тд только в camelСase
     camelcase: [
@@ -106,19 +106,24 @@ module.exports = {
             position: 'before',
           },
           {
-            pattern: '+(react|react-dom|react-router-dom|prop-types|react-styles-proptype|react-redux|redux|reselect|classnames|lodash)',
+            pattern: '+(react|react-dom|react-router-dom|prop-types|react-styles-proptype|react-redux|redux|reselect|@reduxjs/toolkit|normalizr|classnames|lodash)',
             group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'api/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: '+(store|features)/**',
+            group: 'internal',
             position: 'before',
           },
           {
             pattern: '+(pages|components|hocs|hooks)/**',
             group: 'internal',
             position: 'before',
-          },
-          {
-            pattern: 'store/**',
-            group: 'internal',
-            position: 'before'
           },
           {
             pattern: 'constants/**',
@@ -144,11 +149,11 @@ module.exports = {
     'import/extensions': [ERROR, {
       js: 'never',
       less: 'always',
-      svg: 'always'
+      svg: 'always',
     }],
     // в dependencies передаем только зависимости, для работы приложения
     'import/no-extraneous-dependencies': [ERROR, {
-      'devDependencies': true
+      devDependencies: true,
     }],
 
     // проверка href в ссылке, не корректно работает с компонентами поверх html-ссылок
@@ -165,7 +170,7 @@ module.exports = {
 
     // в каких файлах может содержаться jsx
     'react/jsx-filename-extension': [ERROR, {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
     }],
     // объявление state в конструкторе, в разработке не всегда нужен конструктор
     'react/state-in-constructor': OFF,
@@ -180,7 +185,7 @@ module.exports = {
     }],
     // многострочная jsx разметка, кроме единственного вложенного элемента
     'react/jsx-one-expression-per-line': [ERROR, {
-      allow: 'single-child'
+      allow: 'single-child',
     }],
 
     // сортировка ключей при деструктуризации

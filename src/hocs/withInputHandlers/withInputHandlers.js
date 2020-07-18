@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import getDisplayName from 'hocs/getDisplayName';
 
-import checkAndRunFunction from 'utils/checkAndRunFunction';
+import { callIfFunction } from 'utils/callIfFunction';
 
 const withInputHandlers = (Component) => {
   const propTypes = {
@@ -25,7 +25,7 @@ const withInputHandlers = (Component) => {
       const {
         target: { value },
       } = event;
-      checkAndRunFunction(onChange, value);
+      callIfFunction(onChange, value);
     }, [isDisabled, onChange]);
 
     const handleFocus = useCallback((event) => {
@@ -33,7 +33,7 @@ const withInputHandlers = (Component) => {
         return;
       }
       setIsFocused(true);
-      checkAndRunFunction(onFocus, event);
+      callIfFunction(onFocus, event);
     }, [isDisabled, onFocus]);
 
     const handleBlur = useCallback((event) => {
@@ -41,7 +41,7 @@ const withInputHandlers = (Component) => {
         return;
       }
       setIsFocused(false);
-      checkAndRunFunction(onBlur, event);
+      callIfFunction(onBlur, event);
     }, [isDisabled, onBlur]);
 
     return (
