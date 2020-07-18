@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import requiredParamType from 'utils/requiredParamType';
+import { requiredParamType } from 'utils/requiredParamType';
 
 const transformModalName = (modalName) => {
   requiredParamType({
@@ -43,10 +43,12 @@ const reducer = (state, action) => {
   }
 };
 
-export default (...modalNames) => {
+const useModalControl = (...modalNames) => {
   const [modalsState, dispatch] = useReducer(reducer, modalNames, createModalsState);
   const openModal = (modalName) => () => dispatch({ type: OPEN_MODAL, modalName });
   const closeModal = (modalName) => () => dispatch({ type: CLOSE_MODAL, modalName });
 
   return [modalsState, openModal, closeModal];
 };
+
+export { useModalControl };

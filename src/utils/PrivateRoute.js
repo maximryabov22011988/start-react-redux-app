@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-import routePath from 'constants/routePath';
+import { routePath } from 'constants/routePath';
 
 const propTypes = {
   children: PropTypes.node,

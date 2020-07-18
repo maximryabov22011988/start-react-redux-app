@@ -1,1 +1,1 @@
-export default () => window.pageYOffset;
+export const getWindowScroll = () => window.pageYOffset;

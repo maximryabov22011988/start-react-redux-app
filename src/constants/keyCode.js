@@ -1,4 +1,4 @@
-export default {
+export const keyCode = {
   TAB: 9,
   ENTER: 13,
   ESC: 27,
