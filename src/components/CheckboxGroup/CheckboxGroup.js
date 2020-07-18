@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import Checkbox, { CheckboxWithHelperText } from 'components/base/Checkbox';
+import Checkbox, { CheckboxWithHelperText } from 'components/Checkbox';
 
-import isArray from 'utils/isArray';
-import isEmptyString from 'utils/isEmptyString';
+import { isArray } from 'utils/isArray';
+import { isEmptyString } from 'utils/isEmptyString';
 
 import './CheckboxGroup.less';
 

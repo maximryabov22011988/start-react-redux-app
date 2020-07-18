@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { State, Store } from '@sambego/storybook-state';
 import { withA11y } from '@storybook/addon-a11y';
 

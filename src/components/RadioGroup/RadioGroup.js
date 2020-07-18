@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import isArray from 'utils/isArray';
-import isEmptyString from 'utils/isEmptyString';
+import { isArray } from 'utils/isArray';
+import { isEmptyString } from 'utils/isEmptyString';
 
 import Radio, { RadioWithHelperText } from './Radio';
 

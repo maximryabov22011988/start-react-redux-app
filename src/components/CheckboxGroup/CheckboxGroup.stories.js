@@ -1,8 +1,7 @@
 import React from 'react';
-
 import { State, Store } from '@sambego/storybook-state';
 
-import Checkbox from 'components/base/Checkbox';
+import Checkbox from 'components/Checkbox';
 
 import CheckboxGroup from './CheckboxGroup';
 

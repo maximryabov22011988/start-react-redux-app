@@ -1,8 +1,7 @@
 import React from 'react';
-
 import { State, Store } from '@sambego/storybook-state';
 
-import Button from 'components/base/Button';
+import Button from 'components/Button';
 
 import Dialog from './Dialog';
 

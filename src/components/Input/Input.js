@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import isEmptyString from 'utils/isEmptyString';
+import { isEmptyString } from 'utils/isEmptyString';
 
 import './Input.less';
 

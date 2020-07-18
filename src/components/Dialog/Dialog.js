@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-
 import RcDialog from 'rc-dialog';
 
 import 'rc-dialog/assets/index.css';
