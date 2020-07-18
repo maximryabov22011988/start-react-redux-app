@@ -34,8 +34,8 @@ const prompt = {
 };
 
 const withTest = (data, type) => {
-  let path =
-    'src/components/{{lowerCase dest}}/{{pascalCase name}}/{{pascalCase name}}.test.js';
+  let path
+    = 'src/components/{{pascalCase name}}/{{pascalCase name}}.test.js';
   let templateFile = 'plop-templates/Component/Component.test.js.hbs';
 
   if (type === 'page') {
@@ -48,37 +48,24 @@ const withTest = (data, type) => {
     templateFile = 'plop-templates/HOC/HOC.test.js.hbs';
   }
 
-  if (type === 'store') {
-    path = 'src/store/{{dest}}/{{camelCase name}}/tests.js';
-    templateFile = 'plop-templates/storeSection/tests.js.hbs';
-  }
-
   return data.withTest === 'yes'
     ? [
-        {
-          path,
-          templateFile,
-          type: 'add',
-        },
-      ]
+      {
+        path,
+        templateFile,
+        type: 'add',
+      },
+    ]
     : [];
 };
 
-const getTypeComponent = (data) => {
-  return data.componentType === 'class' ? 'class' : 'function';
-};
+const getTypeComponent = (data) => (data.componentType === 'class' ? 'class' : 'function');
 
 module.exports = (plop) => {
   plop.setGenerator('component', {
     description: 'Create component',
     prompts: [
       prompt.componentType(),
-      {
-        type: 'list',
-        name: 'dest',
-        message: 'In which directory to put the component?',
-        choices: ['base', 'common'],
-      },
       prompt.name('component'),
       prompt.cssClass('component'),
       prompt.test(),
@@ -87,20 +74,20 @@ module.exports = (plop) => {
       {
         type: 'add',
         path:
-          'src/components/{{lowerCase dest}}/{{pascalCase name}}/{{pascalCase name}}.js',
+          'src/components/{{pascalCase name}}/{{pascalCase name}}.js',
         templateFile: `plop-templates/Component/${getTypeComponent(
-          data
+          data,
         )}Component.js.hbs`,
       },
       {
         type: 'add',
         path:
-          'src/components/{{lowerCase dest}}/{{pascalCase name}}/{{pascalCase name}}.less',
+          'src/components/{{pascalCase name}}/{{pascalCase name}}.less',
         templateFile: 'plop-templates/Component/Component.less.hbs',
       },
       {
         type: 'add',
-        path: 'src/components/{{lowerCase dest}}/{{pascalCase name}}/index.js',
+        path: 'src/components/{{pascalCase name}}/index.js',
         templateFile: 'plop-templates/Component/index.js.hbs',
       },
       ...withTest(data),
@@ -111,19 +98,13 @@ module.exports = (plop) => {
     description: 'Create component stories',
     prompts: [
       prompt.name('component'),
-      {
-        type: 'list',
-        name: 'dest',
-        message: 'In which directory to put the story?',
-        choices: ['base', 'common'],
-      },
     ],
     actions: [
       {
         type: 'add',
         path:
-          'src/components/{{lowerCase dest}}/{{pascalCase name}}/{{pascalCase name}}.stories.js',
-        templateFile: `plop-templates/storybook/story.js.hbs`,
+          'src/components/{{pascalCase name}}/{{pascalCase name}}.stories.js',
+        templateFile: 'plop-templates/storybook/story.js.hbs',
       },
     ],
   });
@@ -141,7 +122,7 @@ module.exports = (plop) => {
         type: 'add',
         path: 'src/pages/{{pascalCase name}}/{{pascalCase name}}.js',
         templateFile: `plop-templates/Page/${getTypeComponent(
-          data
+          data,
         )}Page.js.hbs`,
       },
       {
@@ -184,67 +165,14 @@ module.exports = (plop) => {
       },
       ...(data.withStyles === 'yes'
         ? [
-            {
-              type: 'add',
-              path: 'src/hocs/{{camelCase name}}/{{camelCase name}}.less',
-              templateFile: 'plop-templates/HOC/HOC.less.hbs',
-            },
-          ]
+          {
+            type: 'add',
+            path: 'src/hocs/{{camelCase name}}/{{camelCase name}}.less',
+            templateFile: 'plop-templates/HOC/HOC.less.hbs',
+          },
+        ]
         : []),
       ...withTest(data, 'hoc'),
-    ],
-  });
-
-  plop.setGenerator('store', {
-    description: 'Create store section',
-    prompts: [
-      prompt.name('store section'),
-      {
-        type: 'list',
-        name: 'dest',
-        message: 'Put store section to:',
-        choices: ['data', 'app', 'UI'],
-      },
-      {
-        type: 'list',
-        name: 'withOperations',
-        message: 'Add operations?',
-        choices: booleanChoice,
-      },
-      prompt.test(),
-    ],
-    actions: (data) => [
-      {
-        type: 'add',
-        path: 'src/store/{{dest}}/{{camelCase name}}/index.js',
-        templateFile: 'plop-templates/storeSection/index.js.hbs',
-      },
-      {
-        type: 'add',
-        path: 'src/store/{{dest}}/{{camelCase name}}/types.js',
-      },
-      {
-        type: 'add',
-        path: 'src/store/{{dest}}/{{camelCase name}}/actions.js',
-      },
-      {
-        type: 'add',
-        path: 'src/store/{{dest}}/{{camelCase name}}/reducer.js',
-        templateFile: 'plop-templates/storeSection/reducer.js.hbs',
-      },
-      {
-        type: 'add',
-        path: 'src/store/{{dest}}/{{camelCase name}}/selectors.js',
-      },
-      ...(data.withOperations === 'yes'
-        ? [
-            {
-              type: 'add',
-              path: 'src/store/{{dest}}/{{camelCase name}}/operations.js',
-            },
-          ]
-        : []),
-      ...withTest(data, 'store'),
     ],
   });
 };

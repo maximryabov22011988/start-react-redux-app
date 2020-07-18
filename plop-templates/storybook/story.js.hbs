@@ -1,10 +1,23 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import 'resetStyles';
+import 'globalStyles';
 
 import {{pascalCase name}} from './{{pascalCase name}}';
 
-storiesOf('Components|{{pascalCase dest}}/{{pascalCase name}}', module).add('default', () => (
-  <div>
-    {{pascalCase name}}
-  </div>
-));
+export default {
+  title: 'Components/{{pascalCase name}}',
+  component: {{pascalCase name}},
+  id: 'demo-{{kebabCase name}}-id',
+  decorators: [],
+  parameters: {
+    props: {
+      propTables: [{{pascalCase name}}],
+    },
+  },
+};
+
+export const Default = () => <{{pascalCase name}} />;
+Default.story = {
+  name: 'default',
+};
