@@ -1,5 +1,4 @@
 const path = require('path');
-
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
@@ -142,11 +141,13 @@ module.exports = {
     },
   },
   plugins: [
-    new CopyWebpackPlugin([{
-      context: path.resolve(__dirname, 'src/assets/favicon'),
-      from: '*.*',
-      to: 'favicon',
-    }]),
+    new CopyWebpackPlugin({
+      patterns: [{
+        context: path.resolve(__dirname, 'src/assets/favicon'),
+        from: '*.*',
+        to: 'favicon',
+      }],
+    }),
     new HtmlWebpackPlugin({
       title: pageTitle,
       filename: 'index.html',

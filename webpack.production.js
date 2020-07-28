@@ -1,5 +1,4 @@
 const path = require('path');
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,7 +9,7 @@ const SvgStorePlugin = require('external-svg-sprite-loader');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const {
-  alias, extensions, modules, pageTitle, publicPath, isNeedAnalyzeBundles
+  alias, extensions, isNeedAnalyzeBundles, modules, pageTitle, publicPath,
 } = require('./project.settings');
 const { browsers, polyfills } = require('./browsers');
 
@@ -155,11 +154,13 @@ module.exports = {
     },
   },
   plugins: [
-    new CopyWebpackPlugin([{
-      context: path.resolve(__dirname, 'src/assets/favicon'),
-      from: '*.*',
-      to: 'favicon',
-    }]),
+    new CopyWebpackPlugin({
+      patterns: [{
+        context: path.resolve(__dirname, 'src/assets/favicon'),
+        from: '*.*',
+        to: 'favicon',
+      }],
+    }),
     new HtmlWebpackPlugin({
       title: pageTitle,
       filename: `${process.env.BROWSERS}_index.html`,
@@ -176,12 +177,12 @@ module.exports = {
       },
     }),
     ...(isNeedAnalyzeBundles
-            ? [new BundleAnalyzerPlugin({
-              analyzerMode: 'disabled',
-              generateStatsFile: true,
-              statsOptions: { source: false },
-            })]
-            : []
+      ? [new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: true,
+        statsOptions: { source: false },
+      })]
+      : []
     ),
   ],
 };
