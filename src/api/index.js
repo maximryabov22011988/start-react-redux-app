@@ -1,7 +1,4 @@
-import axios from 'axios';
-
-const TIMEOUT = 5000;
-const MOCK_API_URL = 'http://5dd870fc505c590014d3bcbf.mockapi.io/domrf/';
+import { Axios } from './Axios';
 
 const httpMethod = {
   GET: 'get',
@@ -13,64 +10,66 @@ const httpMethod = {
   DELETE: 'delete',
 };
 
-const getBaseAPI = (baseURL) => {
-  const options = {
-    baseURL,
-    timeout: TIMEOUT,
-  };
+class ApiBuilder {
+  constructor(options = {}) {
+    const {
+      rootEndpoint = 'http://5dd870fc505c590014d3bcbf.mockapi.io/domrf/',
+      headers = {},
+      timeout = 5000,
+    } = options;
 
-  const api = axios.create(options);
+    this.axiosInstance = new Axios().create(rootEndpoint, headers, timeout);
+  }
 
-  const onSuccessRequest = (config) => config;
-  const onFailureRequest = (error) => Promise.reject(error);
-  api.interceptors.request.use(onSuccessRequest, onFailureRequest);
-
-  const onSuccessResponse = (response) => response;
-  const onFailureResponse = (error) => {
-    if (error.response && error.response.data) {
-      return Promise.reject(error.response.data);
-    }
-    return Promise.reject(error.message);
-  };
-  api.interceptors.response.use(onSuccessResponse, onFailureResponse);
-
-  return api;
-};
-
-const makeAPI = (baseURL, httpMethods = Object.values(httpMethod)) => {
-  const baseAPI = getBaseAPI(baseURL);
-
-  return httpMethods.reduce((result, method) => {
-    switch (method) {
+  setHttpMethod(methodName) {
+    switch (methodName) {
       case httpMethod.GET:
       case httpMethod.HEAD:
       case httpMethod.OPTIONS:
       case httpMethod.DELETE: {
-        result[method] = (url, config = {}) => baseAPI[method](url, config)
+        this.endpoint = () => this.axiosInstance[methodName](this.path, this.config)
           .then((response) => Promise.resolve(response))
           .catch((error) => Promise.reject(error));
-
-        return result;
+        break;
       }
 
       case httpMethod.POST:
       case httpMethod.PUT:
       case httpMethod.PATCH: {
-        result[method] = (url, data = {}, config = {}) => baseAPI[method](url, data, config)
+        this.endpoint = (data = {}) => this.axiosInstance[methodName](this.path, data, this.config)
           .then((response) => Promise.resolve(response))
           .catch((error) => Promise.reject(error));
-
-        return result;
+        break;
       }
 
       default: {
-        return result;
+        // eslint-disable-next-line no-console
+        console.error('Unknown http method');
       }
     }
-  }, {});
-};
 
-export default {
-  PROJECT: makeAPI(),
-  MOCK: makeAPI(MOCK_API_URL, [httpMethod.GET, httpMethod.POST, httpMethod.DELETE]),
-};
+    return this;
+  }
+
+  setPath(path) {
+    this.path = path;
+    return this;
+  }
+
+  setBody(body) {
+    this.body = body || {};
+    return this;
+  }
+
+  setConfig(config) {
+    this.config = config || {};
+    return this;
+  }
+
+  build() {
+    return this.endpoint;
+  }
+}
+
+
+export { httpMethod, ApiBuilder };

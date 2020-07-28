@@ -43,6 +43,10 @@ module.exports = {
     'global-require': OFF,
     // запрет на использование alert
     'no-alert': ERROR,
+    // каждый метод на новой строке при использовании цепочки вызовов
+    'newline-per-chained-call': [ERROR, {
+      ignoreChainWithDepth: 2,
+    }],
     // позволяет записывать свойства в объект (например: result при использовании в reduce)
     'no-param-reassign': [ERROR, {
       props: true,

@@ -1,14 +1,34 @@
-import api from 'api';
+import { httpMethod, ApiBuilder } from 'api';
 
 const offersAPI = {
   getOffers() {
-    return api.MOCK.get('/offers');
+    const endpoint = new ApiBuilder()
+      .setHttpMethod(httpMethod.GET)
+      .setPath('/offers')
+      .build();
+
+    return endpoint();
   },
   updateOffer(updatedOffer) {
-    return api.MOCK.post('/offers/update', updatedOffer);
+    const endpoint = new ApiBuilder()
+      .setHttpMethod(httpMethod.POST)
+      .setPath('/offers')
+      .setBody(updatedOffer)
+      .setConfig({
+        // headers: { 'X-Custom-Header': 'foobar1' },
+        timeout: 10000,
+      })
+      .build();
+
+    return endpoint();
   },
   deleteOffer(offerId) {
-    return api.MOCK.delete(`/offers/${offerId}`);
+    const endpoint = new ApiBuilder()
+      .setHttpMethod(httpMethod.DELETE)
+      .setPath(`/offers/${offerId}`)
+      .build();
+
+    return endpoint();
   },
 };
 
