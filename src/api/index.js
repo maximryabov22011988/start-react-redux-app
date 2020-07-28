@@ -71,5 +71,4 @@ class EndpointBuilder {
   }
 }
 
-
 export { httpMethod, EndpointBuilder };

@@ -54,7 +54,6 @@ WithLabel.story = {
   name: 'with label',
 };
 
-
 export const Disabled = () => (
   <State store={store}>{() => [<Checkbox isDisabled>Label</Checkbox>]}</State>
 );

@@ -20,7 +20,7 @@ export default {
 
 export const Text = () => (
   <Link {...acitons} anchor="#">
-        Link
+    Link
   </Link>
 );
 Text.story = {
@@ -29,7 +29,7 @@ Text.story = {
 
 export const TextDisabled = () => (
   <Link {...acitons} isDisabled anchor="#">
-        Link
+    Link
   </Link>
 );
 TextDisabled.story = {
@@ -38,7 +38,7 @@ TextDisabled.story = {
 
 export const Button = () => (
   <Link {...acitons} anchor="#" theme="button">
-        Link
+    Link
   </Link>
 );
 Button.story = {
@@ -47,7 +47,7 @@ Button.story = {
 
 export const ButtonDisabled = () => (
   <Link {...acitons} isDisabled anchor="#" theme="button">
-        Link
+    Link
   </Link>
 );
 ButtonDisabled.story = {

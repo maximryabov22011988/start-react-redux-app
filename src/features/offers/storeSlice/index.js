@@ -8,7 +8,6 @@ import { normalizeOffers } from './normalize';
 
 const sliceName = 'offers';
 
-
 const { operation: fetchOffers, reducers } = createOperation({
   sliceName,
   fetchFunction: offersAPI.getOffers,
@@ -25,7 +24,6 @@ const { operation: fetchOffers, reducers } = createOperation({
     return data;
   },
 });
-
 
 const offersSlice = createSlice({
   name: sliceName,
