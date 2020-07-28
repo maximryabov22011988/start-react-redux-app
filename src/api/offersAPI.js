@@ -1,8 +1,8 @@
-import { httpMethod, ApiBuilder } from 'api';
+import { httpMethod, EndpointBuilder } from 'api';
 
 const offersAPI = {
   getOffers() {
-    const endpoint = new ApiBuilder()
+    const endpoint = new EndpointBuilder()
       .setHttpMethod(httpMethod.GET)
       .setPath('/offers')
       .build();
@@ -10,7 +10,7 @@ const offersAPI = {
     return endpoint();
   },
   updateOffer(updatedOffer) {
-    const endpoint = new ApiBuilder()
+    const endpoint = new EndpointBuilder()
       .setHttpMethod(httpMethod.POST)
       .setPath('/offers')
       .setBody(updatedOffer)
@@ -23,7 +23,7 @@ const offersAPI = {
     return endpoint();
   },
   deleteOffer(offerId) {
-    const endpoint = new ApiBuilder()
+    const endpoint = new EndpointBuilder()
       .setHttpMethod(httpMethod.DELETE)
       .setPath(`/offers/${offerId}`)
       .build();

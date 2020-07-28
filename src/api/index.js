@@ -10,7 +10,7 @@ const httpMethod = {
   DELETE: 'delete',
 };
 
-class ApiBuilder {
+class EndpointBuilder {
   constructor(options = {}) {
     const {
       rootEndpoint = 'http://5dd870fc505c590014d3bcbf.mockapi.io/domrf/',
@@ -72,4 +72,4 @@ class ApiBuilder {
 }
 
 
-export { httpMethod, ApiBuilder };
+export { httpMethod, EndpointBuilder };
