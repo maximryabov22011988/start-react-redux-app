@@ -7,7 +7,7 @@ module.exports = {
     production: '/',
   },
   devServer: {
-    port: 7777,
+    port: 7070,
     proxyConfig: [{
       context: ['/api_1', '/api_2', '/api_3'],
       target: process.env.BACKEND_URL,
